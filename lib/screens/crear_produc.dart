@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:industrial/screens/agregar_vent.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import '../models/pruduccion.dart';
@@ -109,33 +110,41 @@ class _CrearProduccionState extends State<CrearProduccion> {
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
                 padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 onPressed: (() {
+
                   if (tipoVentana.indexTipo == 0) {
-                    crearPruduccionPro.addVentana(ProduccionCre(
-                        tipoVentana: tipoVentana.ventanasD[0].nombre,
-                        id: crearPruduccionPro.cout(),
+                    crearPruduccionPro.addProducc(ProduccionCre(
+                        tipoVentana: tipoVentana.ventanasD[0].nombre,                      
                         cliente: myController.text,
                         direccion: myController2.text,
                         telefono: myController3.text,
                         items: []));
                   } else if (tipoVentana.indexTipo == 1) {
-                    crearPruduccionPro.addVentana(ProduccionCre(
+                    crearPruduccionPro.addProducc(ProduccionCre(
                         tipoVentana: tipoVentana.ventanasD[1].nombre,
-                        id: crearPruduccionPro.cout(),
                         cliente: myController.text,
                         direccion: myController2.text,
                         telefono: myController3.text,
                         items: []));
                   }else if (tipoVentana.indexTipo == 2) {
-                    crearPruduccionPro.addVentana(ProduccionCre(
+                    crearPruduccionPro.addProducc(ProduccionCre(
                         tipoVentana: tipoVentana.ventanasD[2].nombre,
-                        id: crearPruduccionPro.cout(),
                         cliente: myController.text,
                         direccion: myController2.text,
                         telefono: myController3.text,
                         items: []));
                   }
 
-                  crearPruduccionPro.prin();
+                  // crearPruduccionPro.prin();
+                    Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2)  {
+                        return FadeTransition(
+                            opacity: animation1,
+                            child: const AfregarVentanas(
+                            ));
+                      },
+                    ),
+                  );
                   Navigator.pushReplacementNamed(context, 'agregarVentana');
                 }),
                 child: const Text('Siguiente'),

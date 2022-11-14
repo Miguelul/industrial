@@ -20,7 +20,7 @@ class AfregarVentanas extends StatefulWidget {
 class _AfregarVentanasState extends State<AfregarVentanas> {
   final myController1 = TextEditingController();
   final myController2 = TextEditingController();
-
+  bool valueI = false;
   var maskFormatter = MaskTextInputFormatter(
       mask: '## #/#',
       filter: {"#": RegExp(r'[0-9]')},
@@ -57,6 +57,11 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
               const SizedBox(
                 height: 50,
               ),
+              CupertinoSwitch(
+                  value: valueI,
+                  onChanged: ((value) => setState(() {
+                        valueI = value;
+                      }))),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -101,13 +106,15 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                 color: CupertinoColors.activeBlue,
                 disabledColor: Colors.grey,
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 onPressed: (() {
                   if (tipoVentana.indexTipo == 0) {
                     crearPruduccionPro.addTradi(
-                        crearPruduccionPro.converFracDesim(myController1.text),
-                        crearPruduccionPro.converFracDesim(myController2.text)
-                        );
+                      crearPruduccionPro.converFracDesim(myController1.text),
+                      crearPruduccionPro.converFracDesim(myController2.text),
+                      (valueI == false) ? 0 : 1,
+                    );
                   } else if (tipoVentana.indexTipo == 1) {
                     crearPruduccionPro.addP65(
                         crearPruduccionPro.converFracDesim(myController1.text),
@@ -118,7 +125,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                         crearPruduccionPro.converFracDesim(myController2.text));
                   }
 
-                  crearPruduccionPro.prin();
+                  // crearPruduccionPro.prin();
                 }),
                 child: const Text('Ver Data'),
               ),
@@ -129,16 +136,21 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                 color: CupertinoColors.activeBlue,
                 disabledColor: Colors.grey,
                 borderRadius: const BorderRadius.all(Radius.circular(15)),
-                padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                 onPressed: (() {
-                       Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return FadeTransition(
-                          opacity: animation1, child: ProduTerminada(nuPro: crearPruduccionPro.coutProduc(),));
-                    },
-                  ),
-                );
+                  // crearPruduccionPro.init();
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) {
+                        return FadeTransition(
+                            opacity: animation1,
+                            child: ProduTerminada(
+                              nuPro: crearPruduccionPro.coutProduc(),
+                            ));
+                      },
+                    ),
+                  );
                   // Navigator.pushReplacementNamed(context, 'produTerminada');
                 }),
                 child: const Text('Guardar'),
@@ -165,8 +177,11 @@ class CardProduccPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
+   
+    print(
+        "_______${crearPruduccionPro.coutProduc()} ____ ${crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc())}");
     return ListView.builder(
-        itemCount: crearPruduccionPro.coutVentana(),
+        itemCount: crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()),
         shrinkWrap: true,
         itemBuilder: (context, index) => (Padding(
               padding: const EdgeInsets.all(10.0),
@@ -178,12 +193,20 @@ class CardProduccPrimary extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 15),
+                  padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${index + 1}',
+                        (crearPruduccionPro
+                                    .creProducProv[
+                                        crearPruduccionPro.coutProduc()]
+                                    .items[index]
+                                    .cabezalArferza![0]
+                                    .valor2 ==
+                                0
+                            ? '2 Vi'
+                            : '3 Vi'),
                         style: const TextStyle(fontSize: 18),
                       ),
                       Column(
@@ -197,7 +220,7 @@ class CardProduccPrimary extends StatelessWidget {
                                 color: Color.fromARGB(255, 87, 87, 87)),
                           ),
                           const Text(
-                            'Fantino, destras de lo bombero',
+                            'Fantino, destra',
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w100,
@@ -208,12 +231,16 @@ class CardProduccPrimary extends StatelessWidget {
                       CupertinoButton(
                         color: CupertinoColors.activeBlue,
                         disabledColor: Colors.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
-                        onPressed: (() {}),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 9, horizontal: 15),
+                        onPressed: (() {
+                          crearPruduccionPro.deleteVentana( crearPruduccionPro.coutProduc() ,crearPruduccionPro
+                              .creProducProv[crearPruduccionPro.coutProduc()].items[index].idVentana);
+                        }),
                         child: const Icon(
-                          CupertinoIcons.add,
+                          CupertinoIcons.delete,
                           size: 12,
                         ),
                       ),

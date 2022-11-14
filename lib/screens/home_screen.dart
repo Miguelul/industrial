@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:industrial/screens/produ_terninada.dart';
+import 'package:industrial/widgets/search.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
 
-class HomeScreen extends StatelessWidget {
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
+    final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
+
+    setState(() {
+      //  crearPruduccionPro.init();
+    });
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           // ignore: prefer_const_literals_to_create_immutables
@@ -42,30 +55,30 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  width: double.infinity,
-                  height: 45,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 238, 238, 238),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: Row(
-                    children: const [
-                      SizedBox(width: 15),
-                      Icon(
-                        Icons.search,
-                        color: Color.fromARGB(255, 187, 187, 187),
-                      ),
-                      SizedBox(width: 14),
-                      Text('Nombre del Cliente',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 187, 187, 187)))
-                    ],
-                  ),
-                ),
-              ),
+              const SizedBox(height: 8),
+              CupertinoButton(
+                  onPressed: () => showSearch(
+                      context: context, delegate: CustomSearchDelegate()),
+                  child: Container(
+                    width: double.infinity,
+                    height: 45,
+                    decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 238, 238, 238),
+                        borderRadius: BorderRadius.circular(25)),
+                    child: Row(
+                      children: const [
+                        SizedBox(width: 15),
+                        Icon(
+                          Icons.search,
+                          color: Color.fromARGB(255, 187, 187, 187),
+                        ),
+                        SizedBox(width: 14),
+                        Text('Nombre del Cliente',
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 187, 187, 187)))
+                      ],
+                    ),
+                  )),
               const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
@@ -76,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                         color: Color.fromARGB(221, 66, 66, 66)),
                   )),
               Container(
-                height: 250,
+                height: 230,
                 width: double.infinity,
                 color: const Color.fromARGB(255, 255, 255, 255),
                 child: ListView.builder(
@@ -86,8 +99,7 @@ class HomeScreen extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(17.0),
                         child: Container(
-                          height: 250,
-                          width: 200,
+                          width: 150,
                           decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 238, 238, 238),
                               borderRadius: BorderRadius.circular(15)),
@@ -103,9 +115,9 @@ class HomeScreen extends StatelessWidget {
                                           context, 'crearProduc');
                                     },
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 25, vertical: 12),
+                                        horizontal: 18, vertical: 5),
                                     color: CupertinoColors.activeBlue,
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(9),
                                     child: const Icon(
                                       CupertinoIcons.add,
                                       size: 23,
@@ -116,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Container(
-                                      width: 90,
+                                      width: 95,
                                       child: Text(
                                         tipoVentana.ventanasD[index].nombre,
                                         style: const TextStyle(
@@ -145,16 +157,14 @@ class HomeScreen extends StatelessWidget {
               ),
               const CardProducc(),
               ElevatedButton.icon(
-                  onPressed: (() {
-                    Navigator.pushReplacementNamed(context, 'login');
+                  onPressed: (() async {
 
-                    tipoVentana.prin();
                   }),
                   icon: const Icon(Icons.backpack),
                   label: const Text('Login')),
               ElevatedButton.icon(
                   onPressed: (() {
-                    Navigator.pushReplacementNamed(context, 'crearProduc');
+                    crearPruduccionPro.init();
                   }),
                   icon: const Icon(Icons.backpack),
                   label: const Text('Crear Producción'))
@@ -174,7 +184,7 @@ class CardProducc extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-    crearPruduccionPro.init();
+
     return ListView.builder(
         itemCount: crearPruduccionPro.coutProduc() + 1,
         shrinkWrap: true,
@@ -199,27 +209,60 @@ class CardProducc extends StatelessWidget {
                   color: const Color.fromARGB(255, 238, 238, 238),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${crearPruduccionPro.creProducProv[index].cliente} ',
-                        style: const TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 87, 87, 87)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            ' $index   ${crearPruduccionPro.creProducProv[index].cliente} ',
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 87, 87, 87)),
+                          ),
+                          Text(
+                            '${crearPruduccionPro.creProducProv[index].direccion}',
+                            style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w100,
+                                color: Color.fromARGB(255, 153, 145, 145)),
+                          ),
+                        ],
                       ),
-                      Text(
-                        '${crearPruduccionPro.creProducProv[index].direccion}',
-                        style: const TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w100,
-                            color: Color.fromARGB(255, 153, 145, 145)),
-                      ),
-                    ],
-                  ),
+                    ),
+                    CupertinoButton(
+                        child: const Icon(Icons.delete_forever),
+                        onPressed: () {
+                          showCupertinoDialog(
+                              context: context,
+                              builder: (context) {
+                                return CupertinoAlertDialog(
+                                  title: const Text("Delete File"),
+                                  content: const Text(
+                                      "Are you sure you want to delete the file?"),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                        child: const Text("YES"),
+                                        onPressed: () {
+                                          crearPruduccionPro.deleteProducc(
+                                              crearPruduccionPro
+                                                  .creProducProv[index].id);
+                                          Navigator.of(context).pop();
+                                        }),
+                                    CupertinoDialogAction(
+                                        child: const Text("NO"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        })
+                                  ],
+                                );
+                              });
+                        })
+                  ],
                 ),
               ),
             ))));

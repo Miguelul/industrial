@@ -31,7 +31,6 @@ class MyApp extends StatelessWidget {
       routes: {
         'home' : ( _ ) => const HomeScreen(),
         'crearProduc' : ( _ ) => const CrearProduccion(),
-        'agregarVentana' : ( _ ) => const AfregarVentanas(),
       },
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.grey[300]
