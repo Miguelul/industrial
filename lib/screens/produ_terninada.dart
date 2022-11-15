@@ -18,11 +18,10 @@ class ProduTerminada extends StatefulWidget {
 
 class _ProduTerminadaState extends State<ProduTerminada>
     with TickerProviderStateMixin {
-       bool? estado = false;
+  bool? estado = false;
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 6, vsync: this);
-    
 
     // return FutureBuilder(
     //     future: crPruProv.init(),
@@ -74,25 +73,45 @@ class _ProduTerminadaState extends State<ProduTerminada>
               height: 600,
               color: const Color.fromARGB(255, 255, 255, 255),
               child: TabBarView(controller: tabController, children: [
-                CardProduTerm(select: 1, select2: 2, nuPro: widget.nuPro, estado: estado!,),
                 CardProduTerm(
-                    select: 3, select3: 10, select4: 15, nuPro: widget.nuPro,estado: estado!),
+                  select: 1,
+                  select3: 10,
+                  select2: 2,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
                 CardProduTerm(
-                    select: 4, select3: 11, select4: 16, nuPro: widget.nuPro, estado: estado!),
+                    select: 3,
+                    select3: 10,
+                    select4: 15,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+                CardProduTerm(
+                    select: 4,
+                    select3: 11,
+                    select4: 16,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
                 CardProduTerm(
                     select: 5,
                     select3: 12,
                     select2: 9,
                     select4: 17,
-                    nuPro: widget.nuPro, estado: estado!),
+                    nuPro: widget.nuPro,
+                    estado: estado!),
                 CardProduTerm(
-                    select: 6, select3: 13, select4: 18, nuPro: widget.nuPro, estado: estado!),
+                    select: 6,
+                    select3: 13,
+                    select4: 18,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
                 CardProduTerm(
                     select: 7,
                     select3: 14,
                     select4: 19,
                     select2: 8,
-                    nuPro: widget.nuPro, estado: estado!),
+                    nuPro: widget.nuPro,
+                    estado: estado!),
               ]),
             ),
           ),
@@ -247,9 +266,9 @@ class TabBarD extends StatelessWidget {
 
 class CardProduTerm extends StatefulWidget {
   final int nuPro;
-   bool estado;
+  bool estado;
   final int? select, select2, select3, select4;
-   CardProduTerm({
+  CardProduTerm({
     required this.select,
     required this.estado,
     this.select2,
@@ -266,20 +285,19 @@ class CardProduTerm extends StatefulWidget {
 class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
-      final crPruProv = Provider.of<CreProducProv>(context);
-    
+    final crPruProv = Provider.of<CreProducProv>(context);
+
     return SingleChildScrollView(
       child: ListView.builder(
           itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
           shrinkWrap: true,
           itemBuilder: (context, index) {
-           
             widget.estado =
                 ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
                         0)
                     ? false
                     : true;
-            print(widget.estado );
+            print(' ${widget.estado}   $index');
             return (Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
@@ -290,12 +308,15 @@ class _CardProduTermState extends State<CardProduTerm> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 15),
+                  padding: const EdgeInsets.all(8),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Row(
                         children: [
+                          const SizedBox(
+                            width: 8,
+                          ),
                           Text(
                             (crPruProv
                                         .creProducProv[crPruProv.coutProduc()]
@@ -303,7 +324,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                         .cabezalArferza![0]
                                         .valor2 ==
                                     0
-                                ? ' 2 Vi  '
+                                ? ''
                                 : ' 3 Vi  '),
                             style: const TextStyle(
                                 fontSize: 15,
@@ -313,6 +334,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                           Column(
                             children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     (widget.select != 5)
@@ -365,67 +387,85 @@ class _CardProduTermState extends State<CardProduTerm> {
                                   : const SizedBox(),
                             ],
                           ),
-                          (widget.select ==4)
-                              ? Checkbox(
-                                  value: widget.estado ,
-                                  onChanged: (value) {
-                                    switch (widget.select) {
-                                      case 3:
-                                        crPruProv.updateLateral(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (true == widget.estado ) ? 0 : 1,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)));
-                                        break;
-                                      case 4:
-                                        crPruProv.updateRiel(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (true == widget.estado ) ? 0 : 1,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)));
-                            
-                                        break;
-                                      case 5:
-                                        crPruProv.updateAlfer(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (true == widget.estado ) ? 0 : 1,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)));
+                          const Spacer(),
+                          (widget.select != 1)
+                              ? Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Checkbox(
+                                    value: widget.estado,
+                                    onChanged: (value) {
+                                      switch (widget.select) {
+                                        case 3:
+                                            print(' ${widget.estado}.....$index');
+                                          crPruProv.updateLateral(LisPropiVen(
+                                              crPruProv.verDeglose(
+                                                  widget.select!,
+                                                  widget.nuPro,
+                                                  index),
+                                              (value!) ? 1 : 0,
+                                              crPruProv.verDeglose(
+                                                  widget.select4!,
+                                                  widget.nuPro,
+                                                  index)));
+                                          print(index);
                                       
-                                        break;
-                                      case 6:
-                                        crPruProv.updateLlavi(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (true == widget.estado ) ? 0 : 1,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)));
-                                     
-                                        break;
-                                      case 7:
-                                        crPruProv.updateCrital(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (true == widget.estado ) ? 0 : 1,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)));
-                                      
-                                        break;
-                                    }
-                                  },
+                                          print(
+                                              (true == widget.estado) ? 0 : 1);
+                                          break;
+                                        case 4:
+                                          crPruProv.updateRiel(LisPropiVen(
+                                              crPruProv.verDeglose(
+                                                  widget.select!,
+                                                  widget.nuPro,
+                                                  index),
+                                              (value!) ? 1 : 0,
+                                              crPruProv.verDeglose(
+                                                  widget.select4!,
+                                                  widget.nuPro,
+                                                  index)));
+
+                                          break;
+                                        case 5:
+                                          crPruProv.updateAlfer(LisPropiVen(
+                                              crPruProv.verDeglose(
+                                                  widget.select!,
+                                                  widget.nuPro,
+                                                  index),
+                                             (value!) ? 1 : 0,
+                                              crPruProv.verDeglose(
+                                                  widget.select4!,
+                                                  widget.nuPro,
+                                                  index)));
+
+                                          break;
+                                        case 6:
+                                          crPruProv.updateLlavi(LisPropiVen(
+                                              crPruProv.verDeglose(
+                                                  widget.select!,
+                                                  widget.nuPro,
+                                                  index),
+                                              (value!) ? 1 : 0,
+                                              crPruProv.verDeglose(
+                                                  widget.select4!,
+                                                  widget.nuPro,
+                                                  index)));
+
+                                          break;
+                                        case 7:
+                                          crPruProv.updateCrital(LisPropiVen(
+                                              crPruProv.verDeglose(
+                                                  widget.select!,
+                                                  widget.nuPro,
+                                                  index),
+                                              (value!) ? 1 : 0,
+                                              crPruProv.verDeglose(
+                                                  widget.select4!,
+                                                  widget.nuPro,
+                                                  index)));
+                                          break;
+                                      }
+                                    },
+                                  ),
                                 )
                               : const SizedBox()
                         ],

@@ -84,6 +84,7 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
+    int nuPro = 0;
     _listPro = crearPruduccionPro.creProducProv.where((element) {
       return element.cliente!
           .toLowerCase()
@@ -92,22 +93,28 @@ class CustomSearchDelegate extends SearchDelegate {
     return ListView.builder(
         itemCount: _listPro.length,
         shrinkWrap: true,
-        itemBuilder: (context, index) => (CupertinoButton(
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) {
-                  return FadeTransition(
-                      opacity: animation1,
-                      child: ProduTerminada(
-                        nuPro: index,
-                      ));
-                },
-              ));
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Builder(
-                builder: (context) {
+        itemBuilder: (context, index) {
+          return (CupertinoButton(
+              onPressed: () {
+                for (int index2 = 0; index2 <= crearPruduccionPro.creProducProv.length; index2++) {
+                  if (crearPruduccionPro.creProducProv[index2].cliente == _listPro[index].cliente) {
+                    nuPro = index2;
+                    break;
+                  }
+                }
+                Navigator.of(context).push(PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) {
+                    return FadeTransition(
+                        opacity: animation1,
+                        child: ProduTerminada(
+                          nuPro: nuPro,
+                        ));
+                  },
+                ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Builder(builder: (context) {
                   return Container(
                     height: 70,
                     width: double.infinity,
@@ -138,8 +145,8 @@ class CustomSearchDelegate extends SearchDelegate {
                       ),
                     ),
                   );
-                }
-              ),
-            ))));
+                }),
+              )));
+        });
   }
 }
