@@ -11,6 +11,7 @@ class DBProvider {
     await database.execute("""
        CREATE TABLE produccion(
       idProduccion INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+      fecha TEXT,
       tipoVentana TEXT,
       cliente TEXT,
       direccion TEXT,
@@ -95,13 +96,13 @@ class DBProvider {
   static Future<sql.Database> _initDB() async {
     // Path de donde almacenaremos la base de datos
     Directory directory = await getApplicationDocumentsDirectory();
-    final path = join(directory.path, 'producciones16.db');
+    final path = join(directory.path, 'producciones17.db');
     return sql.openDatabase(
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
       },
       path,
-      version: 21,
+      version: 22,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
       },
@@ -112,7 +113,6 @@ class DBProvider {
     sql.Database? db = await instance.database;
     final idprodu = await db!.insert("produccion", produccionCre.toMap());
     print('producion insertada en DB');
-
     return idprodu;
   }
 
@@ -135,7 +135,7 @@ class DBProvider {
     await db.insert("cabezarRiel", degCaR.toMap());
     await db.insert("cabezalArferza", degCaA.toMap());
     await db.insert("llavinEnganche", degLlaEn.toMap());
-    await db.insert("anchoCrital", degAlCr.toMap());
+    await db.insert("anchoCrital", degAnCri.toMap());
     await db.insert("altoCrital", degAlCr.toMap());
 
     print('Desglo Insertado en DB');
@@ -149,7 +149,7 @@ class DBProvider {
         .delete("produccion", where: "idProduccion = ?", whereArgs: [id]);
 
     print('Producion Borrada $id');
-  
+
     return idPro;
   }
 
@@ -166,29 +166,34 @@ class DBProvider {
     return db!.update("produccion", produccionCre.toMap(),
         where: "id = ?", whereArgs: [produccionCre.id]);
   }
-    static Future<int> updateLateral(LisPropiVen proVenta) async {
+
+  static Future<int> updateLateral(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("laterales", proVenta.toMap(),
+    return db!.update("laterales", proVenta.toMap2(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
-   static Future<int> updateRiel(LisPropiVen proVenta) async {
+
+  static Future<int> updateRiel(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("cabezarRiel", proVenta.toMap(),
+    return db!.update("cabezarRiel", proVenta.toMap2(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
-   static Future<int> updateLlavi(LisPropiVen proVenta) async {
+
+  static Future<int> updateLlavi(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("llavinEnganche", proVenta.toMap(),
+    return db!.update("llavinEnganche", proVenta.toMap2(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
-   static Future<int> updateAlfer(LisPropiVen proVenta) async {
+
+  static Future<int> updateAlfer(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("cabezalArferza", proVenta.toMap(),
+    return db!.update("cabezalArferza", proVenta.toMap2(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
-   static Future<int> updateCrista(LisPropiVen proVenta) async {
+
+  static Future<int> updateCrista(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("anchoCrital", proVenta.toMap(),
+    return db!.update("anchoCrital", proVenta.toMap2(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
@@ -202,6 +207,7 @@ class DBProvider {
     while (index < producciones.length) {
       producc.add(ProduccionCre(
         id: producciones[index]['idProduccion'],
+        fecha: producciones[index]['fecha'],
         tipoVentana: producciones[index]['tipoVentana'],
         cliente: producciones[index]['cliente'],
         direccion: producciones[index]['direccion'],
@@ -223,8 +229,8 @@ class DBProvider {
 
   static Future<List<Ventana>> getVenta(int idPro) async {
     sql.Database? db = await instance.database;
-    final List<Map<String, dynamic>> ventana = await db!
-        .rawQuery('select * from ventana where idProduccion=$idPro');
+    final List<Map<String, dynamic>> ventana =
+        await db!.rawQuery('select * from ventana where idProduccion=$idPro');
     List<Ventana> ventan = [];
     for (int index = 0; index < ventana.length; index++) {
       int n = ventana[index]['IdVentana'];
@@ -245,8 +251,8 @@ class DBProvider {
 
   static Future<List<LisPropiVen>> getLate(int idVenta) async {
     sql.Database? db = await instance.database;
-    final List<Map<String, dynamic>> laterales = await db!
-        .rawQuery('select * from laterales where IdVentana=$idVenta');
+    final List<Map<String, dynamic>> laterales =
+        await db!.rawQuery('select * from laterales where IdVentana=$idVenta');
     return List.generate(laterales.length, (index) {
       return LisPropiVen(laterales[index]['valor'], laterales[index]['estado'],
           laterales[index]['IdVentana']);

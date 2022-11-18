@@ -9,25 +9,92 @@ class CreProducProv extends ChangeNotifier {
       UnmodifiableListView(_creProducProv);
   int idProdu = 0;
 
-  init() async {
-    try {
-      _creProducProv.clear();
-      _creProducProv.addAll(await DBProvider.getProducc());
-      notifyListeners();
-    } catch (e) {
-      print('ERRO AL CARGAR BASE DE DATO');
+  init(int op) async {
+    if (op == 1) {
+      try {
+        _creProducProv.clear();
+        _creProducProv.addAll(await DBProvider.getProducc());
+        notifyListeners();
+      } catch (e) {
+        print('ERRO AL CARGAR BASE DE DATO');
+      }
+    } else {
+      try {
+        _creProducProv.clear();
+        _creProducProv.addAll(await DBProvider.getProducc());
+        notifyListeners();
+      } catch (e) {
+        print('ERRO AL CARGAR BASE DE DATO');
+      }
     }
   }
 
   addProducc(ProduccionCre produccion) async {
     _creProducProv.add(produccion);
+    print('.............................${_creProducProv[0].fecha}');
     idProdu = await DBProvider.insertProducc(produccion);
-    init();
+  }
+
+  sumMateriales(int nuPro, int totalDe) {
+    double totalf = 0;
+    Map<int, double> total = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+      6: 0,
+      7: 0,
+      8: 0,
+      9: 0,
+      10: 0,
+      11: 0,
+      12: 0,
+      13: 0,
+      14: 0
+    };
+    for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
+      print('_____  $index');
+      if (creProducProv[nuPro].items[index].cabezalArferza![0].valor2 == 0) {
+        total[1] = total[1]! +
+            creProducProv[nuPro].items[index].laterales![0].valor * 2;
+        total[2] =
+            total[2]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[3] = total[3]! +
+            creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 2;
+        total[4] = total[4]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
+        total[5] = (creProducProv[nuPro].items.length).toDouble();
+        total[6] = (creProducProv[nuPro].items.length).toDouble() * 4;
+        total[7] = total[7]! +
+            (creProducProv[nuPro].items[index].anchoCrital![0].valor +
+                    creProducProv[nuPro].items[index].altoCrital![0].valor) *
+                2;
+        totalf = total[totalDe]!;
+      } else {
+        total[8] = total[8]! +
+            creProducProv[nuPro].items[index].laterales![0].valor * 2;
+        total[9] =
+            total[9]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[10] = total[10]! +
+            creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
+        total[11] = total[11]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 3;
+        total[12] = (creProducProv[nuPro].items.length).toDouble() * 2;
+        total[13] = (creProducProv[nuPro].items.length).toDouble() * 6;
+        total[14] = total[14]! +
+            creProducProv[nuPro].items[index].anchoCrital![0].valor +
+            creProducProv[nuPro].items[index].altoCrital![0].valor;
+        totalf = total[totalDe]!;
+      }
+    }
+
+    return totalf;
   }
 
   deleteProducc(index) async {
     await DBProvider.deleteProducc(index);
-    init();
+    init(1);
   }
 
   deleteVentana(int idPr, int idVe) async {
@@ -38,27 +105,27 @@ class CreProducProv extends ChangeNotifier {
 
   updateLateral(LisPropiVen lateral) async {
     await DBProvider.updateLateral(lateral);
-    init();
+    init(1);
   }
 
   updateRiel(LisPropiVen lateral) async {
     await DBProvider.updateRiel(lateral);
-    init();
+    init(1);
   }
 
   updateLlavi(LisPropiVen lateral) async {
     await DBProvider.updateLlavi(lateral);
-    init();
+    init(1);
   }
 
   updateAlfer(LisPropiVen lateral) async {
     await DBProvider.updateAlfer(lateral);
-    init();
+    init(1);
   }
 
   updateCrital(LisPropiVen lateral) async {
     await DBProvider.updateCrista(lateral);
-    init();
+    init(1);
   }
 
   verDeglose(int select, int nuPro, int items) {
@@ -86,9 +153,19 @@ class CreProducProv extends ChangeNotifier {
     return text3[select];
   }
 
+  coutPosiProduc() {
+    int n = _creProducProv.length;
+    return (n != 0) ? n - 1 : 0;
+  }
+
   coutProduc() {
     int n = _creProducProv.length;
     return n - 1;
+  }
+
+  coutProduc2() {
+    int n = _creProducProv.length;
+    return n;
   }
 
   addTradi(double ancho, double alto, int cantidaVia) async {
@@ -114,6 +191,7 @@ class CreProducProv extends ChangeNotifier {
             : [LisPropiVen((ancho / 3) - (1.5), 0)],
         altoCrital: [LisPropiVen(alto - 4, 0)],
       );
+      print(medida);
       int idVen = await DBProvider.insertVentana(
           Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
@@ -142,8 +220,8 @@ class CreProducProv extends ChangeNotifier {
     } catch (err) {
       print('amarillo');
     }
-
-    init();
+    // prin();
+    init(1);
   }
 
   addP65(double ancho, double alto) async {
@@ -192,10 +270,10 @@ class CreProducProv extends ChangeNotifier {
 
       _creProducProv[idProdu].items.add(medida);
     } catch (err) {
-      print('amarillo');
+      print('Error al insertar deglose');
     }
 
-    init();
+    init(1);
   }
 
   addP90(double ancho, double alto) {
@@ -225,7 +303,7 @@ class CreProducProv extends ChangeNotifier {
       print('amarillo');
     }
 
-    init();
+    init(1);
   }
 
   cout() {
@@ -233,6 +311,7 @@ class CreProducProv extends ChangeNotifier {
   }
 
   coutVentanaByPro(int nuPro) {
+    print(nuPro);
     return _creProducProv[nuPro].items.length;
   }
 
@@ -328,13 +407,6 @@ class CreProducProv extends ChangeNotifier {
       return ('$int1 ${estandar[index - 1]}');
     }
   }
-  // deleteDefaVen() {
-  //   int n = _creProducProv.length;
-  //   if (_creProducProv[n - 1].items[0].alto == 0) {
-  //     print('+++++$n ++++++');
-  //     _creProducProv[n - 1].items.removeAt(0);
-  //   }
-  // }
 
   prin() {
     int i = 0;

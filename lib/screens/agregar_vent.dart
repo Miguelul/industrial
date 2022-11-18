@@ -37,131 +37,141 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        title: const Center(
-          child: Text(
-            'Nueva Producción',
-            style: TextStyle(
-                fontWeight: FontWeight.w100,
-                color: Color.fromARGB(255, 0, 0, 0)),
+    return WillPopScope(
+      onWillPop: (() async {
+        return false;
+      }),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          automaticallyImplyLeading: false,
+          title: const Center(
+            child: Text(
+              'Nueva Producción',
+              style: TextStyle(
+                  fontWeight: FontWeight.w100,
+                  color: Color.fromARGB(255, 0, 0, 0)),
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              CupertinoSwitch(
-                  value: valueI,
-                  onChanged: ((value) => setState(() {
-                        valueI = value;
-                      }))),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: TextFormField(
-                  controller: myController1,
-                  inputFormatters: [maskFormatter],
-                  autocorrect: false,
-                  obscureText: false,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecorations.authInputDecoration(
-                      hintText: '',
-                      labelText: 'Ancho',
-                      prefixIcon: Icons.lock_outline),
-                  validator: (value) {
-                    return (value != null && value.length >= 6)
-                        ? null
-                        : 'La contraseña debe de ser de 6 caracteres';
-                  },
+        body: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: TextFormField(
-                  controller: myController2,
-                  inputFormatters: [maskFormatter],
-                  autocorrect: false,
-                  obscureText: false,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecorations.authInputDecoration(
-                      hintText: '',
-                      labelText: 'Alto',
-                      prefixIcon: Icons.lock_outline),
-                  validator: (value) {
-                    return (value != null && value.length >= 6)
-                        ? null
-                        : 'La contraseña debe de ser de 6 caracteres';
-                  },
+                CupertinoSwitch(
+                    value: valueI,
+                    onChanged: ((value) => setState(() {
+                          valueI = value;
+                        }))),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: TextFormField(
+                    controller: myController1,
+                    inputFormatters: [maskFormatter],
+                    autocorrect: false,
+                    obscureText: false,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecorations.authInputDecoration(
+                        hintText: '',
+                        labelText: 'Ancho',
+                        prefixIcon: Icons.lock_outline),
+                    validator: (value) {
+                      return (value != null && value.length >= 6)
+                          ? null
+                          : 'La contraseña debe de ser de 6 caracteres';
+                    },
+                  ),
                 ),
-              ),
-              CupertinoButton(
-                color: CupertinoColors.activeBlue,
-                disabledColor: Colors.grey,
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                onPressed: (() {
-                  if (tipoVentana.indexTipo == 0) {
-                    crearPruduccionPro.addTradi(
-                      crearPruduccionPro.converFracDesim(myController1.text),
-                      crearPruduccionPro.converFracDesim(myController2.text),
-                      (valueI == false) ? 0 : 1,
-                    );
-                  } else if (tipoVentana.indexTipo == 1) {
-                    crearPruduccionPro.addP65(
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: TextFormField(
+                    controller: myController2,
+                    inputFormatters: [maskFormatter],
+                    autocorrect: false,
+                    obscureText: false,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecorations.authInputDecoration(
+                        hintText: '',
+                        labelText: 'Alto',
+                        prefixIcon: Icons.lock_outline),
+                    validator: (value) {
+                      return (value != null && value.length >= 6)
+                          ? null
+                          : 'La contraseña debe de ser de 6 caracteres';
+                    },
+                  ),
+                ),
+                CupertinoButton(
+                  color: CupertinoColors.activeBlue,
+                  disabledColor: Colors.grey,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  onPressed: (() {
+                    if (tipoVentana.indexTipo == 0) {
+                      crearPruduccionPro.addTradi(
                         crearPruduccionPro.converFracDesim(myController1.text),
-                        crearPruduccionPro.converFracDesim(myController2.text));
-                  } else if (tipoVentana.indexTipo == 2) {
-                    crearPruduccionPro.addP90(
-                        crearPruduccionPro.converFracDesim(myController1.text),
-                        crearPruduccionPro.converFracDesim(myController2.text));
-                  }
+                        crearPruduccionPro.converFracDesim(myController2.text),
+                        (valueI == false) ? 0 : 1,
+                      );
+                    } else if (tipoVentana.indexTipo == 1) {
+                      crearPruduccionPro.addP65(
+                          crearPruduccionPro
+                              .converFracDesim(myController1.text),
+                          crearPruduccionPro
+                              .converFracDesim(myController2.text));
+                    } else if (tipoVentana.indexTipo == 2) {
+                      crearPruduccionPro.addP90(
+                          crearPruduccionPro
+                              .converFracDesim(myController1.text),
+                          crearPruduccionPro
+                              .converFracDesim(myController2.text));
+                    }
 
-                  // crearPruduccionPro.prin();
-                }),
-                child: const Text('Ver Data'),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CupertinoButton(
-                color: CupertinoColors.activeBlue,
-                disabledColor: Colors.grey,
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                onPressed: (() {
-                  // crearPruduccionPro.init();
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation1, animation2) {
-                        return FadeTransition(
-                            opacity: animation1,
-                            child: ProduTerminada(
-                              nuPro: crearPruduccionPro.coutProduc(),
-                            ));
-                      },
-                    ),
-                  );
-                  // Navigator.pushReplacementNamed(context, 'produTerminada');
-                }),
-                child: const Text('Guardar'),
-              ),
-              Container(
-                width: 85,
-                height: 45,
-                color: Colors.deepPurpleAccent,
-              ),
-              const CardProduccPrimary(),
-            ],
+                    // crearPruduccionPro.prin();
+                  }),
+                  child: const Text('Ver Data'),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                CupertinoButton(
+                  color: CupertinoColors.activeBlue,
+                  disabledColor: Colors.grey,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  onPressed: (() {
+                    // crearPruduccionPro.init();
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) {
+                          return FadeTransition(
+                              opacity: animation1,
+                              child: ProduTerminada(
+                                nuPro: crearPruduccionPro.coutProduc(),
+                              ));
+                        },
+                      ),
+                    );
+                    // Navigator.pushReplacementNamed(context, 'produTerminada');
+                  }),
+                  child: const Text('Guardar'),
+                ),
+                // Container(
+                //   width: 85,
+                //   height: 45,
+                //   color: Colors.deepPurpleAccent,
+                // ),
+                const CardProduccPrimary(),
+              ],
+            ),
           ),
         ),
       ),
@@ -177,11 +187,13 @@ class CardProduccPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-   
-    print(
-        "_______${crearPruduccionPro.coutProduc()} ____ ${crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc())}");
+
     return ListView.builder(
-        itemCount: crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()),
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: (crearPruduccionPro.coutProduc() == 0)
+            ?0
+            :  crearPruduccionPro
+                .coutVentanaByPro(crearPruduccionPro.coutProduc()),
         shrinkWrap: true,
         itemBuilder: (context, index) => (Padding(
               padding: const EdgeInsets.all(10.0),
@@ -236,8 +248,13 @@ class CardProduccPrimary extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 9, horizontal: 15),
                         onPressed: (() {
-                          crearPruduccionPro.deleteVentana( crearPruduccionPro.coutProduc() ,crearPruduccionPro
-                              .creProducProv[crearPruduccionPro.coutProduc()].items[index].idVentana);
+                          crearPruduccionPro.deleteVentana(
+                              crearPruduccionPro.coutProduc(),
+                              crearPruduccionPro
+                                  .creProducProv[
+                                      crearPruduccionPro.coutProduc()]
+                                  .items[index]
+                                  .idVentana);
                         }),
                         child: const Icon(
                           CupertinoIcons.delete,

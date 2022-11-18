@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final crPruProv = Provider.of<CreProducProv>(context);
 
     if (_refresh1 == false) {
-      crPruProv.init();
+      crPruProv.init(1);
       _refresh1 = true;
       _isLoading = false;
     }
@@ -189,10 +189,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         label: const Text('Login')),
                     ElevatedButton.icon(
                         onPressed: (() {
-                          crPruProv.init();
+                          crPruProv.init(1);
                         }),
                         icon: const Icon(Icons.backpack),
-                        label: const Text('Crear Producción'))
+                        label: const Text('Crear Producción')),
+
+                    
                   ],
                 ),
               ),
@@ -211,8 +213,9 @@ class CardProducc extends StatelessWidget {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
 
     return ListView.builder(
-        itemCount: crearPruduccionPro.coutProduc() + 1,
+        itemCount: crearPruduccionPro.coutProduc2(),
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => (CupertinoButton(
             onPressed: () {
               Navigator.of(context).push(PageRouteBuilder(
@@ -226,7 +229,7 @@ class CardProducc extends StatelessWidget {
               ));
             },
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
               child: Container(
                 height: 70,
                 width: double.infinity,

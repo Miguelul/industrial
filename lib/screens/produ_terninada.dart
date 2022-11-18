@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:industrial/models/pruduccion.dart';
 import 'package:industrial/screens/home_screen.dart';
+import 'package:industrial/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
@@ -165,6 +166,30 @@ class AppBarD extends StatelessWidget {
           size: 17,
         ),
       ),
+      actions: [
+        Stack(children: [
+          Positioned(
+            child: CupertinoButton(
+              color: Color.fromARGB(255, 248, 112, 21),
+              disabledColor: Colors.grey,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              padding: const EdgeInsets.all(7),
+              onPressed: (() {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) {
+                      return FadeTransition(
+                          opacity: animation1,
+                          child: TotalMaterial(nuPro: nuPro));
+                    },
+                  ),
+                );
+              }),
+              child: const Text('Detalles'),
+            ),
+          ),
+        ]),
+      ],
       stretch: true,
       onStretchTrigger: () {
         // Function callback for stretch
@@ -181,12 +206,6 @@ class AppBarD extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: <Widget>[
-            // Positioned(
-            //   child: Image.asset(
-            //     'assets/images/casa.jpg',
-            //     // fit: BoxFit.cover,
-            //   ),
-            // ),
             Positioned(
               left: 20,
               bottom: 30,
@@ -194,6 +213,12 @@ class AppBarD extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        ' ${crPruProv.creProducProv[nuPro].fecha} ',
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 18),
+                      ),
                       Text(
                         'Cliente: ${crPruProv.creProducProv[nuPro].cliente} ',
                         style: const TextStyle(
@@ -240,30 +265,6 @@ class AppBarD extends StatelessWidget {
   }
 }
 
-class TabBarD extends StatelessWidget {
-  const TabBarD({
-    Key? key,
-    required this.titulo,
-  }) : super(
-          key: key,
-        );
-  final String titulo;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: const Color.fromARGB(255, 255, 255, 255),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-        child: Text(
-          titulo,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-        ),
-      ),
-    );
-  }
-}
-
 class CardProduTerm extends StatefulWidget {
   final int nuPro;
   bool estado;
@@ -286,204 +287,178 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-
-    return SingleChildScrollView(
-      child: ListView.builder(
-          itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            widget.estado =
-                ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
-                        0)
-                    ? false
-                    : true;
-            print(' ${widget.estado}   $index');
-            return (Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text(
+    print(",,,,,,,,,,,,,,,,,${widget.nuPro},,,,,,${crPruProv.coutVentanaByPro(widget.nuPro)}");
+    // crPruProv.prin();
+    // int index = 0;
+    return ListView.builder(
+        itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          // index = index1 - 1;
+          widget.estado =
+              ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
+                      0)
+                  ? false
+                  : true;
+          return (Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              height: 70,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 238, 238, 238),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Text(
+                          (crPruProv.creProducProv[widget.nuPro]
+                                      .items[index].cabezalArferza![0].valor2 ==
+                                  0
+                              ? ''
+                              : ' 3 Vi  '),
+                          style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 87, 87, 87)),
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}',
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 87, 87, 87)),
+                                ),
+                                Text(
+                                  (widget.select2 == 2)
+                                      ? '  x  ' +
+                                          crPruProv.toFracc(
+                                              crPruProv.verDeglose(
+                                                  widget.select2!,
+                                                  widget.nuPro,
+                                                  index))
+                                      : (widget.select2 == 8)
+                                          ? '  x  ' +
+                                              crPruProv.toFracc(
+                                                  crPruProv.verDeglose(
+                                                      widget.select2!,
+                                                      widget.nuPro,
+                                                      index))
+                                          : '',
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 87, 87, 87)),
+                                ),
+                              ],
+                            ),
                             (crPruProv
-                                        .creProducProv[crPruProv.coutProduc()]
-                                        .items[index]
-                                        .cabezalArferza![0]
-                                        .valor2 ==
-                                    0
-                                ? ''
-                                : ' 3 Vi  '),
-                            style: const TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 87, 87, 87)),
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    (widget.select != 5)
-                                        ? '${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}'
-                                        : '${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}',
+                                            .creProducProv[
+                                               widget.nuPro]
+                                            .items[index]
+                                            .cabezalArferza![0]
+                                            .valor2 !=
+                                        0 &&
+                                    widget.select == 5)
+                                ? Text(
+                                    '${crPruProv.toFracc(crPruProv.verDeglose(widget.select2!, widget.nuPro, index))}',
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(255, 87, 87, 87)),
-                                  ),
-                                  Text(
-                                    (widget.select2 == 2)
-                                        ? '  x  ' +
-                                            crPruProv.toFracc(
-                                                crPruProv.verDeglose(
-                                                    widget.select2!,
-                                                    widget.nuPro,
-                                                    index))
-                                        : (widget.select2 == 8)
-                                            ? '  x  ' +
-                                                crPruProv.toFracc(
-                                                    crPruProv.verDeglose(
-                                                        widget.select2!,
-                                                        widget.nuPro,
-                                                        index))
-                                            : '',
-                                    style: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 87, 87, 87)),
-                                  ),
-                                ],
-                              ),
-                              (crPruProv
-                                              .creProducProv[
-                                                  crPruProv.coutProduc()]
-                                              .items[index]
-                                              .cabezalArferza![0]
-                                              .valor2 !=
-                                          0 &&
-                                      widget.select == 5)
-                                  ? Text(
-                                      '${crPruProv.toFracc(crPruProv.verDeglose(widget.select2!, widget.nuPro, index))}',
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              Color.fromARGB(255, 87, 87, 87)),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                          const Spacer(),
-                          (widget.select != 1)
-                              ? Padding(
-                                  padding: const EdgeInsets.only(right: 8),
-                                  child: Checkbox(
-                                    value: widget.estado,
-                                    onChanged: (value) {
-                                      switch (widget.select) {
-                                        case 3:
-                                            print(' ${widget.estado}.....$index');
-                                          crPruProv.updateLateral(LisPropiVen(
-                                              crPruProv.verDeglose(
-                                                  widget.select!,
-                                                  widget.nuPro,
-                                                  index),
-                                              (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
-                                                  widget.select4!,
-                                                  widget.nuPro,
-                                                  index)));
-                                          print(index);
-                                      
-                                          print(
-                                              (true == widget.estado) ? 0 : 1);
-                                          break;
-                                        case 4:
-                                          crPruProv.updateRiel(LisPropiVen(
-                                              crPruProv.verDeglose(
-                                                  widget.select!,
-                                                  widget.nuPro,
-                                                  index),
-                                              (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
-                                                  widget.select4!,
-                                                  widget.nuPro,
-                                                  index)));
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                        const Spacer(),
+                        (widget.select != 1)
+                            ? Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Checkbox(
+                                  value: widget.estado,
+                                  onChanged: (value) {
+                                    switch (widget.select) {
+                                      case 3:
+                                        crPruProv.updateLateral(LisPropiVen(
+                                            crPruProv.verDeglose(widget.select!,
+                                                widget.nuPro, index),
+                                            (value!) ? 1 : 0,
+                                            crPruProv.verDeglose(
+                                                widget.select4!,
+                                                widget.nuPro,
+                                                index)));
 
-                                          break;
-                                        case 5:
-                                          crPruProv.updateAlfer(LisPropiVen(
-                                              crPruProv.verDeglose(
-                                                  widget.select!,
-                                                  widget.nuPro,
-                                                  index),
-                                             (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
-                                                  widget.select4!,
-                                                  widget.nuPro,
-                                                  index)));
+                                        break;
+                                      case 4:
+                                        crPruProv.updateRiel(LisPropiVen(
+                                            crPruProv.verDeglose(widget.select!,
+                                                widget.nuPro, index),
+                                            (value!) ? 1 : 0,
+                                            crPruProv.verDeglose(
+                                                widget.select4!,
+                                                widget.nuPro,
+                                                index)));
 
-                                          break;
-                                        case 6:
-                                          crPruProv.updateLlavi(LisPropiVen(
-                                              crPruProv.verDeglose(
-                                                  widget.select!,
-                                                  widget.nuPro,
-                                                  index),
-                                              (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
-                                                  widget.select4!,
-                                                  widget.nuPro,
-                                                  index)));
+                                        break;
+                                      case 5:
+                                        crPruProv.updateAlfer(LisPropiVen(
+                                            crPruProv.verDeglose(widget.select!,
+                                                widget.nuPro, index),
+                                            (value!) ? 1 : 0,
+                                            crPruProv.verDeglose(
+                                                widget.select4!,
+                                                widget.nuPro,
+                                                index)));
 
-                                          break;
-                                        case 7:
-                                          crPruProv.updateCrital(LisPropiVen(
-                                              crPruProv.verDeglose(
-                                                  widget.select!,
-                                                  widget.nuPro,
-                                                  index),
-                                              (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
-                                                  widget.select4!,
-                                                  widget.nuPro,
-                                                  index)));
-                                          break;
-                                      }
-                                    },
-                                  ),
-                                )
-                              : const SizedBox()
-                        ],
-                      ),
-                      // Text(
-                      //   '${crPruProv.toFracc(crPruProv.creProducProv[0].items[index].alto!)}',
-                      //   style: TextStyle(
-                      //       fontSize: 13,
-                      //       fontWeight: FontWeight.w100,
-                      //       color: Color.fromARGB(255, 153, 145, 145)),
-                      // ),
-                    ],
-                  ),
+                                        break;
+                                      case 6:
+                                        crPruProv.updateLlavi(LisPropiVen(
+                                            crPruProv.verDeglose(widget.select!,
+                                                widget.nuPro, index),
+                                            (value!) ? 1 : 0,
+                                            crPruProv.verDeglose(
+                                                widget.select4!,
+                                                widget.nuPro,
+                                                index)));
+
+                                        break;
+                                      case 7:
+                                        crPruProv.updateCrital(LisPropiVen(
+                                            crPruProv.verDeglose(widget.select!,
+                                                widget.nuPro, index),
+                                            (value!) ? 1 : 0,
+                                            crPruProv.verDeglose(
+                                                widget.select4!,
+                                                widget.nuPro,
+                                                index)));
+                                        break;
+                                    }
+                                  },
+                                ),
+                              )
+                            : const SizedBox()
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ));
-          }),
-    );
+            ),
+          ));
+        });
   }
 }
 
