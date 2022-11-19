@@ -22,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void _refresh() async {
     setState(() {
       _refresh1 = false;
-      
     });
   }
 
@@ -193,8 +192,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         }),
                         icon: const Icon(Icons.backpack),
                         label: const Text('Crear Producción')),
-
-                    
                   ],
                 ),
               ),
@@ -246,7 +243,7 @@ class CardProducc extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            ' $index   ${crearPruduccionPro.creProducProv[index].cliente} ',
+                            ' ${index+1}   ${crearPruduccionPro.creProducProv[index].cliente} ',
                             style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,

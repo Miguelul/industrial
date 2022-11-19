@@ -31,7 +31,6 @@ class CreProducProv extends ChangeNotifier {
 
   addProducc(ProduccionCre produccion) async {
     _creProducProv.add(produccion);
-    print('.............................${_creProducProv[0].fecha}');
     idProdu = await DBProvider.insertProducc(produccion);
   }
 

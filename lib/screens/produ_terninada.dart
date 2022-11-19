@@ -243,6 +243,12 @@ class AppBarD extends StatelessWidget {
                             color: Color.fromARGB(255, 255, 255, 255),
                             fontSize: 18),
                       ),
+                      Text(
+                        '${crPruProv.creProducProv[nuPro].tipoVentana}',
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255),
+                            fontSize: 15),
+                      ),
                     ]),
               ),
             ),
@@ -287,7 +293,8 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-    print(",,,,,,,,,,,,,,,,,${widget.nuPro},,,,,,${crPruProv.coutVentanaByPro(widget.nuPro)}");
+    print(
+        ",,,,,,,,,,,,,,,,,${widget.nuPro},,,,,,${crPruProv.coutVentanaByPro(widget.nuPro)}");
     // crPruProv.prin();
     // int index = 0;
     return ListView.builder(
@@ -321,8 +328,8 @@ class _CardProduTermState extends State<CardProduTerm> {
                           width: 8,
                         ),
                         Text(
-                          (crPruProv.creProducProv[widget.nuPro]
-                                      .items[index].cabezalArferza![0].valor2 ==
+                          (crPruProv.creProducProv[widget.nuPro].items[index]
+                                      .cabezalArferza![0].valor2 ==
                                   0
                               ? ''
                               : ' 3 Vi  '),
@@ -366,12 +373,8 @@ class _CardProduTermState extends State<CardProduTerm> {
                                 ),
                               ],
                             ),
-                            (crPruProv
-                                            .creProducProv[
-                                               widget.nuPro]
-                                            .items[index]
-                                            .cabezalArferza![0]
-                                            .valor2 !=
+                            (crPruProv.creProducProv[widget.nuPro].items[index]
+                                            .cabezalArferza![0].valor2 !=
                                         0 &&
                                     widget.select == 5)
                                 ? Text(
