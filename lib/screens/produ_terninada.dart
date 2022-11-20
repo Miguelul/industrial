@@ -403,7 +403,8 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             crPruProv.verDeglose(
                                                 widget.select4!,
                                                 widget.nuPro,
-                                                index)));
+                                                index)),widget.nuPro,index,(value) ? 1 : 0
+                                                );
 
                                         break;
                                       case 4:
@@ -414,7 +415,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             crPruProv.verDeglose(
                                                 widget.select4!,
                                                 widget.nuPro,
-                                                index)));
+                                                index)),widget.nuPro,index,(value) ? 1 : 0);
 
                                         break;
                                       case 5:
@@ -425,7 +426,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             crPruProv.verDeglose(
                                                 widget.select4!,
                                                 widget.nuPro,
-                                                index)));
+                                                index)),widget.nuPro,index,(value) ? 1 : 0);
 
                                         break;
                                       case 6:
@@ -436,7 +437,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             crPruProv.verDeglose(
                                                 widget.select4!,
                                                 widget.nuPro,
-                                                index)));
+                                                index)),widget.nuPro,index,(value) ? 1 : 0);
 
                                         break;
                                       case 7:
@@ -447,7 +448,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             crPruProv.verDeglose(
                                                 widget.select4!,
                                                 widget.nuPro,
-                                                index)));
+                                                index)),widget.nuPro,index,(value) ? 1 : 0);
                                         break;
                                     }
                                   },

@@ -102,29 +102,34 @@ class CreProducProv extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateLateral(LisPropiVen lateral) async {
+  updateLateral(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
+    _creProducProv[nuPro].items[nuItems].laterales![0].estado = estado;
+    notifyListeners();
     await DBProvider.updateLateral(lateral);
-    init(1);
   }
 
-  updateRiel(LisPropiVen lateral) async {
+  updateRiel(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+    _creProducProv[nuPro].items[nuItems].cabezarRiel![0].estado = estado;
+    notifyListeners();
     await DBProvider.updateRiel(lateral);
-    init(1);
   }
 
-  updateLlavi(LisPropiVen lateral) async {
+  updateLlavi(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+    _creProducProv[nuPro].items[nuItems].llavinEnganche![0].estado = estado;
+    notifyListeners();
     await DBProvider.updateLlavi(lateral);
-    init(1);
   }
 
-  updateAlfer(LisPropiVen lateral) async {
+  updateAlfer(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+    _creProducProv[nuPro].items[nuItems].cabezalArferza![0].estado = estado;
+    notifyListeners();
     await DBProvider.updateAlfer(lateral);
-    init(1);
   }
 
-  updateCrital(LisPropiVen lateral) async {
+  updateCrital(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+    _creProducProv[nuPro].items[nuItems].anchoCrital![0].estado = estado;
+    notifyListeners();
     await DBProvider.updateCrista(lateral);
-    init(1);
   }
 
   verDeglose(int select, int nuPro, int items) {
@@ -314,16 +319,26 @@ class CreProducProv extends ChangeNotifier {
     return _creProducProv[nuPro].items.length;
   }
 
-  converFracDesim(String medida) {
+  converFracDesim(String medida, bool values) {
     double doubl1 = 0, doubl2 = 0, doubl3 = 0;
-
-    if (medida.length == 6) {
-      doubl1 = double.parse(medida.substring(0, 2));
-      doubl2 = double.parse(medida.substring(2, 4));
-      doubl3 = double.parse(medida.substring(5, 6));
-      return doubl1 + (doubl2 / doubl3);
-    } else if (medida.length == 2) {
-      return double.parse(medida);
+    if (values == false) {
+      if (medida.length == 6) {
+        doubl1 = double.parse(medida.substring(0, 2));
+        doubl2 = double.parse(medida.substring(2, 4));
+        doubl3 = double.parse(medida.substring(5, 6));
+        return doubl1 + (doubl2 / doubl3);
+      } else if (medida.length == 2) {
+        return double.parse(medida);
+      }
+    } else {
+      if (medida.length == 7) {
+        doubl1 = double.parse(medida.substring(0, 3));
+        doubl2 = double.parse(medida.substring(3, 5));
+        doubl3 = double.parse(medida.substring(6, 7));
+        return doubl1 + (doubl2 / doubl3);
+      } else if (medida.length == 2) {
+        return double.parse(medida);
+      }
     }
   }
 

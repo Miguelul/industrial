@@ -22,7 +22,8 @@ class InputDecorations {
           )
         ),
         filled: true,
-        fillColor: const Color.fromARGB(255, 228, 230, 228),
+        fillColor: const Color.fromARGB(
+                                        255, 238, 238, 238),
         hintText: hintText,
         labelText: labelText,
         labelStyle: const TextStyle(

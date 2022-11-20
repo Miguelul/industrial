@@ -1,27 +1,34 @@
 // For demo
 
 class LisPropiVen {
-  final int? idVentana, estado;
+  int? idVentana, estado;
   final double valor;
   LisPropiVen(this.valor, this.estado, [this.idVentana]);
 
   Map<String, dynamic> toMap() {
     return {'IdVentana': idVentana, 'valor': valor, 'estado': estado};
   }
-   Map<String, dynamic> toMap2() {
-    return {'IdVentana': idVentana,'estado': estado};
+
+  Map<String, dynamic> toMap2() {
+    return {'IdVentana': idVentana, 'estado': estado};
   }
 }
 
 class LisPropiVen3 {
-  final int? idVentana, estado;
+  int ?estado;
+  final int? idVentana;
   final double? valor;
   final double? valor2;
 
   LisPropiVen3({this.valor, this.valor2, this.estado, this.idVentana});
 
   Map<String, dynamic> toMap() {
-    return {'IdVentana': idVentana, 'valor': valor, 'valor2': valor2,'estado': estado};
+    return {
+      'IdVentana': idVentana,
+      'valor': valor,
+      'valor2': valor2,
+      'estado': estado
+    };
   }
 }
 
@@ -54,7 +61,7 @@ class Ventana {
 }
 
 class ProduccionCre {
-  final int ?id;
+  final int? id;
   final String? tipoVentana, cliente, direccion, telefono, fecha;
   final List<Ventana> items;
 
