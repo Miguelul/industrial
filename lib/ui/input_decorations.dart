@@ -10,13 +10,14 @@ class InputDecorations {
   }) {
     return InputDecoration(
         enabledBorder: UnderlineInputBorder(
-          borderRadius: BorderRadius.circular(6),
+          borderRadius: BorderRadius.circular(13),
           borderSide: const BorderSide(
             color: Colors.deepPurple
           ),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
+        focusedBorder: UnderlineInputBorder(
+           borderRadius: BorderRadius.circular(13),
+          borderSide: const BorderSide(
             color: Colors.deepPurple,
             width: 2
           )

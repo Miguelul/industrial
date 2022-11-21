@@ -53,7 +53,6 @@ class CreProducProv extends ChangeNotifier {
       14: 0
     };
     for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
-      print('_____  $index');
       if (creProducProv[nuPro].items[index].cabezalArferza![0].valor2 == 0) {
         total[1] = total[1]! +
             creProducProv[nuPro].items[index].laterales![0].valor * 2;
@@ -97,9 +96,9 @@ class CreProducProv extends ChangeNotifier {
   }
 
   deleteVentana(int idPr, int idVe) async {
-    await DBProvider.deleteVentana(idVe);
     _creProducProv[idPr].items.removeWhere((item) => item.idVentana == idVe);
     notifyListeners();
+    await DBProvider.deleteVentana(idVe);
   }
 
   updateLateral(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {

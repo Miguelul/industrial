@@ -43,6 +43,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
         return false;
       }),
       child: Scaffold(
+         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           leading: IconButton(

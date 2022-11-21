@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:industrial/models/pruduccion.dart';
 import 'package:industrial/screens/home_screen.dart';
 import 'package:industrial/screens/screens.dart';
+import 'package:industrial/widgets/addbar_termina.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
@@ -23,6 +24,9 @@ class _ProduTerminadaState extends State<ProduTerminada>
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 6, vsync: this);
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    final crPruProv = Provider.of<CreProducProv>(context);
 
     // return FutureBuilder(
     //     future: crPruProv.init(),
@@ -31,241 +35,101 @@ class _ProduTerminadaState extends State<ProduTerminada>
     //         return const Center(child: CircularProgressIndicator());
     //       } else {
     return Scaffold(
+       backgroundColor: Colors.white,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           AppBarD(nuPro: widget.nuPro),
-          SliverToBoxAdapter(
-            child: Container(
-              color: Colors.white,
-              height: 55,
-              child: TabBar(
-                  controller: tabController,
-                  isScrollable: true,
-                  labelColor: const Color.fromARGB(255, 0, 0, 0),
-                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                  unselectedLabelColor:
-                      const Color.fromARGB(255, 104, 104, 104),
-                  indicator: CircleTabIndicator(color: Colors.black, radius: 3),
-                  tabs: const [
-                    Tab(text: 'Medidas'),
-                    Tab(
-                      text: 'Laterales',
-                    ),
-                    Tab(
-                      text: 'Cabez Riel',
-                    ),
-                    Tab(
-                      text: 'Cabez Alferza',
-                    ),
-                    Tab(
-                      text: 'Llavi y Enganche',
-                    ),
-                    Tab(
-                      text: 'Cristal Ancho Alto',
-                    ),
-                  ]),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              width: double.maxFinite,
-              height: 600,
-              color: const Color.fromARGB(255, 255, 255, 255),
-              child: TabBarView(controller: tabController, children: [
-                CardProduTerm(
-                  select: 1,
-                  select3: 10,
-                  select2: 2,
-                  nuPro: widget.nuPro,
-                  estado: estado!,
-                ),
-                CardProduTerm(
-                    select: 3,
-                    select3: 10,
-                    select4: 15,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
-                CardProduTerm(
-                    select: 4,
-                    select3: 11,
-                    select4: 16,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
-                CardProduTerm(
-                    select: 5,
-                    select3: 12,
-                    select2: 9,
-                    select4: 17,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
-                CardProduTerm(
-                    select: 6,
-                    select3: 13,
-                    select4: 18,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
-                CardProduTerm(
-                    select: 7,
-                    select3: 14,
-                    select4: 19,
-                    select2: 8,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
-              ]),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: CupertinoButton(
-              color: CupertinoColors.activeBlue,
-              disabledColor: Colors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-              onPressed: (() {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return FadeTransition(
-                          opacity: animation1, child: const HomeScreen());
-                    },
-                  ),
-                );
-                // Navigator.push(context, ProduTerminada())
-              }),
-              child: const Text('Guardar'),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class AppBarD extends StatelessWidget {
-  final int nuPro;
-  const AppBarD({
-    required this.nuPro,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final crPruProv = Provider.of<CreProducProv>(context);
-    return SliverAppBar(
-      leading: CupertinoButton(
-        color: CupertinoColors.activeBlue,
-        disabledColor: Colors.grey,
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        padding: const EdgeInsets.all(7),
-        onPressed: (() {
-          Navigator.pushReplacementNamed(context, 'home');
-        }),
-        child: const Icon(
-          CupertinoIcons.back,
-          size: 17,
-        ),
-      ),
-      actions: [
-        Stack(children: [
-          Positioned(
-            child: CupertinoButton(
-              color: Color.fromARGB(255, 248, 112, 21),
-              disabledColor: Colors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              padding: const EdgeInsets.all(7),
-              onPressed: (() {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return FadeTransition(
-                          opacity: animation1,
-                          child: TotalMaterial(nuPro: nuPro));
-                    },
-                  ),
-                );
-              }),
-              child: const Text('Detalles'),
-            ),
-          ),
-        ]),
-      ],
-      stretch: true,
-      onStretchTrigger: () {
-        // Function callback for stretch
-        return Future<void>.value();
-      },
-      expandedHeight: 200.0,
-      flexibleSpace: FlexibleSpaceBar(
-        stretchModes: const <StretchMode>[
-          StretchMode.zoomBackground,
-          StretchMode.blurBackground,
-          StretchMode.fadeTitle,
-        ],
-        centerTitle: true,
-        background: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Positioned(
-              left: 20,
-              bottom: 30,
+          SliverPersistentHeader(
+            delegate: MySliverPersistentHeaderDelegate(
               child: Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ' ${crPruProv.creProducProv[nuPro].fecha} ',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 18),
+                color: Colors.white,
+                height: 55,
+                child: TabBar(
+                    controller: tabController,
+                    isScrollable: true,
+                    labelColor: const Color.fromARGB(255, 0, 0, 0),
+                    labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                    unselectedLabelColor:
+                        const Color.fromARGB(255, 104, 104, 104),
+                    indicator:
+                        CircleTabIndicator(color: Colors.black, radius: 3),
+                    tabs: const [
+                      Tab(text: 'Medidas'),
+                      Tab(
+                        text: 'Laterales',
                       ),
-                      Text(
-                        'Cliente: ${crPruProv.creProducProv[nuPro].cliente} ',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 18),
+                      Tab(
+                        text: 'Cabez Riel',
                       ),
-                      const SizedBox(
-                        height: 5,
+                      Tab(
+                        text: 'Cabez Alferza',
                       ),
-                      Text(
-                        'Direccion:  ${crPruProv.creProducProv[nuPro].direccion!}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 18),
+                      Tab(
+                        text: 'Llavi y Enganche',
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Tel: ${crPruProv.creProducProv[nuPro].telefono}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 18),
-                      ),
-                      Text(
-                        '${crPruProv.creProducProv[nuPro].tipoVentana}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            fontSize: 15),
+                      Tab(
+                        text: 'Cristal Ancho Alto',
                       ),
                     ]),
               ),
             ),
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(0.0, 0.5),
-                  end: Alignment.center,
-                  colors: <Color>[
-                    Color.fromARGB(95, 14, 13, 13),
-                    Color(0x00000000),
-                  ],
-                ),
+            pinned: true,
+          ),
+           SliverToBoxAdapter(
+          
+              child: Container(
+                height: crPruProv.coutVentanaByPro(widget.nuPro).toDouble()!*100,
+                 child: 
+                IntrinsicHeight(
+                child: TabBarView(controller: tabController, children: [
+                 
+                     CardProduTerm(
+                      select: 1,
+                      select3: 10,
+                      select2: 2,
+                      nuPro: widget.nuPro,
+                      estado: estado!,
+                    ),
+                  
+                  CardProduTerm(
+                      select: 3,
+                      select3: 10,
+                      select4: 15,
+                      nuPro: widget.nuPro,
+                      estado: estado!),
+                  CardProduTerm(
+                      select: 4,
+                      select3: 11,
+                      select4: 16,
+                      nuPro: widget.nuPro,
+                      estado: estado!),
+                  CardProduTerm(
+                      select: 5,
+                      select3: 12,
+                      select2: 9,
+                      select4: 17,
+                      nuPro: widget.nuPro,
+                      estado: estado!),
+                  CardProduTerm(
+                      select: 6,
+                      select3: 13,
+                      select4: 18,
+                      nuPro: widget.nuPro,
+                      estado: estado!),
+                  CardProduTerm(
+                      select: 7,
+                      select3: 14,
+                      select4: 19,
+                      select2: 8,
+                      nuPro: widget.nuPro,
+                      estado: estado!),
+                ]),
               ),
             ),
-          ],
         ),
+        ],
       ),
     );
   }
@@ -293,16 +157,12 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-    print(
-        ",,,,,,,,,,,,,,,,,${widget.nuPro},,,,,,${crPruProv.coutVentanaByPro(widget.nuPro)}");
-    // crPruProv.prin();
-    // int index = 0;
+
     return ListView.builder(
         itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          // index = index1 - 1;
           widget.estado =
               ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
                       0)
@@ -396,59 +256,88 @@ class _CardProduTermState extends State<CardProduTerm> {
                                   onChanged: (value) {
                                     switch (widget.select) {
                                       case 3:
-                                        crPruProv.updateLateral(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (value!) ? 1 : 0,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)),widget.nuPro,index,(value) ? 1 : 0
-                                                );
+                                        crPruProv.updateLateral(
+                                            LisPropiVen(
+                                                crPruProv.verDeglose(
+                                                    widget.select!,
+                                                    widget.nuPro,
+                                                    index),
+                                                (value!) ? 1 : 0,
+                                                crPruProv.verDeglose(
+                                                    widget.select4!,
+                                                    widget.nuPro,
+                                                    index)),
+                                            widget.nuPro,
+                                            index,
+                                            (value) ? 1 : 0);
 
                                         break;
                                       case 4:
-                                        crPruProv.updateRiel(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (value!) ? 1 : 0,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)),widget.nuPro,index,(value) ? 1 : 0);
+                                        crPruProv.updateRiel(
+                                            LisPropiVen(
+                                                crPruProv.verDeglose(
+                                                    widget.select!,
+                                                    widget.nuPro,
+                                                    index),
+                                                (value!) ? 1 : 0,
+                                                crPruProv.verDeglose(
+                                                    widget.select4!,
+                                                    widget.nuPro,
+                                                    index)),
+                                            widget.nuPro,
+                                            index,
+                                            (value) ? 1 : 0);
 
                                         break;
                                       case 5:
-                                        crPruProv.updateAlfer(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (value!) ? 1 : 0,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)),widget.nuPro,index,(value) ? 1 : 0);
+                                        crPruProv.updateAlfer(
+                                            LisPropiVen(
+                                                crPruProv.verDeglose(
+                                                    widget.select!,
+                                                    widget.nuPro,
+                                                    index),
+                                                (value!) ? 1 : 0,
+                                                crPruProv.verDeglose(
+                                                    widget.select4!,
+                                                    widget.nuPro,
+                                                    index)),
+                                            widget.nuPro,
+                                            index,
+                                            (value) ? 1 : 0);
 
                                         break;
                                       case 6:
-                                        crPruProv.updateLlavi(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (value!) ? 1 : 0,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)),widget.nuPro,index,(value) ? 1 : 0);
+                                        crPruProv.updateLlavi(
+                                            LisPropiVen(
+                                                crPruProv.verDeglose(
+                                                    widget.select!,
+                                                    widget.nuPro,
+                                                    index),
+                                                (value!) ? 1 : 0,
+                                                crPruProv.verDeglose(
+                                                    widget.select4!,
+                                                    widget.nuPro,
+                                                    index)),
+                                            widget.nuPro,
+                                            index,
+                                            (value) ? 1 : 0);
 
                                         break;
                                       case 7:
-                                        crPruProv.updateCrital(LisPropiVen(
-                                            crPruProv.verDeglose(widget.select!,
-                                                widget.nuPro, index),
-                                            (value!) ? 1 : 0,
-                                            crPruProv.verDeglose(
-                                                widget.select4!,
-                                                widget.nuPro,
-                                                index)),widget.nuPro,index,(value) ? 1 : 0);
+                                        crPruProv.updateCrital(
+                                            LisPropiVen(
+                                                crPruProv.verDeglose(
+                                                    widget.select!,
+                                                    widget.nuPro,
+                                                    index),
+                                                (value!) ? 1 : 0,
+                                                crPruProv.verDeglose(
+                                                    widget.select4!,
+                                                    widget.nuPro,
+                                                    index)),
+                                            widget.nuPro,
+                                            index,
+                                            (value) ? 1 : 0);
                                         break;
                                     }
                                   },
@@ -489,4 +378,38 @@ class _CirclePainter extends BoxPainter {
         offset + Offset(cfg.size!.width / 2, cfg.size!.height - radius - 5);
     canvas.drawCircle(circleOffset, radius, _paint);
   }
+}
+
+class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final Widget child;
+
+  MySliverPersistentHeaderDelegate({required this.child});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          top: 0 - shrinkOffset,
+          child: Container(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: child,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  @override
+  double get maxExtent => 54;
+
+  @override
+  double get minExtent => 54;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      false;
 }

@@ -14,6 +14,7 @@ class TotalMaterial extends StatelessWidget {
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context, listen: false);
     return Scaffold(
+       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),

@@ -44,11 +44,14 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return WillPopScope(
         onWillPop: (() async {
           return false;
         }),
         child: Scaffold(
+           backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -64,114 +67,118 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
           ),
           body: SingleChildScrollView(
             child: Container(
+              
                 color: Colors.white,
                 child: Column(
                   children: [
                     const SizedBox(
                       height: 50,
                     ),
-                    CupertinoSwitch(
-                        value: valueI,
-                        onChanged: ((value) => setState(() {
-                              valueI = value;
-                            }))),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 20),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 150,
-                            child: TextFormField(
-                              controller: myController1,
-                              inputFormatters: (value2 == false)
-                                  ? [maskFormatter]
-                                  : [maskFormatter2],
-                              autocorrect: false,
-                              obscureText: false,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecorations.authInputDecoration(
-                                  hintText: '',
-                                  labelText: 'Ancho',
-                                  prefixIcon: Icons.account_balance),
-                              validator: (value) {
-                                return (value != null && value.length >= 6)
-                                    ? null
-                                    : 'La contraseña debe de ser de 6 caracteres';
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left:8),
-                            child: Container(
-                              width: 70,
-                              height: 59,
-                              decoration:  BoxDecoration(
-                                  color: const Color.fromARGB(255, 238, 238, 238),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Column(
-                                children: [
-                                  const Text('100 1/2',style: TextStyle(color: Colors.grey,),),
-                                  CupertinoSwitch(
-                                      value: value2,
-                                      onChanged: ((value) => setState(() {
-                                            value2 = value;
-                                          }))),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                        // ),
+          
+                    Container(
+                      width: double.infinity,
+                      height: 71,
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          borderRadius: BorderRadius.circular(6)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 20),
+                        child: Row(
+                          children: [
+                            Spacer(),
+                            CupertinoSwitch(
+                                value: valueI,
+                                onChanged: ((value) => setState(() {
+                                      valueI = value;
+                                    }))),
+                            Spacer(),
+                          ],
+                          // ),
+                        ),
                       ),
                     ),
-
+          
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 1, horizontal: 20),
-                      child: Row(
+                      child: Column(
                         children: [
-                          Container(
-                            width: 150,
-                            child: TextFormField(
-                              controller: myController2,
-                              inputFormatters: (value3 == false)
-                                  ? [maskFormatter]
-                                  : [maskFormatter2],
-                              autocorrect: false,
-                              obscureText: false,
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecorations.authInputDecoration(
-                                  hintText: '',
-                                  labelText: 'Alto',
-                                  prefixIcon: Icons.lock_outline),
-                              validator: (value) {
-                                return (value != null && value.length >= 6)
-                                    ? null
-                                    : 'La contraseña debe de ser de 6 caracteres';
-                              },
-                            ),
-                          ),
-                           Padding(
-                             padding: const EdgeInsets.only(left:8),
-                            child: Container(
-                              width: 70,
-                              height: 59,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 238, 238, 238),
-                                  borderRadius: BorderRadius.circular(6)),
-                              child: Column(
-                                children: [
-                                  const Text('100 1/2',style: TextStyle(color: Colors.grey,),),
-                                  CupertinoSwitch(
-                                      value: value3,
-                                      onChanged: ((value) => setState(() {
-                                            value3 = value;
-                                          }))),
-                                ],
+                          Stack(children: [
+                            Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: myController1,
+                                inputFormatters: (value2 == false)
+                                    ? [maskFormatter]
+                                    : [maskFormatter2],
+                                autocorrect: false,
+                                obscureText: false,
+                                keyboardType: TextInputType.number,
+                                decoration:
+                                    InputDecorations.authInputDecoration(
+                                        hintText: '',
+                                        labelText: 'Ancho',
+                                        prefixIcon: Icons.account_box_outlined),
+                                validator: (value) {
+                                  return (value != null && value.length >= 6)
+                                      ? null
+                                      : 'La contraseña debe de ser de 6 caracteres';
+                                },
                               ),
                             ),
+                            Positioned(
+                              top: 2,
+                              right: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: CupertinoSwitch(
+                                    value: value2,
+                                    onChanged: ((value) => setState(() {
+                                          value2 = value;
+                                        }))),
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 10,
                           ),
+                          Stack(children: [
+                            Container(
+                              width: double.infinity,
+                              child: TextFormField(
+                                controller: myController2,
+                                inputFormatters: (value3 == false)
+                                    ? [maskFormatter]
+                                    : [maskFormatter2],
+                                autocorrect: false,
+                                obscureText: false,
+                                keyboardType: TextInputType.number,
+                                decoration:
+                                    InputDecorations.authInputDecoration(
+                                        hintText: '',
+                                        labelText: 'Alto',
+                                        prefixIcon: Icons.lock_outline),
+                                validator: (value) {
+                                  return (value != null && value.length >= 6)
+                                      ? null
+                                      : 'La contraseña debe de ser de 6 caracteres';
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              top: 2,
+                              right: 5,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: CupertinoSwitch(
+                                    value: value3,
+                                    onChanged: ((value) => setState(() {
+                                          value3 = value;
+                                        }))),
+                              ),
+                            )
+                          ]),
                         ],
                       ),
                       //      CupertinoSwitch(
@@ -182,7 +189,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                     ),
                     //   ],
                     // ),
-
+          
                     CupertinoButton(
                       color: CupertinoColors.activeBlue,
                       disabledColor: Colors.grey,
@@ -211,7 +218,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                               crearPruduccionPro.converFracDesim(
                                   myController2.text, value2));
                         }
-
+          
                         // crearPruduccionPro.prin();
                       }),
                       child: const Text('Ver Data'),
@@ -263,7 +270,7 @@ class CardProduccPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-    crearPruduccionPro.prin();
+
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: (crearPruduccionPro.coutProduc() == 0)
