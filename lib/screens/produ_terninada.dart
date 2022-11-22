@@ -43,37 +43,41 @@ class _ProduTerminadaState extends State<ProduTerminada>
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           AppBarD(nuPro: widget.nuPro),
-          SliverToBoxAdapter(
-            child: Container(
-              color: Colors.white,
-              height: 55,
-              child: TabBar(
-                  controller: tabController,
-                  isScrollable: true,
-                  labelColor: const Color.fromARGB(255, 0, 0, 0),
-                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                  unselectedLabelColor:
-                      const Color.fromARGB(255, 104, 104, 104),
-                  indicator: CircleTabIndicator(color: Colors.black, radius: 3),
-                  tabs: const [
-                    Tab(text: 'Medidas'),
-                    Tab(
-                      text: 'Laterales',
-                    ),
-                    Tab(
-                      text: 'Cabez Riel',
-                    ),
-                    Tab(
-                      text: 'Cabez Alferza',
-                    ),
-                    Tab(
-                      text: 'Llavi y Enganche',
-                    ),
-                    Tab(
-                      text: 'Cristal Ancho Alto',
-                    ),
-                  ]),
+    SliverPersistentHeader(
+            delegate: MySliverPersistentHeaderDelegate(
+              child: Container(
+                color: Colors.white,
+                height: 55,
+                child: TabBar(
+                    controller: tabController,
+                    isScrollable: true,
+                    labelColor: const Color.fromARGB(255, 0, 0, 0),
+                    labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                    unselectedLabelColor:
+                        const Color.fromARGB(255, 104, 104, 104),
+                    indicator:
+                        CircleTabIndicator(color: Colors.black, radius: 3),
+                    tabs: const [
+                      Tab(text: 'Medidas'),
+                      Tab(
+                        text: 'Laterales',
+                      ),
+                      Tab(
+                        text: 'Cabez Riel',
+                      ),
+                      Tab(
+                        text: 'Cabez Alferza',
+                      ),
+                      Tab(
+                        text: 'Llavi y Enganche',
+                      ),
+                      Tab(
+                        text: 'Cristal Ancho Alto',
+                      ),
+                    ]),
+              ),
             ),
+            pinned: true,
           ),
           SliverToBoxAdapter(
             child: SizedBox(
@@ -121,26 +125,7 @@ class _ProduTerminadaState extends State<ProduTerminada>
               ]),
             ),
           ),
-          SliverToBoxAdapter(
-            child: CupertinoButton(
-              color: CupertinoColors.activeBlue,
-              disabledColor: Colors.grey,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-              onPressed: (() {
-                Navigator.of(context).push(
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) {
-                      return FadeTransition(
-                          opacity: animation1, child: const HomeScreen());
-                    },
-                  ),
-                );
-                // Navigator.push(context, ProduTerminada())
-              }),
-              child: const Text('Guardar'),
-            ),
-          ),
+
         ],
       ),
     );

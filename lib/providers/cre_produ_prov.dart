@@ -9,6 +9,8 @@ class CreProducProv extends ChangeNotifier {
       UnmodifiableListView(_creProducProv);
   int idProdu = 0;
 
+  
+
   init(int op) async {
     if (op == 1) {
       try {
@@ -107,25 +109,25 @@ class CreProducProv extends ChangeNotifier {
     await DBProvider.updateLateral(lateral);
   }
 
-  updateRiel(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+  updateRiel(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].cabezarRiel![0].estado = estado;
     notifyListeners();
     await DBProvider.updateRiel(lateral);
   }
 
-  updateLlavi(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+  updateLlavi(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].llavinEnganche![0].estado = estado;
     notifyListeners();
     await DBProvider.updateLlavi(lateral);
   }
 
-  updateAlfer(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+  updateAlfer(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].cabezalArferza![0].estado = estado;
     notifyListeners();
     await DBProvider.updateAlfer(lateral);
   }
 
-  updateCrital(LisPropiVen lateral,int nuPro, int nuItems, int estado) async {
+  updateCrital(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].anchoCrital![0].estado = estado;
     notifyListeners();
     await DBProvider.updateCrista(lateral);

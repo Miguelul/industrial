@@ -5,7 +5,6 @@ import 'package:industrial/models/ventanas.dart';
 
 
 class TipoVentana extends ChangeNotifier {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   int indexTipo = 0;
   final List<Ventanas> _ventanasDisp = [
     Ventanas(

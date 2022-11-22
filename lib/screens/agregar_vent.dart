@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
+import '../providers/validator_form.dart';
 import '../ui/input_decorations.dart';
 
 class AfregarVentanas extends StatefulWidget {
@@ -44,6 +45,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
+    final validatorForm = Provider.of<ValidatorForm>(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return WillPopScope(
@@ -51,7 +53,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
           return false;
         }),
         child: Scaffold(
-           backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -67,14 +69,13 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
           ),
           body: SingleChildScrollView(
             child: Container(
-              
                 color: Colors.white,
                 child: Column(
                   children: [
                     const SizedBox(
                       height: 50,
                     ),
-          
+
                     Container(
                       width: double.infinity,
                       height: 71,
@@ -98,98 +99,111 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                         ),
                       ),
                     ),
-          
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 1, horizontal: 20),
-                      child: Column(
-                        children: [
-                          Stack(children: [
-                            Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: myController1,
-                                inputFormatters: (value2 == false)
-                                    ? [maskFormatter]
-                                    : [maskFormatter2],
-                                autocorrect: false,
-                                obscureText: false,
-                                keyboardType: TextInputType.number,
-                                decoration:
-                                    InputDecorations.authInputDecoration(
-                                        hintText: '',
-                                        labelText: 'Ancho',
-                                        prefixIcon: Icons.account_box_outlined),
-                                validator: (value) {
-                                  return (value != null && value.length >= 6)
-                                      ? null
-                                      : 'La contraseña debe de ser de 6 caracteres';
-                                },
+
+                    Form(
+                      key: validatorForm.formKey,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 1, horizontal: 20),
+                        child: Column(
+                          children: [
+                            Stack(children: [
+                              Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: myController1,
+                                  inputFormatters: (value2 == false)
+                                      ? [maskFormatter]
+                                      : [maskFormatter2],
+                                  autocorrect: false,
+                                  obscureText: false,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecorations.authInputDecoration(
+                                          hintText: '',
+                                          labelText: 'Ancho',
+                                          prefixIcon:
+                                              Icons.account_box_outlined),
+                                  validator: (value) {
+                                    return (value!.isNotEmpty &&
+                                                value.length == 6 ||
+                                            value.length == 7 ||
+                                            value.length == 3 ||
+                                            value.length == 2)
+                                        ? null
+                                        : 'Revise la Medida';
+                                  },
+                                ),
                               ),
+                              Positioned(
+                                top: 2,
+                                right: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: CupertinoSwitch(
+                                      value: value2,
+                                      onChanged: ((value) => setState(() {
+                                            value2 = value;
+                                          }))),
+                                ),
+                              ),
+                            ]),
+                            const SizedBox(
+                              height: 10,
                             ),
-                            Positioned(
-                              top: 2,
-                              right: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: CupertinoSwitch(
-                                    value: value2,
-                                    onChanged: ((value) => setState(() {
-                                          value2 = value;
-                                        }))),
+                            Stack(children: [
+                              Container(
+                                width: double.infinity,
+                                child: TextFormField(
+                                  controller: myController2,
+                                  inputFormatters: (value3 == false)
+                                      ? [maskFormatter]
+                                      : [maskFormatter2],
+                                  autocorrect: false,
+                                  obscureText: false,
+                                  keyboardType: TextInputType.number,
+                                  decoration:
+                                      InputDecorations.authInputDecoration(
+                                          hintText: '',
+                                          labelText: 'Alto',
+                                          prefixIcon: Icons.lock_outline),
+                                  validator: (value) {
+                                    return (value!.isNotEmpty &&
+                                                value.length == 6 ||
+                                            value.length == 7 ||
+                                            value.length == 3 ||
+                                            value.length == 2)
+                                        ? null
+                                        : 'Revise la Medida';
+                                  },
+                                ),
                               ),
-                            ),
-                          ]),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Stack(children: [
-                            Container(
-                              width: double.infinity,
-                              child: TextFormField(
-                                controller: myController2,
-                                inputFormatters: (value3 == false)
-                                    ? [maskFormatter]
-                                    : [maskFormatter2],
-                                autocorrect: false,
-                                obscureText: false,
-                                keyboardType: TextInputType.number,
-                                decoration:
-                                    InputDecorations.authInputDecoration(
-                                        hintText: '',
-                                        labelText: 'Alto',
-                                        prefixIcon: Icons.lock_outline),
-                                validator: (value) {
-                                  return (value != null && value.length >= 6)
-                                      ? null
-                                      : 'La contraseña debe de ser de 6 caracteres';
-                                },
-                              ),
-                            ),
-                            Positioned(
-                              top: 2,
-                              right: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: CupertinoSwitch(
-                                    value: value3,
-                                    onChanged: ((value) => setState(() {
-                                          value3 = value;
-                                        }))),
-                              ),
-                            )
-                          ]),
-                        ],
+                              Positioned(
+                                top: 2,
+                                right: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: CupertinoSwitch(
+                                      value: value3,
+                                      onChanged: ((value) => setState(() {
+                                            value3 = value;
+                                          }))),
+                                ),
+                              )
+                            ]),
+                          ],
+                        ),
+                        //      CupertinoSwitch(
+                        // value: value2,
+                        // onChanged: ((value) => setState(() {
+                        //       value2 = value;
+                        //     }))),
                       ),
-                      //      CupertinoSwitch(
-                      // value: value2,
-                      // onChanged: ((value) => setState(() {
-                      //       value2 = value;
-                      //     }))),
                     ),
                     //   ],
                     // ),
-          
+
                     CupertinoButton(
                       color: CupertinoColors.activeBlue,
                       disabledColor: Colors.grey,
@@ -197,29 +211,29 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 30),
                       onPressed: (() {
-                        if (tipoVentana.indexTipo == 0) {
-                          crearPruduccionPro.addTradi(
-                            crearPruduccionPro.converFracDesim(
-                                myController1.text, value2),
-                            crearPruduccionPro.converFracDesim(
-                                myController2.text, value2),
-                            (valueI == false) ? 0 : 1,
-                          );
-                        } else if (tipoVentana.indexTipo == 1) {
-                          crearPruduccionPro.addP65(
+                        if (validatorForm.isValidForm() == true) {
+                          if (tipoVentana.indexTipo == 0) {
+                            crearPruduccionPro.addTradi(
                               crearPruduccionPro.converFracDesim(
                                   myController1.text, value2),
                               crearPruduccionPro.converFracDesim(
-                                  myController2.text, value2));
-                        } else if (tipoVentana.indexTipo == 2) {
-                          crearPruduccionPro.addP90(
-                              crearPruduccionPro.converFracDesim(
-                                  myController1.text, value2),
-                              crearPruduccionPro.converFracDesim(
-                                  myController2.text, value2));
+                                  myController2.text, value2),
+                              (valueI == false) ? 0 : 1,
+                            );
+                          } else if (tipoVentana.indexTipo == 1) {
+                            crearPruduccionPro.addP65(
+                                crearPruduccionPro.converFracDesim(
+                                    myController1.text, value2),
+                                crearPruduccionPro.converFracDesim(
+                                    myController2.text, value2));
+                          } else if (tipoVentana.indexTipo == 2) {
+                            crearPruduccionPro.addP90(
+                                crearPruduccionPro.converFracDesim(
+                                    myController1.text, value2),
+                                crearPruduccionPro.converFracDesim(
+                                    myController2.text, value2));
+                          }
                         }
-          
-                        // crearPruduccionPro.prin();
                       }),
                       child: const Text('Ver Data'),
                     ),
@@ -241,7 +255,10 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   opacity: animation1,
                                   child: ProduTerminada(
                                     nuPro: crearPruduccionPro.coutProduc(),
-                                    contVen: crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()).toDouble(),
+                                    contVen: crearPruduccionPro
+                                        .coutVentanaByPro(
+                                            crearPruduccionPro.coutProduc())
+                                        .toDouble(),
                                   ));
                             },
                           ),

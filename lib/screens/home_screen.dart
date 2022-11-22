@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:industrial/providers/db_provider.dart';
+import 'package:industrial/providers/validator_form.dart';
+import 'package:industrial/screens/crear_produc.dart';
 import 'package:industrial/screens/produ_terninada.dart';
 import 'package:industrial/widgets/search.dart';
 import 'package:provider/provider.dart';
@@ -136,9 +138,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: 15,
                                       child: CupertinoButton(
                                           onPressed: () {
+                                            Navigator.of(context).push(
+                                              PageRouteBuilder(
+                                                pageBuilder: (context,
+                                                    animation1, animation2) {
+                                                  return FadeTransition(
+                                                      opacity: animation1,
+                                                      child:
+                                                          ChangeNotifierProvider(
+                                                        create: (context) =>
+                                                            ValidatorForm(),
+                                                        child:
+                                                            const CrearProduccion(),
+                                                      ));
+                                                },
+                                              ),
+                                            );
+
                                             tipoVentana.indexTipo = index;
-                                            Navigator.pushReplacementNamed(
-                                                context, 'crearProduc');
                                           },
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 18, vertical: 5),
@@ -223,7 +240,9 @@ class CardProducc extends StatelessWidget {
                       opacity: animation1,
                       child: ProduTerminada(
                         nuPro: index,
-                        contVen: crearPruduccionPro.coutVentanaByPro(index).toDouble(),
+                        contVen: crearPruduccionPro
+                            .coutVentanaByPro(index)
+                            .toDouble(),
                       ));
                 },
               ));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:industrial/providers/validator_form.dart';
 import 'package:industrial/screens/agregar_vent.dart';
 import 'package:industrial/screens/home_screen.dart';
 import 'package:intl/intl.dart';
@@ -38,12 +39,13 @@ class _CrearProduccionState extends State<CrearProduccion> {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
+    final validatorForm = Provider.of<ValidatorForm>(context);
     return WillPopScope(
       onWillPop: (() async {
         return false;
       }),
       child: Scaffold(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           leading: IconButton(
@@ -82,51 +84,70 @@ class _CrearProduccionState extends State<CrearProduccion> {
                         : tipoVentana.indexTipo == 2
                             ? tipoVentana.ventanasD[2].nombre
                             : ''),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextFormField(
-                    controller: myController,
-                    autocorrect: false,
-                    obscureText: false,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecorations.authInputDecoration(
-                        hintText: '',
-                        labelText: 'Nombre del Cliente',
-                        prefixIcon: Icons.lock_outline),
+                Form(
+                  key: validatorForm.formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: TextFormField(
+                          controller: myController,
+                          autocorrect: false,
+                          obscureText: false,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecorations.authInputDecoration(
+                              hintText: '',
+                              labelText: 'Nombre del Cliente',
+                              prefixIcon: Icons.lock_outline),
+                          validator: (value) {
+                            return (value!.isNotEmpty)
+                                ? null
+                                : 'Ingrese el Nombre';
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: TextFormField(
+                          controller: myController2,
+                          autocorrect: false,
+                          obscureText: false,
+                          keyboardType: TextInputType.name,
+                          decoration: InputDecorations.authInputDecoration(
+                              hintText: '',
+                              labelText: 'Dirección',
+                              prefixIcon: Icons.lock_outline),
+                          validator: (value) {
+                            return (value!.isNotEmpty)
+                                ? null
+                                : 'Ingrese la Dirección';
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: TextFormField(
+                          inputFormatters: [maskFormatter],
+                          controller: myController3,
+                          autocorrect: false,
+                          obscureText: false,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecorations.authInputDecoration(
+                              hintText: '',
+                              labelText: 'Telefono',
+                              prefixIcon: Icons.lock_outline),
+                          validator: (value) {
+                            return (value!.isNotEmpty && value.length == 12)
+                                ? null
+                                : 'Ingrese un Número de Telefono';
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextFormField(
-                    controller: myController2,
-                    autocorrect: false,
-                    obscureText: false,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecorations.authInputDecoration(
-                        hintText: '',
-                        labelText: 'Dirección',
-                        prefixIcon: Icons.lock_outline),
-                    validator: (value) {
-                      return (value != null && value.length >= 6)
-                          ? null
-                          : 'La contraseña debe de ser de 6 caracteres';
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextFormField(
-                    inputFormatters: [maskFormatter],
-                    controller: myController3,
-                    autocorrect: false,
-                    obscureText: false,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecorations.authInputDecoration(
-                        hintText: '',
-                        labelText: 'Telefono',
-                        prefixIcon: Icons.lock_outline),
-                  ),
-                ),
+
                 CupertinoButton(
                   color: CupertinoColors.activeBlue,
                   disabledColor: Colors.grey,
@@ -135,48 +156,48 @@ class _CrearProduccionState extends State<CrearProduccion> {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   onPressed: (() {
                     var now1 = DateTime.now();
-                    String now = DateFormat("dd/MM/yyyy  hh:mm").format(now1).toString();
-
-                    if (tipoVentana.indexTipo == 0) {
-                      crearPruduccionPro.addProducc(ProduccionCre(
-                          fecha: now,
-                          tipoVentana: tipoVentana.ventanasD[0].nombre,
-                          cliente: myController.text,
-                          direccion: myController2.text,
-                          telefono: myController3.text,
-                          items: []));
-                    } else if (tipoVentana.indexTipo == 1) {
-                      crearPruduccionPro.addProducc(ProduccionCre(
-                          fecha: now,
-                          tipoVentana: tipoVentana.ventanasD[1].nombre,
-                          cliente: myController.text,
-                          direccion: myController2.text,
-                          telefono: myController3.text,
-                          items: []));
-                    } else if (tipoVentana.indexTipo == 2) {
-                      crearPruduccionPro.addProducc(ProduccionCre(
-                          fecha: now,
-                          tipoVentana: tipoVentana.ventanasD[2].nombre,
-                          cliente: myController.text,
-                          direccion: myController2.text,
-                          telefono: myController3.text,
-                          items: []));
+                    String now =
+                        DateFormat("dd/MM/yyyy  hh:mm").format(now1).toString();
+                    print(validatorForm.isValidForm());
+                    if (validatorForm.isValidForm() == true) {
+                      if (tipoVentana.indexTipo == 0) {
+                        crearPruduccionPro.addProducc(ProduccionCre(
+                            fecha: now,
+                            tipoVentana: tipoVentana.ventanasD[0].nombre,
+                            cliente: myController.text,
+                            direccion: myController2.text,
+                            telefono: myController3.text,
+                            items: []));
+                      } else if (tipoVentana.indexTipo == 1) {
+                        crearPruduccionPro.addProducc(ProduccionCre(
+                            fecha: now,
+                            tipoVentana: tipoVentana.ventanasD[1].nombre,
+                            cliente: myController.text,
+                            direccion: myController2.text,
+                            telefono: myController3.text,
+                            items: []));
+                      } else if (tipoVentana.indexTipo == 2) {
+                        crearPruduccionPro.addProducc(ProduccionCre(
+                            fecha: now,
+                            tipoVentana: tipoVentana.ventanasD[2].nombre,
+                            cliente: myController.text,
+                            direccion: myController2.text,
+                            telefono: myController3.text,
+                            items: []));
+                      }
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            return FadeTransition(
+                                opacity: animation1,
+                                child: ChangeNotifierProvider(
+                                  create: (context) => ValidatorForm(),
+                                  child: const AfregarVentanas(),
+                                ));
+                          },
+                        ),
+                      );
                     }
-
-                    // crearPruduccionPro.prin();
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) {
-                          return FadeTransition(
-                              opacity: animation1,
-                              child: const AfregarVentanas());
-                        },
-                      ),
-                    );
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AfregarVentanas()));
                   }),
                   child: const Text('Siguiente'),
                 ),
