@@ -22,6 +22,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildLeading(BuildContext context) {
+    
     return IconButton(
         onPressed: () {
           close(context, '');
@@ -31,6 +32,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
+      final crearPruduccionPro = Provider.of<CreProducProv>(context);
     return ListView.builder(
         itemCount: _listPro.length,
         shrinkWrap: true,
@@ -42,6 +44,7 @@ class CustomSearchDelegate extends SearchDelegate {
                       opacity: animation1,
                       child: ProduTerminada(
                         nuPro: index,
+                         contVen: crearPruduccionPro.coutVentanaByPro(index).toDouble(),
                       ));
                 },
               ));
@@ -108,6 +111,7 @@ class CustomSearchDelegate extends SearchDelegate {
                         opacity: animation1,
                         child: ProduTerminada(
                           nuPro: nuPro,
+                           contVen: crearPruduccionPro.coutVentanaByPro(nuPro).toDouble(),
                         ));
                   },
                 ));

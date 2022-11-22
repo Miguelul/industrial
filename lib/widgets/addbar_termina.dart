@@ -122,18 +122,18 @@ class AppBarD extends StatelessWidget {
                     ]),
               ),
             ),
-            const DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(0.0, 0.5),
-                  end: Alignment.center,
-                  colors: <Color>[
-                    Color.fromARGB(108, 255, 255, 255),
-                    Color.fromARGB(55, 255, 255, 255),
-                  ],
-                ),
-              ),
-            ),
+            // const DecoratedBox(
+            //   decoration: BoxDecoration(
+            //     gradient: LinearGradient(
+            //       begin: Alignment(0.0, 0.5),
+            //       end: Alignment.center,
+            //       colors: <Color>[
+            //         Color.fromARGB(108, 255, 255, 255),
+            //         Color.fromARGB(55, 255, 255, 255),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

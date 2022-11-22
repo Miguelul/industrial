@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-       backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         title: Column(
@@ -74,131 +74,130 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-            child: Container(
-              color: const Color.fromARGB(255, 255, 255, 255),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 8),
-                  CupertinoButton(
-                      onPressed: () => showSearch(
-                          context: context,
-                          delegate: CustomSearchDelegate()),
-                      child: Container(
-                        width: double.infinity,
-                        height: 45,
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 238, 238, 238),
-                            borderRadius: BorderRadius.circular(25)),
-                        child: Row(
-                          children: const [
-                            SizedBox(width: 15),
-                            Icon(
-                              Icons.search,
-                              color: Color.fromARGB(255, 187, 187, 187),
-                            ),
-                            SizedBox(width: 14),
-                            Text('Nombre del Cliente',
-                                style: TextStyle(
-                                    color:
-                                        Color.fromARGB(255, 187, 187, 187)))
-                          ],
-                        ),
-                      )),
-                  const Padding(
+              child: Container(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    CupertinoButton(
+                        onPressed: () => showSearch(
+                            context: context, delegate: CustomSearchDelegate()),
+                        child: Container(
+                          width: double.infinity,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 238, 238, 238),
+                              borderRadius: BorderRadius.circular(25)),
+                          child: Row(
+                            children: const [
+                              SizedBox(width: 15),
+                              Icon(
+                                Icons.search,
+                                color: Color.fromARGB(255, 187, 187, 187),
+                              ),
+                              SizedBox(width: 14),
+                              Text('Nombre del Cliente',
+                                  style: TextStyle(
+                                      color:
+                                          Color.fromARGB(255, 187, 187, 187)))
+                            ],
+                          ),
+                        )),
+                    const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text(
+                          'Con cual tipo de ventana quieres trabajar',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(221, 66, 66, 66)),
+                        )),
+                    Container(
+                      height: 230,
+                      width: double.infinity,
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      child: ListView.builder(
+                          itemCount: tipoVentana.ventanasD.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(17.0),
+                              child: Container(
+                                width: 150,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(
+                                        255, 238, 238, 238),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Stack(
+                                  children: [
+                                    Positioned(
+                                      left: 15,
+                                      top: 15,
+                                      child: CupertinoButton(
+                                          onPressed: () {
+                                            tipoVentana.indexTipo = index;
+                                            Navigator.pushReplacementNamed(
+                                                context, 'crearProduc');
+                                          },
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 18, vertical: 5),
+                                          color: CupertinoColors.activeBlue,
+                                          borderRadius:
+                                              BorderRadius.circular(9),
+                                          child: const Icon(
+                                            CupertinoIcons.add,
+                                            size: 23,
+                                          )),
+                                    ),
+                                    Positioned(
+                                        bottom: 20,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Container(
+                                            width: 95,
+                                            child: Text(
+                                              tipoVentana
+                                                  .ventanasD[index].nombre,
+                                              style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromARGB(
+                                                      221, 66, 66, 66)),
+                                            ),
+                                          ),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+                    const Padding(
                       padding: EdgeInsets.all(10.0),
                       child: Text(
-                        'Con cual tipo de ventana quieres trabajar',
+                        'Todas la producción',
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(221, 66, 66, 66)),
-                      )),
-                  Container(
-                    height: 230,
-                    width: double.infinity,
-                    color: const Color.fromARGB(255, 255, 255, 255),
-                    child: ListView.builder(
-                        itemCount: tipoVentana.ventanasD.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(17.0),
-                            child: Container(
-                              width: 150,
-                              decoration: BoxDecoration(
-                                  color: const Color.fromARGB(
-                                      255, 238, 238, 238),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: 15,
-                                    top: 15,
-                                    child: CupertinoButton(
-                                        onPressed: () {
-                                          tipoVentana.indexTipo = index;
-                                          Navigator.pushReplacementNamed(
-                                              context, 'crearProduc');
-                                        },
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 18, vertical: 5),
-                                        color: CupertinoColors.activeBlue,
-                                        borderRadius:
-                                            BorderRadius.circular(9),
-                                        child: const Icon(
-                                          CupertinoIcons.add,
-                                          size: 23,
-                                        )),
-                                  ),
-                                  Positioned(
-                                      bottom: 20,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Container(
-                                          width: 95,
-                                          child: Text(
-                                            tipoVentana
-                                                .ventanasD[index].nombre,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    221, 66, 66, 66)),
-                                          ),
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      'Todas la producción',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(221, 66, 66, 66)),
+                      ),
                     ),
-                  ),
-                  const CardProducc(),
-                  ElevatedButton.icon(
-                      onPressed: (() async {}),
-                      icon: const Icon(Icons.backpack),
-                      label: const Text('Login')),
-                  ElevatedButton.icon(
-                      onPressed: (() {
-                        crPruProv.init(1);
-                      }),
-                      icon: const Icon(Icons.backpack),
-                      label: const Text('Crear Producción')),
-                ],
+                    const CardProducc(),
+                    ElevatedButton.icon(
+                        onPressed: (() async {}),
+                        icon: const Icon(Icons.backpack),
+                        label: const Text('Login')),
+                    ElevatedButton.icon(
+                        onPressed: (() {
+                          crPruProv.init(1);
+                        }),
+                        icon: const Icon(Icons.backpack),
+                        label: const Text('Crear Producción')),
+                  ],
+                ),
               ),
             ),
-          ),
     );
   }
 }
@@ -224,6 +223,7 @@ class CardProducc extends StatelessWidget {
                       opacity: animation1,
                       child: ProduTerminada(
                         nuPro: index,
+                        contVen: crearPruduccionPro.coutVentanaByPro(index).toDouble(),
                       ));
                 },
               ));

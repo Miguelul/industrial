@@ -241,6 +241,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   opacity: animation1,
                                   child: ProduTerminada(
                                     nuPro: crearPruduccionPro.coutProduc(),
+                                    contVen: crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()).toDouble(),
                                   ));
                             },
                           ),

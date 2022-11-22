@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:industrial/models/pruduccion.dart';
 import 'package:industrial/screens/home_screen.dart';
 import 'package:industrial/screens/screens.dart';
-import 'package:industrial/widgets/addbar_termina.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
+import '../widgets/addbar_termina.dart';
 
 class ProduTerminada extends StatefulWidget {
   final int nuPro;
-  const ProduTerminada({required this.nuPro, super.key});
+  final double contVen;
+  const ProduTerminada({required this.nuPro, required this.contVen ,super.key});
 
   @override
   State<ProduTerminada> createState() => _ProduTerminadaState();
@@ -24,10 +25,11 @@ class _ProduTerminadaState extends State<ProduTerminada>
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 6, vsync: this);
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    final crPruProv = Provider.of<CreProducProv>(context);
+    // final crPruProv = Provider.of<CreProducProv>(context);
+    // double height =
+    //     0; //crPruProv.coutVentanaByPro(widget.nuPro).toDouble()! * 100;
 
+    print(widget.contVen);
     // return FutureBuilder(
     //     future: crPruProv.init(),
     //     builder: (context, snapshot) {
@@ -35,100 +37,110 @@ class _ProduTerminadaState extends State<ProduTerminada>
     //         return const Center(child: CircularProgressIndicator());
     //       } else {
     return Scaffold(
-       backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           AppBarD(nuPro: widget.nuPro),
-          SliverPersistentHeader(
-            delegate: MySliverPersistentHeaderDelegate(
-              child: Container(
-                color: Colors.white,
-                height: 55,
-                child: TabBar(
-                    controller: tabController,
-                    isScrollable: true,
-                    labelColor: const Color.fromARGB(255, 0, 0, 0),
-                    labelPadding: const EdgeInsets.only(left: 20, right: 20),
-                    unselectedLabelColor:
-                        const Color.fromARGB(255, 104, 104, 104),
-                    indicator:
-                        CircleTabIndicator(color: Colors.black, radius: 3),
-                    tabs: const [
-                      Tab(text: 'Medidas'),
-                      Tab(
-                        text: 'Laterales',
-                      ),
-                      Tab(
-                        text: 'Cabez Riel',
-                      ),
-                      Tab(
-                        text: 'Cabez Alferza',
-                      ),
-                      Tab(
-                        text: 'Llavi y Enganche',
-                      ),
-                      Tab(
-                        text: 'Cristal Ancho Alto',
-                      ),
-                    ]),
-              ),
-            ),
-            pinned: true,
-          ),
-           SliverToBoxAdapter(
-          
-              child: Container(
-                height: crPruProv.coutVentanaByPro(widget.nuPro).toDouble()!*100,
-                 child: 
-                IntrinsicHeight(
-                child: TabBarView(controller: tabController, children: [
-                 
-                     CardProduTerm(
-                      select: 1,
-                      select3: 10,
-                      select2: 2,
-                      nuPro: widget.nuPro,
-                      estado: estado!,
+          SliverToBoxAdapter(
+            child: Container(
+              color: Colors.white,
+              height: 55,
+              child: TabBar(
+                  controller: tabController,
+                  isScrollable: true,
+                  labelColor: const Color.fromARGB(255, 0, 0, 0),
+                  labelPadding: const EdgeInsets.only(left: 20, right: 20),
+                  unselectedLabelColor:
+                      const Color.fromARGB(255, 104, 104, 104),
+                  indicator: CircleTabIndicator(color: Colors.black, radius: 3),
+                  tabs: const [
+                    Tab(text: 'Medidas'),
+                    Tab(
+                      text: 'Laterales',
                     ),
-                  
-                  CardProduTerm(
-                      select: 3,
-                      select3: 10,
-                      select4: 15,
-                      nuPro: widget.nuPro,
-                      estado: estado!),
-                  CardProduTerm(
-                      select: 4,
-                      select3: 11,
-                      select4: 16,
-                      nuPro: widget.nuPro,
-                      estado: estado!),
-                  CardProduTerm(
-                      select: 5,
-                      select3: 12,
-                      select2: 9,
-                      select4: 17,
-                      nuPro: widget.nuPro,
-                      estado: estado!),
-                  CardProduTerm(
-                      select: 6,
-                      select3: 13,
-                      select4: 18,
-                      nuPro: widget.nuPro,
-                      estado: estado!),
-                  CardProduTerm(
-                      select: 7,
-                      select3: 14,
-                      select4: 19,
-                      select2: 8,
-                      nuPro: widget.nuPro,
-                      estado: estado!),
-                ]),
-              ),
+                    Tab(
+                      text: 'Cabez Riel',
+                    ),
+                    Tab(
+                      text: 'Cabez Alferza',
+                    ),
+                    Tab(
+                      text: 'Llavi y Enganche',
+                    ),
+                    Tab(
+                      text: 'Cristal Ancho Alto',
+                    ),
+                  ]),
             ),
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: widget.contVen*100,
+              child: TabBarView(controller: tabController, children: [
+                CardProduTerm(
+                  select: 1,
+                  select3: 10,
+                  select2: 2,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
+                CardProduTerm(
+                    select: 3,
+                    select3: 10,
+                    select4: 15,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+                CardProduTerm(
+                    select: 4,
+                    select3: 11,
+                    select4: 16,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+                CardProduTerm(
+                    select: 5,
+                    select3: 12,
+                    select2: 9,
+                    select4: 17,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+                CardProduTerm(
+                    select: 6,
+                    select3: 13,
+                    select4: 18,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+                CardProduTerm(
+                    select: 7,
+                    select3: 14,
+                    select4: 19,
+                    select2: 8,
+                    nuPro: widget.nuPro,
+                    estado: estado!),
+              ]),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: CupertinoButton(
+              color: CupertinoColors.activeBlue,
+              disabledColor: Colors.grey,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+              onPressed: (() {
+                Navigator.of(context).push(
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) {
+                      return FadeTransition(
+                          opacity: animation1, child: const HomeScreen());
+                    },
+                  ),
+                );
+                // Navigator.push(context, ProduTerminada())
+              }),
+              child: const Text('Guardar'),
+            ),
+          ),
         ],
       ),
     );
@@ -157,12 +169,12 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-
     return ListView.builder(
         itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
+          // index = index1 - 1;
           widget.estado =
               ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
                       0)
