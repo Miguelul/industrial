@@ -4,11 +4,13 @@ import 'package:industrial/providers/db_provider.dart';
 import 'package:industrial/providers/validator_form.dart';
 import 'package:industrial/screens/crear_produc.dart';
 import 'package:industrial/screens/produ_terninada.dart';
+import 'package:industrial/services/products_service.dart';
 import 'package:industrial/widgets/search.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
+import '../services/auth_service.dart';
 
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class HomeScreen extends StatefulWidget {
@@ -37,8 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final tipoVentana = Provider.of<TipoVentana>(context);
     final crPruProv = Provider.of<CreProducProv>(context);
+    final authService = Provider.of<AuthService>(context, listen: false);
+    final productsService = Provider.of<ProductsService>(context);
+    productsService.loadProducts();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     if (_refresh1 == false) {
       crPruProv.init(1);
       _refresh1 = true;
@@ -48,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+         automaticallyImplyLeading: false,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +77,33 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        actions:[ IconButton(
+          icon: const Icon(Icons.login_outlined, color: Colors.blue),
+          onPressed: () {
+            showCupertinoDialog(
+                context: context,
+                builder: (context) {
+                  return CupertinoAlertDialog(
+                    title: const Text("Logout"),
+                    content: const Text(
+                        "Está seguro de que quieres cerrar la seción?"),
+                    actions: [
+                      CupertinoDialogAction(
+                          child: const Text("SI"),
+                          onPressed: () {
+                            authService.logout();
+                            Navigator.pushReplacementNamed(context, 'login');
+                          }),
+                      CupertinoDialogAction(
+                          child: const Text("NO"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          })
+                    ],
+                  );
+                });
+          },
+        ),]
       ),
       body: _isLoading
           ? const Center(

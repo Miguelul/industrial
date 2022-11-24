@@ -60,7 +60,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
             automaticallyImplyLeading: false,
             title: const Center(
               child: Text(
-                'Nueva Producción',
+                'Agregar Medidas',
                 style: TextStyle(
                     fontWeight: FontWeight.w100,
                     color: Color.fromARGB(255, 0, 0, 0)),
@@ -73,7 +73,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                 child: Column(
                   children: [
                     const SizedBox(
-                      height: 50,
+                      height: 15,
                     ),
 
                     Container(
@@ -87,10 +87,14 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                             vertical: 8, horizontal: 20),
                         child: Row(
                           children: [
-                            Spacer(),
+                            // Spacer(),
+                            const Text("Tres Vias", style: TextStyle(
+                              fontSize: 12
+                            ),),
                             CupertinoSwitch(
                                 value: valueI,
                                 onChanged: ((value) => setState(() {
+                                      
                                       valueI = value;
                                     }))),
                             Spacer(),
@@ -144,6 +148,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   child: CupertinoSwitch(
                                       value: value2,
                                       onChanged: ((value) => setState(() {
+                                        myController1.text = "";
                                             value2 = value;
                                           }))),
                                 ),
@@ -187,6 +192,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   child: CupertinoSwitch(
                                       value: value3,
                                       onChanged: ((value) => setState(() {
+                                            myController2.text = "";
                                             value3 = value;
                                           }))),
                                 ),
@@ -204,74 +210,79 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                     //   ],
                     // ),
 
-                    CupertinoButton(
-                      color: CupertinoColors.activeBlue,
-                      disabledColor: Colors.grey,
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 30),
-                      onPressed: (() {
-                        if (validatorForm.isValidForm() == true) {
-                          if (tipoVentana.indexTipo == 0) {
-                            crearPruduccionPro.addTradi(
-                              crearPruduccionPro.converFracDesim(
-                                  myController1.text, value2),
-                              crearPruduccionPro.converFracDesim(
-                                  myController2.text, value2),
-                              (valueI == false) ? 0 : 1,
-                            );
-                          } else if (tipoVentana.indexTipo == 1) {
-                            crearPruduccionPro.addP65(
-                                crearPruduccionPro.converFracDesim(
-                                    myController1.text, value2),
-                                crearPruduccionPro.converFracDesim(
-                                    myController2.text, value2));
-                          } else if (tipoVentana.indexTipo == 2) {
-                            crearPruduccionPro.addP90(
-                                crearPruduccionPro.converFracDesim(
-                                    myController1.text, value2),
-                                crearPruduccionPro.converFracDesim(
-                                    myController2.text, value2));
-                          }
-                        }
-                      }),
-                      child: const Text('Ver Data'),
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CupertinoButton(
-                      color: CupertinoColors.activeBlue,
-                      disabledColor: Colors.grey,
-                      borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 30),
-                      onPressed: (() {
-                        // crearPruduccionPro.init();
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation1, animation2) {
-                              return FadeTransition(
-                                  opacity: animation1,
-                                  child: ProduTerminada(
-                                    nuPro: crearPruduccionPro.coutProduc(),
-                                    contVen: crearPruduccionPro
-                                        .coutVentanaByPro(
-                                            crearPruduccionPro.coutProduc())
-                                        .toDouble(),
-                                  ));
-                            },
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        children: [
+                          CupertinoButton(
+                            color: CupertinoColors.activeBlue,
+                            disabledColor: Colors.grey,
+                            borderRadius: const BorderRadius.all(Radius.circular(15)),
+                            padding:  EdgeInsets.symmetric(
+                                vertical: 13, horizontal: width*0.062),
+                            onPressed: (() {
+                              if (validatorForm.isValidForm() == true) {
+                                if (tipoVentana.indexTipo == 0) {
+                                  crearPruduccionPro.addTradi(
+                                    crearPruduccionPro.converFracDesim(
+                                        myController1.text, value2),
+                                    crearPruduccionPro.converFracDesim(
+                                        myController2.text, value3),
+                                    (valueI == false) ? 0 : 1,
+                                  );
+                                } else if (tipoVentana.indexTipo == 1) {
+                                  crearPruduccionPro.addP65(
+                                      crearPruduccionPro.converFracDesim(
+                                          myController1.text, value2),
+                                      crearPruduccionPro.converFracDesim(
+                                          myController2.text, value3));
+                                } else if (tipoVentana.indexTipo == 2) {
+                                  crearPruduccionPro.addP90(
+                                      crearPruduccionPro.converFracDesim(
+                                          myController1.text, value2),
+                                      crearPruduccionPro.converFracDesim(
+                                          myController2.text, value3));
+                                }
+                              }
+                            }),
+                            child: const Text('Add Medidas'),
                           ),
-                        );
-                        // Navigator.pushReplacementNamed(context, 'produTerminada');
-                      }),
-                      child: const Text('Guardar'),
+                               const SizedBox(
+                        width: 10,
+                      ),
+                      CupertinoButton(
+                        color: CupertinoColors.activeBlue,
+                        disabledColor: Colors.grey,
+                        borderRadius: const BorderRadius.all(Radius.circular(15)),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 13, horizontal: width*0.06),
+                        onPressed: (() {
+                          // crearPruduccionPro.init();
+                          Navigator.of(context).push(
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation1, animation2) {
+                                return FadeTransition(
+                                    opacity: animation1,
+                                    child: ProduTerminada(
+                                      nuPro: crearPruduccionPro.coutProduc(),
+                                      contVen: crearPruduccionPro
+                                          .coutVentanaByPro(
+                                              crearPruduccionPro.coutProduc())
+                                          .toDouble(),
+                                    ));
+                              },
+                            ),
+                          );
+                          // Navigator.pushReplacementNamed(context, 'produTerminada');
+                        }),
+                        child: const Text('Guardar'),
+                      ),
+                                      
+                        ],
+                      ),
                     ),
-                    // Container(
-                    //   width: 85,
-                    //   height: 45,
-                    //   color: Colors.deepPurpleAccent,
-                    // ),
+               
+                 
                     const CardProduccPrimary(),
                   ],
                 )),

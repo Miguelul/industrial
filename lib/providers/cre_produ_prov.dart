@@ -9,8 +9,6 @@ class CreProducProv extends ChangeNotifier {
       UnmodifiableListView(_creProducProv);
   int idProdu = 0;
 
-  
-
   init(int op) async {
     if (op == 1) {
       try {
@@ -174,6 +172,7 @@ class CreProducProv extends ChangeNotifier {
   }
 
   addTradi(double ancho, double alto, int cantidaVia) async {
+    print("```````````````$ancho  x $alto    $cantidaVia ");
     try {
       Ventana medida = Ventana(
         ancho: ancho,
@@ -321,6 +320,7 @@ class CreProducProv extends ChangeNotifier {
   }
 
   converFracDesim(String medida, bool values) {
+    print("qqqqqqqqq$medida   $values");
     double doubl1 = 0, doubl2 = 0, doubl3 = 0;
     if (values == false) {
       if (medida.length == 6) {
@@ -337,7 +337,7 @@ class CreProducProv extends ChangeNotifier {
         doubl2 = double.parse(medida.substring(3, 5));
         doubl3 = double.parse(medida.substring(6, 7));
         return doubl1 + (doubl2 / doubl3);
-      } else if (medida.length == 2) {
+      } else if (medida.length == 3) {
         return double.parse(medida);
       }
     }

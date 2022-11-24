@@ -3,25 +3,31 @@ import 'package:industrial/providers/cre_produ_prov.dart';
 import 'package:industrial/providers/cre_ventana.dart';
 import 'package:industrial/providers/validator_form.dart';
 import 'package:industrial/screens/agregar_vent.dart';
+import 'package:industrial/screens/check_auth_screen.dart';
 import 'package:industrial/screens/crear_produc.dart';
 import 'package:industrial/screens/home_screen.dart';
+import 'package:industrial/screens/login_screen.dart';
+import 'package:industrial/services/auth_service.dart';
+import 'package:industrial/services/notifications_service.dart';
+import 'package:industrial/services/products_service.dart';
 import 'package:provider/provider.dart';
- 
+
 void main() {
   runApp(
     MultiProvider(
       providers: [
-       ChangeNotifierProvider(create: (_)=> TipoVentana(), child: const HomeScreen()),
-       ChangeNotifierProvider(create: (_)=> CreProducProv(), child: const CrearProduccion()),
-      
-      
+        ChangeNotifierProvider(
+            create: (_) => TipoVentana(), child: const HomeScreen()),
+        ChangeNotifierProvider(
+            create: (_) => CreProducProv(), child: const CrearProduccion()),
+        ChangeNotifierProvider(create: (_) => AuthService()),
+         ChangeNotifierProvider(create: ( _ ) => ProductsService() ),
       ],
-      child:
-       const MyApp(),
+      child: const MyApp(),
     ),
   );
 }
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -30,14 +36,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Productos App',
-      initialRoute: 'home',
+      initialRoute: 'checking',
       routes: {
-        'home' : ( _ ) => const HomeScreen(),
-        'crearProduc' : ( _ ) => const CrearProduccion(),
+        'checking': ( _ ) => CheckAuthScreen(),
+        'home': (_) => const HomeScreen(),
+        'crearProduc': (_) => const CrearProduccion(),
+        'login': (_) => LoginScreen(),
       },
-      theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.grey[300]
-      ),
+      scaffoldMessengerKey: NotificationsService.messengerKey,
+      theme: ThemeData.light().copyWith(scaffoldBackgroundColor: Colors.white),
     );
   }
 }

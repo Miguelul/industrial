@@ -15,6 +15,8 @@ class AppBarD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
+      double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SliverAppBar(
       backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       leading: CupertinoButton(
@@ -38,12 +40,12 @@ class AppBarD extends StatelessWidget {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+          padding: const EdgeInsets.only(right: 10.0),
           child: CupertinoButton(
             color: Color.fromARGB(127, 212, 207, 204),
             disabledColor: Colors.grey,
             borderRadius: const BorderRadius.all(Radius.circular(15)),
-            padding: const EdgeInsets.all(7),
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
             onPressed: (() {
               Navigator.of(context).push(
                 PageRouteBuilder(
@@ -76,6 +78,13 @@ class AppBarD extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             Positioned(
+              // right: 1,
+              child: Padding(
+              
+              padding:  EdgeInsets.only(left: width*0.30, top: 20, bottom: 20),
+              child: Image.asset("assets/images/window.png"),
+            )),
+            Positioned(
               left: 20,
               bottom: 30,
               child: Container(
@@ -86,11 +95,13 @@ class AppBarD extends StatelessWidget {
                       Text(
                         '${crPruProv.creProducProv[nuPro].tipoVentana}',
                         style: const TextStyle(
-                            color: Color.fromARGB(255, 68, 64, 64),
-                            fontSize: 15),
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 63, 61, 61),
+                            fontSize: 20),
                       ),
+                     const SizedBox(height: 15),
                       Text(
-                        ' ${crPruProv.creProducProv[nuPro].fecha} ',
+                        '${crPruProv.creProducProv[nuPro].fecha} ',
                         style: const TextStyle(
                             color: Color.fromARGB(255, 68, 64, 64),
                             fontSize: 15),
@@ -101,18 +112,13 @@ class AppBarD extends StatelessWidget {
                             color: Color.fromARGB(255, 68, 64, 64),
                             fontSize: 15),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
                       Text(
-                        'Direccion:  ${crPruProv.creProducProv[nuPro].direccion!}',
+                        'Dirección:  ${crPruProv.creProducProv[nuPro].direccion!}',
                         style: const TextStyle(
                             color: Color.fromARGB(255, 68, 64, 64),
                             fontSize: 15),
                       ),
-                      const SizedBox(
-                        height: 5,
-                      ),
+                    
                       Text(
                         'Tel: ${crPruProv.creProducProv[nuPro].telefono}',
                         style: const TextStyle(
@@ -120,6 +126,7 @@ class AppBarD extends StatelessWidget {
                             fontSize: 15),
                       ),
                     ]),
+           
               ),
             ),
             // const DecoratedBox(

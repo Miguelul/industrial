@@ -48,6 +48,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          elevation: 0,
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).push(PageRouteBuilder(
@@ -83,7 +84,11 @@ class _CrearProduccionState extends State<CrearProduccion> {
                         ? tipoVentana.ventanasD[1].nombre
                         : tipoVentana.indexTipo == 2
                             ? tipoVentana.ventanasD[2].nombre
-                            : ''),
+                            : '',style: TextStyle(
+                              color: Color.fromARGB(255, 83, 83, 80),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            )),
                 Form(
                   key: validatorForm.formKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
