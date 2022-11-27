@@ -72,217 +72,260 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 15,
-                    ),
-
                     Container(
-                      width: double.infinity,
-                      height: 71,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(6)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        child: Row(
-                          children: [
-                            // Spacer(),
-                            const Text("Tres Vias", style: TextStyle(
-                              fontSize: 12
-                            ),),
-                            CupertinoSwitch(
-                                value: valueI,
-                                onChanged: ((value) => setState(() {
-                                      
-                                      valueI = value;
-                                    }))),
-                            Spacer(),
-                          ],
-                          // ),
-                        ),
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
                       ),
-                    ),
-
-                    Form(
-                      key: validatorForm.formKey,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 1, horizontal: 20),
-                        child: Column(
-                          children: [
-                            Stack(children: [
-                              Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: myController1,
-                                  inputFormatters: (value2 == false)
-                                      ? [maskFormatter]
-                                      : [maskFormatter2],
-                                  autocorrect: false,
-                                  obscureText: false,
-                                  keyboardType: TextInputType.number,
-                                  decoration:
-                                      InputDecorations.authInputDecoration(
-                                          hintText: '',
-                                          labelText: 'Ancho',
-                                          prefixIcon:
-                                              Icons.account_box_outlined),
-                                  validator: (value) {
-                                    return (value!.isNotEmpty &&
-                                                value.length == 6 ||
-                                            value.length == 7 ||
-                                            value.length == 3 ||
-                                            value.length == 2)
-                                        ? null
-                                        : 'Revise la Medida';
-                                  },
-                                ),
-                              ),
-                              Positioned(
-                                top: 2,
-                                right: 5,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: CupertinoSwitch(
-                                      value: value2,
-                                      onChanged: ((value) => setState(() {
-                                        myController1.text = "";
-                                            value2 = value;
-                                          }))),
-                                ),
-                              ),
-                            ]),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Stack(children: [
-                              Container(
-                                width: double.infinity,
-                                child: TextFormField(
-                                  controller: myController2,
-                                  inputFormatters: (value3 == false)
-                                      ? [maskFormatter]
-                                      : [maskFormatter2],
-                                  autocorrect: false,
-                                  obscureText: false,
-                                  keyboardType: TextInputType.number,
-                                  decoration:
-                                      InputDecorations.authInputDecoration(
-                                          hintText: '',
-                                          labelText: 'Alto',
-                                          prefixIcon: Icons.lock_outline),
-                                  validator: (value) {
-                                    return (value!.isNotEmpty &&
-                                                value.length == 6 ||
-                                            value.length == 7 ||
-                                            value.length == 3 ||
-                                            value.length == 2)
-                                        ? null
-                                        : 'Revise la Medida';
-                                  },
-                                ),
-                              ),
-                              Positioned(
-                                top: 2,
-                                right: 5,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: CupertinoSwitch(
-                                      value: value3,
-                                      onChanged: ((value) => setState(() {
-                                            myController2.text = "";
-                                            value3 = value;
-                                          }))),
-                                ),
-                              )
-                            ]),
-                          ],
-                        ),
-                        //      CupertinoSwitch(
-                        // value: value2,
-                        // onChanged: ((value) => setState(() {
-                        //       value2 = value;
-                        //     }))),
-                      ),
-                    ),
-                    //   ],
-                    // ),
-
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
+                      child: Column(
                         children: [
-                          CupertinoButton(
-                            color: CupertinoColors.activeBlue,
-                            disabledColor: Colors.grey,
-                            borderRadius: const BorderRadius.all(Radius.circular(15)),
-                            padding:  EdgeInsets.symmetric(
-                                vertical: 13, horizontal: width*0.062),
-                            onPressed: (() {
-                              if (validatorForm.isValidForm() == true) {
-                                if (tipoVentana.indexTipo == 0) {
-                                  crearPruduccionPro.addTradi(
-                                    crearPruduccionPro.converFracDesim(
-                                        myController1.text, value2),
-                                    crearPruduccionPro.converFracDesim(
-                                        myController2.text, value3),
-                                    (valueI == false) ? 0 : 1,
-                                  );
-                                } else if (tipoVentana.indexTipo == 1) {
-                                  crearPruduccionPro.addP65(
-                                      crearPruduccionPro.converFracDesim(
-                                          myController1.text, value2),
-                                      crearPruduccionPro.converFracDesim(
-                                          myController2.text, value3));
-                                } else if (tipoVentana.indexTipo == 2) {
-                                  crearPruduccionPro.addP90(
-                                      crearPruduccionPro.converFracDesim(
-                                          myController1.text, value2),
-                                      crearPruduccionPro.converFracDesim(
-                                          myController2.text, value3));
-                                }
-                              }
-                            }),
-                            child: const Text('Add Medidas'),
+                          const SizedBox(
+                            height: 15,
                           ),
-                               const SizedBox(
-                        width: 10,
-                      ),
-                      CupertinoButton(
-                        color: CupertinoColors.activeBlue,
-                        disabledColor: Colors.grey,
-                        borderRadius: const BorderRadius.all(Radius.circular(15)),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 13, horizontal: width*0.06),
-                        onPressed: (() {
-                          // crearPruduccionPro.init();
-                          Navigator.of(context).push(
-                            PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) {
-                                return FadeTransition(
-                                    opacity: animation1,
-                                    child: ProduTerminada(
-                                      nuPro: crearPruduccionPro.coutProduc(),
-                                      contVen: crearPruduccionPro
-                                          .coutVentanaByPro(
-                                              crearPruduccionPro.coutProduc())
-                                          .toDouble(),
-                                    ));
-                              },
+
+                          Container(
+                            width: double.infinity,
+                            height: 71,
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 255, 255),
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 20),
+                              child: Row(
+                                children: [
+                                  // Spacer(),
+                                  const Text(
+                                    "Tres Vias",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  CupertinoSwitch(
+                                      value: valueI,
+                                      onChanged: ((value) => setState(() {
+                                            valueI = value;
+                                          }))),
+                                  const Spacer(),
+                                ],
+                                // ),
+                              ),
                             ),
-                          );
-                          // Navigator.pushReplacementNamed(context, 'produTerminada');
-                        }),
-                        child: const Text('Guardar'),
-                      ),
-                                      
+                          ),
+
+                          Form(
+                            key: validatorForm.formKey,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 1, horizontal: 20),
+                              child: Column(
+                                children: [
+                                  Stack(children: [
+                                    Container(
+                                      width: double.infinity,
+                                      child: TextFormField(
+                                        controller: myController1,
+                                        inputFormatters: (value2 == false)
+                                            ? [maskFormatter]
+                                            : [maskFormatter2],
+                                        autocorrect: false,
+                                        obscureText: false,
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecorations
+                                            .authInputDecoration(
+                                                hintText: '',
+                                                labelText: 'Ancho',
+                                                prefixIcon:
+                                                    Icons.account_box_outlined),
+                                        validator: (value) {
+                                          return (value!.isNotEmpty &&
+                                                      value.length == 6 ||
+                                                  value.length == 7 ||
+                                                  value.length == 3 ||
+                                                  value.length == 2)
+                                              ? null
+                                              : 'Revise la Medida';
+                                        },
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 2,
+                                      right: 5,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: CupertinoSwitch(
+                                            value: value2,
+                                            onChanged: ((value) => setState(() {
+                                                  myController1.text = "";
+                                                  value2 = value;
+                                                }))),
+                                      ),
+                                    ),
+                                  ]),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Stack(children: [
+                                    Container(
+                                      width: double.infinity,
+                                      child: TextFormField(
+                                        controller: myController2,
+                                        inputFormatters: (value3 == false)
+                                            ? [maskFormatter]
+                                            : [maskFormatter2],
+                                        autocorrect: false,
+                                        obscureText: false,
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecorations
+                                            .authInputDecoration(
+                                                hintText: '',
+                                                labelText: 'Alto',
+                                                prefixIcon: Icons.lock_outline),
+                                        validator: (value) {
+                                          return (value!.isNotEmpty &&
+                                                      value.length == 6 ||
+                                                  value.length == 7 ||
+                                                  value.length == 3 ||
+                                                  value.length == 2)
+                                              ? null
+                                              : 'Revise la Medida';
+                                        },
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 2,
+                                      right: 5,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 8),
+                                        child: CupertinoSwitch(
+                                            value: value3,
+                                            onChanged: ((value) => setState(() {
+                                                  myController2.text = "";
+                                                  value3 = value;
+                                                }))),
+                                      ),
+                                    )
+                                  ]),
+                                ],
+                              ),
+                              //      CupertinoSwitch(
+                              // value: value2,
+                              // onChanged: ((value) => setState(() {
+                              //       value2 = value;
+                              //     }))),
+                            ),
+                          ),
+                          //   ],
+                          // ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Row(
+                              children: [
+                                CupertinoButton(
+                                  color: CupertinoColors.activeBlue,
+                                  disabledColor: Colors.grey,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 13, horizontal: width * 0.062),
+                                  onPressed: (() {
+                                    if (validatorForm.isValidForm() == true) {
+                                      if (tipoVentana.indexTipo == 0) {
+                                        crearPruduccionPro.addTradi(
+                                          crearPruduccionPro.converFracDesim(
+                                              myController1.text, value2),
+                                          crearPruduccionPro.converFracDesim(
+                                              myController2.text, value3),
+                                          (valueI == false) ? 0 : 1,
+                                        );
+                                      } else if (tipoVentana.indexTipo == 1) {
+                                        crearPruduccionPro.addP65(
+                                          crearPruduccionPro.converFracDesim(
+                                            myController1.text,
+                                            value2,
+                                          ),
+                                          crearPruduccionPro.converFracDesim(
+                                              myController2.text, value3),
+                                          (valueI == false) ? 0 : 1,
+                                        );
+                                      } else if (tipoVentana.indexTipo == 2) {
+                                        crearPruduccionPro.addP90(
+                                            crearPruduccionPro.converFracDesim(
+                                                myController1.text, value2),
+                                            crearPruduccionPro.converFracDesim(
+                                                myController2.text, value3));
+                                      }
+                                    }
+                                    myController1.text = "";
+                                    myController2.text = "";
+                                  }),
+                                  child: const Text('Add Medidas'),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                CupertinoButton(
+                                  color: CupertinoColors.activeBlue,
+                                  disabledColor: Colors.grey,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 13, horizontal: width * 0.06),
+                                  onPressed: (() {
+                                    showCupertinoDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return CupertinoAlertDialog(
+                                            title: const Text("Aviso"),
+                                            content: const Text(
+                                                "Revisaste las medidas?"),
+                                            actions: [
+                                              CupertinoDialogAction(
+                                                  child: const Text("YES"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).push(
+                                                      PageRouteBuilder(
+                                                        pageBuilder: (context,
+                                                            animation1,
+                                                            animation2) {
+                                                          return FadeTransition(
+                                                              opacity:
+                                                                  animation1,
+                                                              child:
+                                                                  ProduTerminada(
+                                                                nuPro: crearPruduccionPro
+                                                                    .coutProduc(),
+                                                                contVen: crearPruduccionPro
+                                                                    .coutVentanaByPro(
+                                                                        crearPruduccionPro
+                                                                            .coutProduc())
+                                                                    .toDouble(),
+                                                              ));
+                                                        },
+                                                      ),
+                                                    );
+                                                  }),
+                                              CupertinoDialogAction(
+                                                  child: const Text("NO"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  })
+                                            ],
+                                          );
+                                        });
+                                  }),
+                                  child: const Text('Guardar'),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-               
-                 
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Text("Todas las Medidad"),
                     const CardProduccPrimary(),
                   ],
                 )),
@@ -302,7 +345,8 @@ class CardProduccPrimary extends StatelessWidget {
 
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: (crearPruduccionPro.coutProduc() == 0)
+        itemCount: (crearPruduccionPro
+                .coutVentanaByPro(crearPruduccionPro.coutProduc()) == 0)
             ? 0
             : crearPruduccionPro
                 .coutVentanaByPro(crearPruduccionPro.coutProduc()),

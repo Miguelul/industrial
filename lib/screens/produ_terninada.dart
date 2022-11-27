@@ -13,7 +13,7 @@ import '../widgets/addbar_termina.dart';
 class ProduTerminada extends StatefulWidget {
   final int nuPro;
   final double contVen;
-  const ProduTerminada({required this.nuPro, required this.contVen ,super.key});
+  const ProduTerminada({required this.nuPro, required this.contVen, super.key});
 
   @override
   State<ProduTerminada> createState() => _ProduTerminadaState();
@@ -22,6 +22,7 @@ class ProduTerminada extends StatefulWidget {
 class _ProduTerminadaState extends State<ProduTerminada>
     with TickerProviderStateMixin {
   bool? estado = false;
+  int estado2 = 0;
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 6, vsync: this);
@@ -43,7 +44,7 @@ class _ProduTerminadaState extends State<ProduTerminada>
             parent: AlwaysScrollableScrollPhysics()),
         slivers: [
           AppBarD(nuPro: widget.nuPro),
-    SliverPersistentHeader(
+          SliverPersistentHeader(
             delegate: MySliverPersistentHeaderDelegate(
               child: Container(
                 color: Colors.white,
@@ -81,7 +82,7 @@ class _ProduTerminadaState extends State<ProduTerminada>
           ),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: widget.contVen*100,
+              height: widget.contVen * 100,
               child: TabBarView(controller: tabController, children: [
                 CardProduTerm(
                   select: 1,
@@ -91,41 +92,45 @@ class _ProduTerminadaState extends State<ProduTerminada>
                   estado: estado!,
                 ),
                 CardProduTerm(
-                    select: 3,
-                    select3: 10,
-                    select4: 15,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
+                  select: 3,
+                  select3: 10,
+                  select4: 15,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
                 CardProduTerm(
-                    select: 4,
-                    select3: 11,
-                    select4: 16,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
+                  select: 4,
+                  select3: 11,
+                  select4: 16,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
                 CardProduTerm(
-                    select: 5,
-                    select3: 12,
-                    select2: 9,
-                    select4: 17,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
+                  select: 5,
+                  select3: 12,
+                  select2: 9,
+                  select4: 17,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
                 CardProduTerm(
-                    select: 6,
-                    select3: 13,
-                    select4: 18,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
+                  select: 6,
+                  select3: 13,
+                  select4: 18,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
                 CardProduTerm(
-                    select: 7,
-                    select3: 14,
-                    select4: 19,
-                    select2: 8,
-                    nuPro: widget.nuPro,
-                    estado: estado!),
+                  select: 7,
+                  select3: 14,
+                  select4: 19,
+                  select2: 8,
+                  nuPro: widget.nuPro,
+                  estado: estado!,
+                ),
               ]),
             ),
           ),
-
         ],
       ),
     );
@@ -154,17 +159,18 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
+    int estadoVen = 0;
     return ListView.builder(
         itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
-          // index = index1 - 1;
           widget.estado =
               ((crPruProv.verDeglose(widget.select3!, widget.nuPro, index)) ==
                       0)
                   ? false
                   : true;
+          estadoVen = crPruProv.estadoVenta(widget.nuPro, index);
           return (Padding(
             padding: const EdgeInsets.all(10.0),
             child: Container(
@@ -189,7 +195,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                       .cabezalArferza![0].valor2 ==
                                   0
                               ? ''
-                              : ' 3 Vi  '),
+                              : ' 3 Vi '),
                           style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -209,12 +215,11 @@ class _CardProduTermState extends State<CardProduTerm> {
                                 ),
                                 Text(
                                   (widget.select2 == 2)
-                                      ? '  x  ' +
-                                          crPruProv.toFracc(
+                                      ? '  x  ${crPruProv.toFracc(
                                               crPruProv.verDeglose(
                                                   widget.select2!,
                                                   widget.nuPro,
-                                                  index))
+                                                  index))}    |$estadoVen|'
                                       : (widget.select2 == 8)
                                           ? '  x  ' +
                                               crPruProv.toFracc(
@@ -335,6 +340,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                                             widget.nuPro,
                                             index,
                                             (value) ? 1 : 0);
+
                                         break;
                                     }
                                   },

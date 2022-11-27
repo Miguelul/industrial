@@ -81,7 +81,7 @@ class AppBarD extends StatelessWidget {
               // right: 1,
               child: Padding(
               
-              padding:  EdgeInsets.only(left: width*0.30, top: 20, bottom: 20),
+              padding:  EdgeInsets.only(left: width*0.43, top: 20, bottom: 20),
               child: Image.asset("assets/images/window.png"),
             )),
             Positioned(

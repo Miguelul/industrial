@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final crPruProv = Provider.of<CreProducProv>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
     final productsService = Provider.of<ProductsService>(context);
-    productsService.loadProducts();
+    // productsService.loadProducts();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -54,57 +54,59 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-         automaticallyImplyLeading: false,
-        elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          // ignore: prefer_const_literals_to_create_immutables
-          children: [
-            const Text(
-              'Arinde',
-              style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 87, 87, 87)),
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // ignore: prefer_const_literals_to_create_immutables
+            children: [
+              const Text(
+                'Arinde',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 87, 87, 87)),
+              ),
+              const Text(
+                'Crear es Nuestra Virtud',
+                style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w100,
+                    color: Color.fromARGB(255, 153, 145, 145)),
+              ),
+            ],
+          ),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.login_outlined, color: Colors.blue),
+              onPressed: () {
+                showCupertinoDialog(
+                    context: context,
+                    builder: (context) {
+                      return CupertinoAlertDialog(
+                        title: const Text("Logout"),
+                        content: const Text(
+                            "Está seguro de que quieres cerrar la seción?"),
+                        actions: [
+                          CupertinoDialogAction(
+                              child: const Text("SI"),
+                              onPressed: () {
+                                authService.logout();
+                                Navigator.pushReplacementNamed(
+                                    context, 'login');
+                              }),
+                          CupertinoDialogAction(
+                              child: const Text("NO"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              })
+                        ],
+                      );
+                    });
+              },
             ),
-            const Text(
-              'Crear es Nuestra Virtud',
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w100,
-                  color: Color.fromARGB(255, 153, 145, 145)),
-            ),
-          ],
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        actions:[ IconButton(
-          icon: const Icon(Icons.login_outlined, color: Colors.blue),
-          onPressed: () {
-            showCupertinoDialog(
-                context: context,
-                builder: (context) {
-                  return CupertinoAlertDialog(
-                    title: const Text("Logout"),
-                    content: const Text(
-                        "Está seguro de que quieres cerrar la seción?"),
-                    actions: [
-                      CupertinoDialogAction(
-                          child: const Text("SI"),
-                          onPressed: () {
-                            authService.logout();
-                            Navigator.pushReplacementNamed(context, 'login');
-                          }),
-                      CupertinoDialogAction(
-                          child: const Text("NO"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          })
-                    ],
-                  );
-                });
-          },
-        ),]
-      ),
+          ]),
       body: _isLoading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -150,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Color.fromARGB(221, 66, 66, 66)),
                         )),
                     Container(
-                      height: 230,
+                      height: height*0.46,
                       width: double.infinity,
                       color: const Color.fromARGB(255, 255, 255, 255),
                       child: ListView.builder(
@@ -160,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Padding(
                               padding: const EdgeInsets.all(17.0),
                               child: Container(
-                                width: 150,
+                                width: width*0.493,
                                 decoration: BoxDecoration(
                                     color: const Color.fromARGB(
                                         255, 238, 238, 238),
@@ -235,16 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const CardProducc(),
-                    ElevatedButton.icon(
-                        onPressed: (() async {}),
-                        icon: const Icon(Icons.backpack),
-                        label: const Text('Login')),
-                    ElevatedButton.icon(
-                        onPressed: (() {
-                          crPruProv.init(1);
-                        }),
-                        icon: const Icon(Icons.backpack),
-                        label: const Text('Crear Producción')),
+                
                   ],
                 ),
               ),
@@ -260,9 +253,12 @@ class CardProducc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
 
     return ListView.builder(
+      reverse:true,
         itemCount: crearPruduccionPro.coutProduc2(),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -283,69 +279,83 @@ class CardProducc extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
-              child: Container(
-                height: 70,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 238, 238, 238),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, top: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            ' ${index + 1}   ${crearPruduccionPro.creProducProv[index].cliente} ',
-                            style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 87, 87, 87)),
-                          ),
-                          Text(
-                            '${crearPruduccionPro.creProducProv[index].direccion}',
+              child: Stack(children: [
+                Container(
+                  height: height*0.15,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 238, 238, 238),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${index + 1} ${crearPruduccionPro.creProducProv[index].cliente} ',
+                          style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(255, 87, 87, 87)),
+                        ),
+                        Text(
+                          '${crearPruduccionPro.creProducProv[index].direccion}',
+                          style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w100,
+                              color: Color.fromARGB(255, 126, 117, 117)),
+                        ),
+                        Container(
+                          width: width*0.65,
+                          child: Text(
+                            '${crearPruduccionPro.creProducProv[index].fecha}  ${crearPruduccionPro.creProducProv[index].tipoVentana}',
                             style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w100,
-                                color: Color.fromARGB(255, 153, 145, 145)),
+                                color: Color.fromARGB(255, 126, 117, 117)),
+                           overflow: TextOverflow.fade,
+                            softWrap: false,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    CupertinoButton(
-                        child: const Icon(Icons.delete_forever),
-                        onPressed: () {
-                          showCupertinoDialog(
-                              context: context,
-                              builder: (context) {
-                                return CupertinoAlertDialog(
-                                  title: const Text("Delete File"),
-                                  content: const Text(
-                                      "Are you sure you want to delete the file?"),
-                                  actions: [
-                                    CupertinoDialogAction(
-                                        child: const Text("YES"),
-                                        onPressed: () {
-                                          crearPruduccionPro.deleteProducc(
-                                              crearPruduccionPro
-                                                  .creProducProv[index].id);
-                                          Navigator.of(context).pop();
-                                        }),
-                                    CupertinoDialogAction(
-                                        child: const Text("NO"),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        })
-                                  ],
-                                );
-                              });
-                        })
-                  ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  right: 10,
+                  top: 1,
+                  bottom: 1,
+                  child: CupertinoButton(
+                      child: const Icon(Icons.delete_forever),
+                      onPressed: () {
+                        showCupertinoDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: const Text("Eliminar Producción"),
+                                content: const Text(
+                                    "Está seguro que de quieres borrar esta Producción?"),
+                                actions: [
+                                  CupertinoDialogAction(
+                                      child: const Text("YES"),
+                                      onPressed: () {
+                                        crearPruduccionPro.deleteProducc(
+                                            crearPruduccionPro
+                                                .creProducProv[index].id);
+                                        Navigator.of(context).pop();
+                                      }),
+                                  CupertinoDialogAction(
+                                      child: const Text("NO"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      })
+                                ],
+                              );
+                            });
+                      }),
+                )
+              ]),
             ))));
   }
 }

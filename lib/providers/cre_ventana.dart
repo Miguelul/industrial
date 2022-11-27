@@ -11,10 +11,10 @@ class TipoVentana extends ChangeNotifier {
       nombre: "Ventanas Tradicional",
     ),
     Ventanas(
-      nombre: "Ventanas PS5",
+      nombre: "Ventanas P-65",
     ),
     Ventanas(
-      nombre: "Ventanas P40",
+      nombre: "Ventanas P-92",
     ),
   ];
   UnmodifiableListView<Ventanas> get ventanasD =>

@@ -50,7 +50,8 @@ class CreProducProv extends ChangeNotifier {
       11: 0,
       12: 0,
       13: 0,
-      14: 0
+      14: 0,
+      15: 0
     };
     for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
       if (creProducProv[nuPro].items[index].cabezalArferza![0].valor2 == 0) {
@@ -62,7 +63,7 @@ class CreProducProv extends ChangeNotifier {
             creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 2;
         total[4] = total[4]! +
             creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
-        total[5] = (creProducProv[nuPro].items.length).toDouble();
+        total[5] = index + 1;
         total[6] = (creProducProv[nuPro].items.length).toDouble() * 4;
         total[7] = total[7]! +
             (creProducProv[nuPro].items[index].anchoCrital![0].valor +
@@ -72,22 +73,28 @@ class CreProducProv extends ChangeNotifier {
       } else {
         total[8] = total[8]! +
             creProducProv[nuPro].items[index].laterales![0].valor * 2;
-        total[9] =
-            total[9]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[9] = total[9]! +
+            creProducProv[nuPro].items[index].cabezarRiel![0].valor * 2;
         total[10] = total[10]! +
             creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
         total[11] = total[11]! +
-            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 3;
-        total[12] = (creProducProv[nuPro].items.length).toDouble() * 2;
-        total[13] = (creProducProv[nuPro].items.length).toDouble() * 6;
-        total[14] = total[14]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
+        total[12] = total[12]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 4;
+        total[13] = index + 1;
+        total[14] = (creProducProv[nuPro].items.length).toDouble() * 6;
+        total[15] = total[15]! +
             creProducProv[nuPro].items[index].anchoCrital![0].valor +
             creProducProv[nuPro].items[index].altoCrital![0].valor;
         totalf = total[totalDe]!;
       }
     }
 
-    return totalf;
+    return (totalf).toStringAsFixed(2);
+  }
+
+  toFullPi(double value) {
+    return value = value / 21;
   }
 
   deleteProducc(index) async {
@@ -153,7 +160,19 @@ class CreProducProv extends ChangeNotifier {
       18: _creProducProv[nuPro].items[items].llavinEnganche![0].idVentana,
       19: _creProducProv[nuPro].items[items].anchoCrital![0].idVentana,
     };
-    return text3[select];
+    return (text3[select]);
+  }
+
+  estadoVenta(int nuPro, int items) {
+    num total2 = 0;
+    for (int i = 10; i <= 14; i++) {
+      total2 += verDeglose(i, nuPro, items)!;
+    }
+    if (total2 == 5) {
+      return 1;
+    } else {
+      return 0;
+    }
   }
 
   coutPosiProduc() {
@@ -195,7 +214,6 @@ class CreProducProv extends ChangeNotifier {
             : [LisPropiVen((ancho / 3) - (1.5), 0)],
         altoCrital: [LisPropiVen(alto - 4, 0)],
       );
-      print(medida);
       int idVen = await DBProvider.insertVentana(
           Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
@@ -228,7 +246,7 @@ class CreProducProv extends ChangeNotifier {
     init(1);
   }
 
-  addP65(double ancho, double alto) async {
+  addP65(double ancho, double alto, int cantidaVia) async {
     int idVen = await DBProvider.insertVentana(
         Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
@@ -238,16 +256,13 @@ class CreProducProv extends ChangeNotifier {
         alto: alto,
         laterales: [LisPropiVen(alto - 0.125, 0)],
         cabezarRiel: [LisPropiVen(ancho - 1.5, 0)],
-        cabezalArferza: (0 == 0)
+        cabezalArferza: (cantidaVia == 0)
             ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0)]
-            : [
-                LisPropiVen3(
-                    valor: (ancho / 3) + 0.25,
-                    valor2: (ancho / 3) - 0.5,
-                    estado: 0)
-              ],
+            : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0)],
         llavinEnganche: [LisPropiVen(alto - 2.125, 0)],
-        anchoCrital: [LisPropiVen((ancho - 6.5) / 2, 0)],
+        anchoCrital: (cantidaVia == 0)
+            ? [LisPropiVen(ancho / 2 - 6.875, 0)]
+            : [LisPropiVen((ancho - 7.8125) / 3, 0)],
         altoCrital: [LisPropiVen(alto - 5, 0)],
       );
 
@@ -269,12 +284,12 @@ class CreProducProv extends ChangeNotifier {
             LisPropiVen(medida.altoCrital![0].valor,
                 medida.altoCrital![0].estado, idVen));
       } catch (e) {
-        print('Error al Guadar desglose Tradicional');
+        print('Error al Guadar desglose Tradicional en DB');
       }
 
-      _creProducProv[idProdu].items.add(medida);
+      _creProducProv[coutProduc()].items.add(medida);
     } catch (err) {
-      print('Error al insertar deglose');
+      print('Error al insertar deglose en list');
     }
 
     init(1);
