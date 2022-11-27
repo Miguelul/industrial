@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       left: 15,
                                       top: 15,
                                       child: CupertinoButton(
-                                          onPressed: () {
+                                          onPressed:index!=2?() {
                                             Navigator.of(context).push(
                                               PageRouteBuilder(
                                                 pageBuilder: (context,
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             );
 
                                             tipoVentana.indexTipo = index;
-                                          },
+                                          }:null,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 18, vertical: 5),
                                           color: CupertinoColors.activeBlue,

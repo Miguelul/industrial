@@ -295,31 +295,50 @@ class CreProducProv extends ChangeNotifier {
     init(1);
   }
 
-  addP90(double ancho, double alto) {
-    int n = _creProducProv.length;
+  addP90(double ancho, double alto, int cantidaVia) async {
+    int idVen = await DBProvider.insertVentana(
+        Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
     try {
       Ventana medida = Ventana(
         ancho: ancho,
         alto: alto,
-        laterales: [LisPropiVen(alto - 2, 0)],
-        cabezarRiel: [LisPropiVen(alto - 0.5, 0)],
-        cabezalArferza: (0 == 0)
-            ? [LisPropiVen3(valor: (ancho - 0.5) / 2, valor2: 0, estado: 0)]
-            : [
-                LisPropiVen3(
-                    valor: (ancho / 3) + 0.25,
-                    valor2: (ancho / 3) - 0.5,
-                    estado: 0)
-              ],
-        llavinEnganche: [LisPropiVen(alto - 0.875, 0)],
-        anchoCrital: [LisPropiVen(ancho / 2 - 2.0625, 0)],
-        altoCrital: [LisPropiVen(alto - 4, 0)],
+        laterales: [LisPropiVen(alto - 0.125, 0)],
+        cabezarRiel: [LisPropiVen(ancho - 1.5, 0)],
+        cabezalArferza: (cantidaVia == 0)
+            ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0)]
+            : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0)],
+        llavinEnganche: [LisPropiVen(alto - 2.125, 0)],
+        anchoCrital: (cantidaVia == 0)
+            ? [LisPropiVen(ancho / 2 - 6.875, 0)]
+            : [LisPropiVen((ancho - 7.8125) / 3, 0)],
+        altoCrital: [LisPropiVen(alto - 5, 0)],
       );
 
-      _creProducProv[n - 1].items.add(medida);
+      try {
+        await DBProvider.insertDeglo(
+            LisPropiVen(
+                medida.laterales![0].valor, medida.laterales![0].estado, idVen),
+            LisPropiVen(medida.cabezarRiel![0].valor,
+                medida.cabezarRiel![0].estado, idVen),
+            LisPropiVen3(
+                valor: medida.cabezalArferza![0].valor,
+                valor2: (medida.cabezalArferza![0].valor2),
+                estado: 0,
+                idVentana: idVen),
+            LisPropiVen(medida.llavinEnganche![0].valor,
+                medida.llavinEnganche![0].estado, idVen),
+            LisPropiVen(medida.anchoCrital![0].valor,
+                medida.anchoCrital![0].estado, idVen),
+            LisPropiVen(medida.altoCrital![0].valor,
+                medida.altoCrital![0].estado, idVen));
+      } catch (e) {
+        print('Error al Guadar desglose Tradicional en DB');
+      }
+
+      _creProducProv[coutProduc()].items.add(medida);
     } catch (err) {
-      print('amarillo');
+      print('Error al insertar deglose en list');
     }
 
     init(1);

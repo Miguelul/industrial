@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
 import '../providers/validator_form.dart';
+import '../services/notifications_service.dart';
 import '../ui/input_decorations.dart';
 
 class AfregarVentanas extends StatefulWidget {
@@ -230,6 +231,8 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                       vertical: 13, horizontal: width * 0.062),
                                   onPressed: (() {
                                     if (validatorForm.isValidForm() == true) {
+                                      NotificationsService.showSnackbar(
+                                          "Ventna Add ${crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()) + 1}  ${myController1.text} x ${myController2.text}");
                                       if (tipoVentana.indexTipo == 0) {
                                         crearPruduccionPro.addTradi(
                                           crearPruduccionPro.converFracDesim(
@@ -250,10 +253,12 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                         );
                                       } else if (tipoVentana.indexTipo == 2) {
                                         crearPruduccionPro.addP90(
-                                            crearPruduccionPro.converFracDesim(
-                                                myController1.text, value2),
-                                            crearPruduccionPro.converFracDesim(
-                                                myController2.text, value3));
+                                          crearPruduccionPro.converFracDesim(
+                                              myController1.text, value2),
+                                          crearPruduccionPro.converFracDesim(
+                                              myController2.text, value3),
+                                          (valueI == false) ? 0 : 1,
+                                        );
                                       }
                                     }
                                     myController1.text = "";
@@ -272,47 +277,71 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   padding: EdgeInsets.symmetric(
                                       vertical: 13, horizontal: width * 0.06),
                                   onPressed: (() {
-                                    showCupertinoDialog(
+                                    if (crearPruduccionPro.coutVentanaByPro(
+                                            crearPruduccionPro.coutProduc()) !=
+                                        0) {
+                                      showCupertinoDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return CupertinoAlertDialog(
+                                              title: const Text("Aviso"),
+                                              content: const Text(
+                                                  "Revisaste las medidas?"),
+                                              actions: [
+                                                CupertinoDialogAction(
+                                                    child: const Text("YES"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        PageRouteBuilder(
+                                                          pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) {
+                                                            return FadeTransition(
+                                                                opacity:
+                                                                    animation1,
+                                                                child:
+                                                                    ProduTerminada(
+                                                                  nuPro: crearPruduccionPro
+                                                                      .coutProduc(),
+                                                                  contVen: crearPruduccionPro
+                                                                      .coutVentanaByPro(
+                                                                          crearPruduccionPro
+                                                                              .coutProduc())
+                                                                      .toDouble(),
+                                                                ));
+                                                          },
+                                                        ),
+                                                      );
+                                                    }),
+                                                CupertinoDialogAction(
+                                                    child: const Text("NO"),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    })
+                                              ],
+                                            );
+                                          });
+                                    } else {
+                                      showCupertinoDialog(
                                         context: context,
                                         builder: (context) {
                                           return CupertinoAlertDialog(
                                             title: const Text("Aviso"),
                                             content: const Text(
-                                                "Revisaste las medidas?"),
+                                                "Tines que añadir minimo una medida"),
                                             actions: [
                                               CupertinoDialogAction(
-                                                  child: const Text("YES"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).push(
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (context,
-                                                            animation1,
-                                                            animation2) {
-                                                          return FadeTransition(
-                                                              opacity:
-                                                                  animation1,
-                                                              child:
-                                                                  ProduTerminada(
-                                                                nuPro: crearPruduccionPro
-                                                                    .coutProduc(),
-                                                                contVen: crearPruduccionPro
-                                                                    .coutVentanaByPro(
-                                                                        crearPruduccionPro
-                                                                            .coutProduc())
-                                                                    .toDouble(),
-                                                              ));
-                                                        },
-                                                      ),
-                                                    );
-                                                  }),
-                                              CupertinoDialogAction(
-                                                  child: const Text("NO"),
+                                                  child: const Text("OK"),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
-                                                  })
+                                                  }),
                                             ],
                                           );
-                                        });
+                                        },
+                                      );
+                                    }
                                   }),
                                   child: const Text('Guardar'),
                                 ),
@@ -346,7 +375,8 @@ class CardProduccPrimary extends StatelessWidget {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: (crearPruduccionPro
-                .coutVentanaByPro(crearPruduccionPro.coutProduc()) == 0)
+                    .coutVentanaByPro(crearPruduccionPro.coutProduc()) ==
+                0)
             ? 0
             : crearPruduccionPro
                 .coutVentanaByPro(crearPruduccionPro.coutProduc()),
@@ -364,7 +394,22 @@ class CardProduccPrimary extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20, top: 15, bottom: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        " ${index + 1} ",
+                        style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 87, 87, 87)),
+                      ),
+                      const VerticalDivider(
+                        width: 15,
+                        thickness: 1,
+                        color: Color.fromARGB(255, 87, 87, 87),
+                        indent: 1,
+                        endIndent: 1,
+                      ),
                       Text(
                         (crearPruduccionPro
                                     .creProducProv[
@@ -375,26 +420,17 @@ class CardProduccPrimary extends StatelessWidget {
                                 0
                             ? '2 Vi'
                             : '3 Vi'),
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 87, 87, 87)),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].alto!)}",
-                            style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 87, 87, 87)),
-                          ),
-                          const Text(
-                            'Fantino, destra',
-                            style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w100,
-                                color: Color.fromARGB(255, 153, 145, 145)),
-                          ),
-                        ],
+                      Text(
+                        "${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].alto!)}",
+                        style: const TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 87, 87, 87)),
                       ),
                       CupertinoButton(
                         color: CupertinoColors.activeBlue,
@@ -404,6 +440,8 @@ class CardProduccPrimary extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 9, horizontal: 15),
                         onPressed: (() {
+                                               NotificationsService.showSnackbar(
+                            "Ventana Eliminda ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].alto!)}");
                           crearPruduccionPro.deleteVentana(
                               crearPruduccionPro.coutProduc(),
                               crearPruduccionPro
@@ -411,6 +449,7 @@ class CardProduccPrimary extends StatelessWidget {
                                       crearPruduccionPro.coutProduc()]
                                   .items[index]
                                   .idVentana);
+
                         }),
                         child: const Icon(
                           CupertinoIcons.delete,
