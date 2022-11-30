@@ -6,7 +6,6 @@ class BorderM {
       double width = 0,
       required int page,
       int estado = 0}) {
-    print(",,,,,,$color, $width, $page, $estado");
     if (page == 2 && estado == 1) {
       return Border.all(
         color: color,
@@ -26,7 +25,6 @@ class ColorM {
       {required Color color,
       required int page,
       required int estado}) {
-    print(",,,,,,$color, $page, $estado");
     if (page != 2 && estado == 1) {
       return color;
     } else {

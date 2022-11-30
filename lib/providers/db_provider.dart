@@ -97,6 +97,7 @@ class DBProvider {
     // Path de donde almacenaremos la base de datos
     Directory directory = await getApplicationDocumentsDirectory();
     final path = join(directory.path, 'producciones17.db');
+    print(path);
     return sql.openDatabase(
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');

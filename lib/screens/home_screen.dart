@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
 import '../services/auth_service.dart';
+import 'agregar_ventana/agregar_vent.dart';
 
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 class HomeScreen extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // productsService.loadProducts();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    final theme = Theme.of(context);
     if (_refresh1 == false) {
       crPruProv.init(1);
       _refresh1 = true;
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           actions: [
             IconButton(
-              icon: const Icon(Icons.login_outlined, color: Colors.blue),
+              icon: Icon(Icons.login_outlined, color: theme.primaryColor),
               onPressed: () {
                 showCupertinoDialog(
                     context: context,
@@ -145,14 +146,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          'Con cual tipo de ventana quieres trabajar',
+                          'Con cual tipo de ventana quieres trabajar?',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(221, 66, 66, 66)),
                         )),
                     Container(
-                      height: height*0.46,
+                      height: height * 0.46,
                       width: double.infinity,
                       color: const Color.fromARGB(255, 255, 255, 255),
                       child: ListView.builder(
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Padding(
                               padding: const EdgeInsets.all(17.0),
                               child: Container(
-                                width: width*0.493,
+                                width: width * 0.493,
                                 decoration: BoxDecoration(
                                     color: const Color.fromARGB(
                                         255, 238, 238, 238),
@@ -173,29 +174,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                       left: 15,
                                       top: 15,
                                       child: CupertinoButton(
-                                          onPressed:index!=2?() {
-                                            Navigator.of(context).push(
-                                              PageRouteBuilder(
-                                                pageBuilder: (context,
-                                                    animation1, animation2) {
-                                                  return FadeTransition(
-                                                      opacity: animation1,
-                                                      child:
-                                                          ChangeNotifierProvider(
-                                                        create: (context) =>
-                                                            ValidatorForm(),
-                                                        child:
-                                                            const CrearProduccion(),
-                                                      ));
-                                                },
-                                              ),
-                                            );
+                                          onPressed: index != 2
+                                              ? () {
+                                                  Navigator.of(context).push(
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                          animation1,
+                                                          animation2) {
+                                                        return FadeTransition(
+                                                            opacity: animation1,
+                                                            child:
+                                                                ChangeNotifierProvider(
+                                                              create: (context) =>
+                                                                  ValidatorForm(),
+                                                              child:
+                                                                  const CrearProduccion(),
+                                                            ));
+                                                      },
+                                                    ),
+                                                  );
 
-                                            tipoVentana.indexTipo = index;
-                                          }:null,
+                                                  tipoVentana.indexTipo = index;
+                                                }
+                                              : null,
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 18, vertical: 5),
-                                          color: CupertinoColors.activeBlue,
+                                          color: theme.primaryColor,
                                           borderRadius:
                                               BorderRadius.circular(9),
                                           child: const Icon(
@@ -237,7 +241,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const CardProducc(),
-                
                   ],
                 ),
               ),
@@ -253,35 +256,37 @@ class CardProducc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-
+    final theme = Theme.of(context);
     return ListView.builder(
-      reverse:true,
+        reverse: true,
         itemCount: crearPruduccionPro.coutProduc2(),
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => (CupertinoButton(
             onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) {
-                  return FadeTransition(
-                      opacity: animation1,
-                      child: ProduTerminada(
-                        nuPro: index,
-                        contVen: crearPruduccionPro
-                            .coutVentanaByPro(index)
-                            .toDouble(),
-                      ));
-                },
-              ));
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) {
+                    return FadeTransition(
+                        opacity: animation1,
+                        child: ProduTerminada(
+                          nuPro: index,
+                          contVen: crearPruduccionPro
+                              .coutVentanaByPro(index)
+                              .toDouble(),
+                        ));
+                  },
+                ),
+              );
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 0),
               child: Stack(children: [
                 Container(
-                  height: height*0.15,
+                  height: height * 0.15,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 238, 238, 238),
@@ -293,7 +298,7 @@ class CardProducc extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${index + 1} ${crearPruduccionPro.creProducProv[index].cliente} ',
+                          '${crearPruduccionPro.creProducProv[index].id} ${crearPruduccionPro.creProducProv[index].cliente} ',
                           style: const TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
@@ -307,14 +312,14 @@ class CardProducc extends StatelessWidget {
                               color: Color.fromARGB(255, 126, 117, 117)),
                         ),
                         Container(
-                          width: width*0.65,
+                          width: width * 0.65,
                           child: Text(
                             '${crearPruduccionPro.creProducProv[index].fecha}  ${crearPruduccionPro.creProducProv[index].tipoVentana}',
                             style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w100,
                                 color: Color.fromARGB(255, 126, 117, 117)),
-                           overflow: TextOverflow.fade,
+                            overflow: TextOverflow.fade,
                             softWrap: false,
                           ),
                         ),
@@ -323,11 +328,60 @@ class CardProducc extends StatelessWidget {
                   ),
                 ),
                 Positioned(
+                  right: 50,
+                  top: 1,
+                  bottom: 1,
+                  child: CupertinoButton(
+                      child:
+                          Icon(Icons.add, color: theme.primaryColor),
+                      onPressed: () {
+                       Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation1, animation2) {
+                            return FadeTransition(
+                                opacity: animation1,
+                                child: ChangeNotifierProvider(
+                                  create: (context) => ValidatorForm(),
+                                  child: AfregarVentanas(
+                                    nuPro: index,
+                                  ),
+                                ));
+                          },
+                        ),
+                      );
+                        // showCupertinoDialog(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return CupertinoAlertDialog(
+                        //         title: const Text("Eliminar Producción"),
+                        //         content: const Text(
+                        //             "Está seguro que de quieres borrar esta Producción?"),
+                        //         actions: [
+                        //           CupertinoDialogAction(
+                        //               child: const Text("YES"),
+                        //               onPressed: () {
+                        //                 crearPruduccionPro.deleteProducc(
+                        //                     crearPruduccionPro
+                        //                         .creProducProv[index].id);
+                        //                 Navigator.of(context).pop();
+                        //               }),
+                        //           CupertinoDialogAction(
+                        //               child: const Text("NO"),
+                        //               onPressed: () {
+                        //                 Navigator.of(context).pop();
+                        //               })
+                        //         ],
+                        //       );
+                        //     });
+                      }),
+                ),
+                Positioned(
                   right: 10,
                   top: 1,
                   bottom: 1,
                   child: CupertinoButton(
-                      child: const Icon(Icons.delete_forever),
+                      child:
+                          Icon(Icons.delete_forever, color: theme.primaryColor),
                       onPressed: () {
                         showCupertinoDialog(
                             context: context,
@@ -352,6 +406,7 @@ class CardProducc extends StatelessWidget {
                                       })
                                 ],
                               );
+
                             });
                       }),
                 )

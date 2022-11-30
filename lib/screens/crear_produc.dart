@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:industrial/providers/validator_form.dart';
-import 'package:industrial/screens/agregar_vent.dart';
+import 'package:industrial/screens/agregar_ventana/agregar_vent.dart';
 import 'package:industrial/screens/home_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -40,6 +40,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
     final validatorForm = Provider.of<ValidatorForm>(context);
+     final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: (() async {
         return false;
@@ -51,7 +52,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
+              Navigator.pushReplacement(context ,PageRouteBuilder(
                 pageBuilder: (context, animation1, animation2) {
                   return FadeTransition(
                       opacity: animation1, child: const HomeScreen());
@@ -154,7 +155,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                 ),
 
                 CupertinoButton(
-                  color: CupertinoColors.activeBlue,
+                  color: theme.primaryColor,
                   disabledColor: Colors.grey,
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   padding:
@@ -197,7 +198,9 @@ class _CrearProduccionState extends State<CrearProduccion> {
                                 opacity: animation1,
                                 child: ChangeNotifierProvider(
                                   create: (context) => ValidatorForm(),
-                                  child: const AfregarVentanas(),
+                                  child: AfregarVentanas(
+                                    nuPro: crearPruduccionPro.coutProduc(),
+                                  ),
                                 ));
                           },
                         ),

@@ -126,7 +126,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Laterales Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 1)}')),
-                              const DataCell(Text('Student')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -134,7 +134,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cabezal Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 2)}')),
-                              const DataCell(Text('Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -142,7 +142,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Riel Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 2)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -150,7 +150,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cabezal Hojas')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 3)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -158,7 +158,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Alfeizal Hojas')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 3)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -166,7 +166,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Jambas Llavín')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 4)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -174,7 +174,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Jambas Enganche')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 4)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -182,7 +182,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cierre Central')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 5)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -190,7 +190,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Rueda')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 6)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -198,7 +198,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Goma')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 7)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                         ],
@@ -259,7 +259,7 @@ class TotalMaterial extends StatelessWidget {
                           DataColumn(
                             label: Expanded(
                               child: Text(
-                                'Role',
+                                'Unidad',
                                 style: TextStyle(fontStyle: FontStyle.italic),
                               ),
                             ),
@@ -272,7 +272,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Laterales Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 8)}')),
-                              const DataCell(Text('Student')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -280,7 +280,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cabezal Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 9)}')),
-                              const DataCell(Text('Professor')),
+                             DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -288,7 +288,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Riel Marco')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 9)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -296,7 +296,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cabezal Hojas')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 10)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -304,7 +304,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Alfeizal Hojas')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 10)}')),
-                              const DataCell(Text('Associate Professor')),
+                             DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -312,7 +312,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Jambas Llavín')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 11)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -320,7 +320,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Jambas Enganche')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 12)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -328,7 +328,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Cierre Central')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 13)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -336,7 +336,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Rueda')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 14)}')),
-                              const DataCell(Text('Associate Professor')),
+                             DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                           DataRow(
@@ -344,7 +344,7 @@ class TotalMaterial extends StatelessWidget {
                               const DataCell(Text('Goma')),
                               DataCell(Text(
                                   '${crPruProv.sumMateriales(nuPro!, 15)}')),
-                              const DataCell(Text('Associate Professor')),
+                               DataCell(Text('${crPruProv.sumMateriales(nuPro!, 8)}')),
                             ],
                           ),
                         ],

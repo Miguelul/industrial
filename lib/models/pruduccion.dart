@@ -15,7 +15,7 @@ class LisPropiVen {
 }
 
 class LisPropiVen3 {
-  int ?estado;
+  int? estado;
   final int? idVentana;
   final double? valor;
   final double? valor2;
@@ -85,4 +85,30 @@ class ProduccionCre {
       // 'Iditems': items[0].idVentana
     };
   }
+}
+
+class DetalleMater {
+  final double lateraMarco,
+      cabezaMarco,
+      rielMarco,
+      cabeHoja,
+      alfeHoja,
+      jambaLavin,
+      jambaEngan,
+      cierre,
+      rueda,
+      goma;
+
+  DetalleMater(
+    this.lateraMarco,
+    this.cabezaMarco,
+    this.rielMarco,
+    this.cabeHoja,
+    this.alfeHoja,
+    this.jambaLavin,
+    this.jambaEngan,
+    this.cierre,
+    this.rueda,
+    this.goma,
+  );
 }

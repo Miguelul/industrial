@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:industrial/providers/cre_produ_prov.dart';
 import 'package:industrial/providers/cre_ventana.dart';
 import 'package:industrial/providers/validator_form.dart';
-import 'package:industrial/screens/agregar_vent.dart';
 import 'package:industrial/screens/check_auth_screen.dart';
 import 'package:industrial/screens/crear_produc.dart';
 import 'package:industrial/screens/home_screen.dart';
 import 'package:industrial/screens/login_screen.dart';
+import 'package:industrial/screens/screens.dart';
 import 'package:industrial/services/auth_service.dart';
 import 'package:industrial/services/notifications_service.dart';
 import 'package:industrial/services/products_service.dart';
@@ -20,6 +20,8 @@ void main() {
             create: (_) => TipoVentana(), child: const HomeScreen()),
         ChangeNotifierProvider(
             create: (_) => CreProducProv(), child: const CrearProduccion()),
+        ChangeNotifierProvider(
+            create: (context) => CreProducProv(), child: AfregarVentanas()),
         ChangeNotifierProvider(create: (_) => AuthService()),
          ChangeNotifierProvider(create: ( _ ) => ProductsService() ),
       ],
@@ -44,7 +46,13 @@ class MyApp extends StatelessWidget {
         'login': (_) => LoginScreen(),
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,
-      theme: ThemeData.light().copyWith(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData( 
+          scaffoldBackgroundColor: Colors.white,
+        //  primarySwatch: Colors.blue,
+        
+         primaryColor: const Color.fromARGB(255, 39, 149, 176)
+        //  CupertinoColors.activeBlue
+      ),
     );
   }
 }

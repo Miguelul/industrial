@@ -64,17 +64,17 @@ class CreProducProv extends ChangeNotifier {
         total[4] = total[4]! +
             creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
         total[5] = index + 1;
-        total[6] = (creProducProv[nuPro].items.length).toDouble() * 4;
+        total[6] = (index+1)*4;
         total[7] = total[7]! +
             (creProducProv[nuPro].items[index].anchoCrital![0].valor +
                     creProducProv[nuPro].items[index].altoCrital![0].valor) *
-                2;
+                4;
         totalf = total[totalDe]!;
       } else {
         total[8] = total[8]! +
             creProducProv[nuPro].items[index].laterales![0].valor * 2;
         total[9] = total[9]! +
-            creProducProv[nuPro].items[index].cabezarRiel![0].valor * 2;
+            creProducProv[nuPro].items[index].cabezarRiel![0].valor;
         total[10] = total[10]! +
             creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
         total[11] = total[11]! +
@@ -82,15 +82,15 @@ class CreProducProv extends ChangeNotifier {
         total[12] = total[12]! +
             creProducProv[nuPro].items[index].llavinEnganche![0].valor * 4;
         total[13] = index + 1;
-        total[14] = (creProducProv[nuPro].items.length).toDouble() * 6;
+        total[14] = (index+1)*6;
         total[15] = total[15]! +
-            creProducProv[nuPro].items[index].anchoCrital![0].valor +
-            creProducProv[nuPro].items[index].altoCrital![0].valor;
+            (creProducProv[nuPro].items[index].anchoCrital![0].valor +
+            creProducProv[nuPro].items[index].altoCrital![0].valor)*6;
         totalf = total[totalDe]!;
       }
     }
 
-    return (totalf).toStringAsFixed(2);
+    return double.parse(totalf.toStringAsFixed(2));
   }
 
   toFullPi(double value) {
@@ -190,7 +190,7 @@ class CreProducProv extends ChangeNotifier {
     return n;
   }
 
-  addTradi(double ancho, double alto, int cantidaVia) async {
+  addTradi(double ancho, double alto, int cantidaVia, int nuPro) async {
     print("```````````````$ancho  x $alto    $cantidaVia ");
     try {
       Ventana medida = Ventana(
@@ -238,7 +238,7 @@ class CreProducProv extends ChangeNotifier {
         print('Error al Guadar desglose Tradicional');
       }
 
-      _creProducProv[coutProduc()].items.add(medida);
+      _creProducProv[nuPro].items.add(medida);
     } catch (err) {
       print('amarillo');
     }
@@ -246,7 +246,7 @@ class CreProducProv extends ChangeNotifier {
     init(1);
   }
 
-  addP65(double ancho, double alto, int cantidaVia) async {
+  addP65(double ancho, double alto, int cantidaVia, int nuPro) async {
     int idVen = await DBProvider.insertVentana(
         Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
@@ -287,7 +287,7 @@ class CreProducProv extends ChangeNotifier {
         print('Error al Guadar desglose Tradicional en DB');
       }
 
-      _creProducProv[coutProduc()].items.add(medida);
+      _creProducProv[nuPro].items.add(medida);
     } catch (err) {
       print('Error al insertar deglose en list');
     }
@@ -295,7 +295,7 @@ class CreProducProv extends ChangeNotifier {
     init(1);
   }
 
-  addP90(double ancho, double alto, int cantidaVia) async {
+  addP90(double ancho, double alto, int cantidaVia, int nuPro) async {
     int idVen = await DBProvider.insertVentana(
         Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
 
@@ -336,7 +336,7 @@ class CreProducProv extends ChangeNotifier {
         print('Error al Guadar desglose Tradicional en DB');
       }
 
-      _creProducProv[coutProduc()].items.add(medida);
+      _creProducProv[nuPro].items.add(medida);
     } catch (err) {
       print('Error al insertar deglose en list');
     }

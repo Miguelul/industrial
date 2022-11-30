@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:industrial/screens/pdfpreview.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
@@ -15,7 +16,7 @@ class AppBarD extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-      double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return SliverAppBar(
       backgroundColor: const Color.fromARGB(255, 238, 238, 238),
@@ -39,25 +40,61 @@ class AppBarD extends StatelessWidget {
         ),
       ),
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 10.0),
-          child: CupertinoButton(
-            color: Color.fromARGB(127, 212, 207, 204),
-            disabledColor: Colors.grey,
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-            onPressed: (() {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation1, animation2) {
-                    return FadeTransition(
-                        opacity: animation1,
-                        child: TotalMaterial(nuPro: nuPro));
-                  },
-                ),
-              );
-            }),
-            child: const Text('Detalles'),
+        SizedBox(
+          width: 60,
+          height: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CupertinoButton(
+                color: Color.fromARGB(181, 21, 22, 22),
+                disabledColor: Colors.grey,
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
+                padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+                onPressed: (() async {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) {
+                        return FadeTransition(
+                            opacity: animation1,
+                            child: PdfPreviewPage(
+                                invoice: crPruProv.creProducProv[nuPro],nuPro: nuPro));
+                      },
+                    ),
+                  );
+                }),
+                child: const Text(
+                  'PDF',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 252, 247, 247), fontSize: 16),
+                )),
+          ),
+        ),
+        SizedBox(
+          width: 100,
+          height: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CupertinoButton(
+                color: Color.fromARGB(181, 21, 22, 22),
+                disabledColor: Colors.grey,
+                borderRadius: const BorderRadius.all(Radius.circular(25)),
+                padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
+                onPressed: (() {
+                  Navigator.of(context).push(
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) {
+                        return FadeTransition(
+                            opacity: animation1,
+                            child: TotalMaterial(nuPro: nuPro));
+                      },
+                    ),
+                  );
+                }),
+                child: const Text(
+                  'Detalles',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 252, 247, 247), fontSize: 16),
+                )),
           ),
         ),
       ],
@@ -78,10 +115,9 @@ class AppBarD extends StatelessWidget {
           fit: StackFit.expand,
           children: <Widget>[
             Positioned(
-              // right: 1,
-              child: Padding(
-              
-              padding:  EdgeInsets.only(left: width*0.43, top: 20, bottom: 20),
+                // right: 1,
+                child: Padding(
+              padding: EdgeInsets.only(left: width * 0.50, top: 27, bottom: 27),
               child: Image.asset("assets/images/window.png"),
             )),
             Positioned(
@@ -99,7 +135,7 @@ class AppBarD extends StatelessWidget {
                             color: Color.fromARGB(255, 63, 61, 61),
                             fontSize: 20),
                       ),
-                     const SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       Text(
                         '${crPruProv.creProducProv[nuPro].fecha} ',
                         style: const TextStyle(
@@ -118,7 +154,6 @@ class AppBarD extends StatelessWidget {
                             color: Color.fromARGB(255, 68, 64, 64),
                             fontSize: 15),
                       ),
-                    
                       Text(
                         'Tel: ${crPruProv.creProducProv[nuPro].telefono}',
                         style: const TextStyle(
@@ -126,7 +161,6 @@ class AppBarD extends StatelessWidget {
                             fontSize: 15),
                       ),
                     ]),
-           
               ),
             ),
             // const DecoratedBox(
