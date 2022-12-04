@@ -63,12 +63,7 @@ class AuthService extends ChangeNotifier {
     return;
   }
 
-  Future<String> readToken() async {
-   final d= await storage.read(key: 'token');
-    
-    // final url =await FirebaseAuth.instance.
-    print("...........................$d");
-
+  Future<String> readToken() async {    
     return await storage.read(key: 'token') ?? '';
   }
 

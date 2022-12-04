@@ -34,7 +34,7 @@ class LisPropiVen3 {
 
 class Ventana {
   final int? idProduccion;
-  final int idVentana;
+  final int idVentana, cantidaVia;
   final double? ancho, alto;
   final List<LisPropiVen>? laterales,
       cabezarRiel,
@@ -45,6 +45,7 @@ class Ventana {
 
   Ventana(
       {this.idVentana = 0,
+      this.cantidaVia=0,
       this.idProduccion,
       this.ancho,
       this.alto,
@@ -54,9 +55,11 @@ class Ventana {
       this.llavinEnganche,
       this.anchoCrital,
       this.altoCrital});
-
+ Map<String, dynamic> toMap2() {
+    return {'idProduccion': idProduccion,'cantidaVia': cantidaVia,'ancho': ancho, 'alto': alto};
+  }
   Map<String, dynamic> toMap() {
-    return {'idProduccion': idProduccion, 'ancho': ancho, 'alto': alto};
+    return {'idProduccion': idProduccion,'cantidaVia': cantidaVia, 'idVentana':idVentana, 'ancho': ancho, 'alto': alto};
   }
 }
 

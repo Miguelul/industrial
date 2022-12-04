@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -41,8 +42,9 @@ class _ProduTerminadaState extends State<ProduTerminada>
     //       } else {
     return WillPopScope(
       onWillPop: (() async {
-          return false;
-        }),
+        await Navigator.pushReplacementNamed(context, 'home');
+        return false;
+      }),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: CustomScrollView(
@@ -169,8 +171,10 @@ class _CardProduTermState extends State<CardProduTerm> {
   @override
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
-     final theme = Theme.of(context);
+    final theme = Theme.of(context);
     int estadoVen = 0;
+    print(
+        "  ...........${crPruProv.coutProduc()}...${crPruProv.coutVentanaByPro(crPruProv.coutProduc())}");
     return ListView.builder(
         itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
         physics: const NeverScrollableScrollPhysics(),
@@ -300,7 +304,6 @@ class _CardProduTermState extends State<CardProduTerm> {
                               padding: const EdgeInsets.only(right: 8),
                               child: Checkbox(
                                 activeColor: theme.primaryColor,
-
                                 value: widget.estado,
                                 onChanged: (value) {
                                   switch (widget.select) {
@@ -340,13 +343,17 @@ class _CardProduTermState extends State<CardProduTerm> {
                                       break;
                                     case 5:
                                       crPruProv.updateAlfer(
-                                          LisPropiVen(
-                                              crPruProv.verDeglose(
+                                          LisPropiVen3(
+                                              valor: crPruProv.verDeglose(
                                                   widget.select!,
                                                   widget.nuPro,
                                                   index),
-                                              (value!) ? 1 : 0,
-                                              crPruProv.verDeglose(
+                                              valor2: crPruProv.verDeglose(
+                                                  widget.select2!,
+                                                  widget.nuPro,
+                                                  index),
+                                              estado: (value!) ? 1 : 0,
+                                              idVentana: crPruProv.verDeglose(
                                                   widget.select4!,
                                                   widget.nuPro,
                                                   index)),

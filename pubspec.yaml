@@ -25,6 +25,7 @@ dependencies:
   flutter_svg: ^1.1.6
   pdf: ^3.8.4
   open_file: ^3.2.1
+  draggable_fab: ^0.1.1
   printing:
   # flutter_barcode_scanner: ^2.0.0
 dev_dependencies:

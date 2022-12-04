@@ -7,9 +7,23 @@ class CreProducProv extends ChangeNotifier {
   final List<ProduccionCre> _creProducProv = [];
   UnmodifiableListView<ProduccionCre> get creProducProv =>
       UnmodifiableListView(_creProducProv);
-  int idProdu = 0;
+  int idProdu = 0, estadoEditVen = 0;
 
-  init(int op) async {
+  estadoEditVe(int estadoEdi) {
+    if (estadoEdi != 0 && estadoEdi != 1) {
+      return estadoEditVen;
+    } else {
+      return estadoEditVen = estadoEdi;
+    }
+  }
+
+  Ventana ventaTemp = Ventana();
+  pushventanainta(Ventana ventanIsta) {
+    ventaTemp = ventanIsta;
+    notifyListeners();
+  }
+
+  Future<int> init(int op) async {
     if (op == 1) {
       try {
         _creProducProv.clear();
@@ -27,6 +41,7 @@ class CreProducProv extends ChangeNotifier {
         print('ERRO AL CARGAR BASE DE DATO');
       }
     }
+    return 1;
   }
 
   addProducc(ProduccionCre produccion) async {
@@ -64,7 +79,7 @@ class CreProducProv extends ChangeNotifier {
         total[4] = total[4]! +
             creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
         total[5] = index + 1;
-        total[6] = (index+1)*4;
+        total[6] = (index + 1) * 4;
         total[7] = total[7]! +
             (creProducProv[nuPro].items[index].anchoCrital![0].valor +
                     creProducProv[nuPro].items[index].altoCrital![0].valor) *
@@ -73,8 +88,8 @@ class CreProducProv extends ChangeNotifier {
       } else {
         total[8] = total[8]! +
             creProducProv[nuPro].items[index].laterales![0].valor * 2;
-        total[9] = total[9]! +
-            creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[9] =
+            total[9]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
         total[10] = total[10]! +
             creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
         total[11] = total[11]! +
@@ -82,10 +97,11 @@ class CreProducProv extends ChangeNotifier {
         total[12] = total[12]! +
             creProducProv[nuPro].items[index].llavinEnganche![0].valor * 4;
         total[13] = index + 1;
-        total[14] = (index+1)*6;
+        total[14] = (index + 1) * 6;
         total[15] = total[15]! +
             (creProducProv[nuPro].items[index].anchoCrital![0].valor +
-            creProducProv[nuPro].items[index].altoCrital![0].valor)*6;
+                    creProducProv[nuPro].items[index].altoCrital![0].valor) *
+                6;
         totalf = total[totalDe]!;
       }
     }
@@ -108,6 +124,27 @@ class CreProducProv extends ChangeNotifier {
     await DBProvider.deleteVentana(idVe);
   }
 
+  updateVentana(Ventana ventana, String tipoVeta,) async {
+    print(ventana);
+    await DBProvider.updateVenta(ventana);
+    if (tipoVeta == "Ventanas Tradicional") {
+      ventana = degloTradi(ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
+    } else if (tipoVeta == "Ventanas P-65") {
+      ventana = degloP65(ventana.ancho!, ventana.alto!, ventana.cantidaVia,ventana.idVentana);
+    } else if (tipoVeta == "Ventanas P-92") {
+      ventana = degloP92(ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
+    }
+
+  
+    await DBProvider.updateLateral(ventana.laterales![0]);
+    await DBProvider.updateRiel(ventana.cabezarRiel![0]);
+    await DBProvider.updateAlfer(ventana.cabezalArferza![0]);
+    await DBProvider.updateLlavi(ventana.llavinEnganche![0]);
+    await DBProvider.updateCrista(ventana.anchoCrital![0]);
+    await DBProvider.updateLlavi(ventana.altoCrital![0]);
+    await init(1);
+  }
+
   updateLateral(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].laterales![0].estado = estado;
     notifyListeners();
@@ -126,7 +163,7 @@ class CreProducProv extends ChangeNotifier {
     await DBProvider.updateLlavi(lateral);
   }
 
-  updateAlfer(LisPropiVen lateral, int nuPro, int nuItems, int estado) async {
+  updateAlfer(LisPropiVen3 lateral, int nuPro, int nuItems, int estado) async {
     _creProducProv[nuPro].items[nuItems].cabezalArferza![0].estado = estado;
     notifyListeners();
     await DBProvider.updateAlfer(lateral);
@@ -190,32 +227,42 @@ class CreProducProv extends ChangeNotifier {
     return n;
   }
 
+  degloTradi(double ancho, double alto, int cantidaVia, int idVent) {
+    Ventana medida = Ventana(
+      ancho: ancho,
+      alto: alto,
+      laterales: [LisPropiVen(alto - 0.5, 0,idVent)],
+      cabezarRiel: (cantidaVia == 0)
+          ? [LisPropiVen(ancho - 0.5, 0,idVent)]
+          : [LisPropiVen(ancho - 0.25, 0,idVent)],
+      cabezalArferza: (cantidaVia == 0)
+          ? [LisPropiVen3(valor: (ancho - 0.5) / 2, valor2: 0, estado: 0, idVentana: idVent)]
+          : [
+              LisPropiVen3(
+                  valor: (ancho / 3) + 0.25,
+                  valor2: (ancho / 3) - 0.5,
+                  estado: 0,
+                  idVentana: idVent)
+            ],
+      llavinEnganche: [LisPropiVen(alto - 0.875, 0,idVent)],
+      anchoCrital: (cantidaVia == 0)
+          ? [LisPropiVen(ancho / 2 - 2.0625, 0,idVent)]
+          : [LisPropiVen((ancho / 3) - (1.5), 0,idVent)],
+      altoCrital: [LisPropiVen(alto - 4, 0,idVent)],
+    );
+    return medida;
+  }
+
   addTradi(double ancho, double alto, int cantidaVia, int nuPro) async {
-    print("```````````````$ancho  x $alto    $cantidaVia ");
+    print("```````````````$ancho  x $alto    ${_creProducProv[nuPro].id} ");
+    await init(1);
     try {
-      Ventana medida = Ventana(
-        ancho: ancho,
-        alto: alto,
-        laterales: [LisPropiVen(alto - 0.5, 0)],
-        cabezarRiel: (cantidaVia == 0)
-            ? [LisPropiVen(ancho - 0.5, 0)]
-            : [LisPropiVen(ancho - 0.25, 0)],
-        cabezalArferza: (cantidaVia == 0)
-            ? [LisPropiVen3(valor: (ancho - 0.5) / 2, valor2: 0, estado: 0)]
-            : [
-                LisPropiVen3(
-                    valor: (ancho / 3) + 0.25,
-                    valor2: (ancho / 3) - 0.5,
-                    estado: 0)
-              ],
-        llavinEnganche: [LisPropiVen(alto - 0.875, 0)],
-        anchoCrital: (cantidaVia == 0)
-            ? [LisPropiVen(ancho / 2 - 2.0625, 0)]
-            : [LisPropiVen((ancho / 3) - (1.5), 0)],
-        altoCrital: [LisPropiVen(alto - 4, 0)],
-      );
-      int idVen = await DBProvider.insertVentana(
-          Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
+      int idVen = await DBProvider.insertVentana(Ventana(
+          idProduccion: _creProducProv[nuPro].id,
+          ancho: ancho,
+          alto: alto,
+          cantidaVia: cantidaVia));
+      Ventana medida = degloTradi(ancho, alto, cantidaVia,idVen);
 
       try {
         await DBProvider.insertDeglo(
@@ -246,26 +293,33 @@ class CreProducProv extends ChangeNotifier {
     init(1);
   }
 
+  degloP65(double ancho, double alto, int cantidaVia, int idVent) {
+    Ventana medida = Ventana(
+      ancho: ancho,
+      alto: alto,
+      laterales: [LisPropiVen(alto - 0.125, 0,idVent)],
+      cabezarRiel: [LisPropiVen(ancho - 1.5, 0,idVent)],
+      cabezalArferza: (cantidaVia == 0)
+          ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0, idVentana: idVent)]
+          : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0, idVentana: idVent)],
+      llavinEnganche: [LisPropiVen(alto - 2.125, 0,idVent)],
+      anchoCrital: (cantidaVia == 0)
+          ? [LisPropiVen(ancho / 2 - 6.875, 0,idVent)]
+          : [LisPropiVen((ancho - 7.8125) / 3, 0,idVent)],
+      altoCrital: [LisPropiVen(alto - 5, 0,idVent)],
+    );
+    return medida;
+  }
+
   addP65(double ancho, double alto, int cantidaVia, int nuPro) async {
-    int idVen = await DBProvider.insertVentana(
-        Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
-
+    await init(1);
     try {
-      Ventana medida = Ventana(
-        ancho: ancho,
-        alto: alto,
-        laterales: [LisPropiVen(alto - 0.125, 0)],
-        cabezarRiel: [LisPropiVen(ancho - 1.5, 0)],
-        cabezalArferza: (cantidaVia == 0)
-            ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0)]
-            : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0)],
-        llavinEnganche: [LisPropiVen(alto - 2.125, 0)],
-        anchoCrital: (cantidaVia == 0)
-            ? [LisPropiVen(ancho / 2 - 6.875, 0)]
-            : [LisPropiVen((ancho - 7.8125) / 3, 0)],
-        altoCrital: [LisPropiVen(alto - 5, 0)],
-      );
-
+      int idVen = await DBProvider.insertVentana(Ventana(
+          idProduccion: _creProducProv[nuPro].id,
+          ancho: ancho,
+          alto: alto,
+          cantidaVia: cantidaVia));
+      Ventana medida = degloP65(ancho, alto, cantidaVia, idVen);
       try {
         await DBProvider.insertDeglo(
             LisPropiVen(
@@ -294,26 +348,33 @@ class CreProducProv extends ChangeNotifier {
 
     init(1);
   }
-
-  addP90(double ancho, double alto, int cantidaVia, int nuPro) async {
-    int idVen = await DBProvider.insertVentana(
-        Ventana(idProduccion: idProdu, ancho: ancho, alto: alto));
-
+  degloP92(double ancho, double alto, int cantidaVia, int idVent) {
+    Ventana medida = Ventana(
+      ancho: ancho,
+      alto: alto,
+      laterales: [LisPropiVen(alto - 0.125, 0,idVent)],
+      cabezarRiel: [LisPropiVen(ancho - 1.5, 0,idVent)],
+      cabezalArferza: (cantidaVia == 0)
+          ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0, idVentana: idVent)]
+          : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0, idVentana: idVent)],
+      llavinEnganche: [LisPropiVen(alto - 2.125, 0,idVent)],
+      anchoCrital: (cantidaVia == 0)
+          ? [LisPropiVen(ancho / 2 - 6.875, 0,idVent)]
+          : [LisPropiVen((ancho - 7.8125) / 3, 0,idVent)],
+      altoCrital: [LisPropiVen(alto - 5, 0,idVent)],
+    );
+    return medida;
+  }
+ addP92(double ancho, double alto, int cantidaVia, int nuPro) async {
+    print("```````````````$ancho  x $alto    ${_creProducProv[nuPro].id} ");
+    await init(1);
     try {
-      Ventana medida = Ventana(
-        ancho: ancho,
-        alto: alto,
-        laterales: [LisPropiVen(alto - 0.125, 0)],
-        cabezarRiel: [LisPropiVen(ancho - 1.5, 0)],
-        cabezalArferza: (cantidaVia == 0)
-            ? [LisPropiVen3(valor: (ancho - 1.125) / 2, valor2: 0, estado: 0)]
-            : [LisPropiVen3(valor: ((ancho + 0.25) / 3), valor2: 1, estado: 0)],
-        llavinEnganche: [LisPropiVen(alto - 2.125, 0)],
-        anchoCrital: (cantidaVia == 0)
-            ? [LisPropiVen(ancho / 2 - 6.875, 0)]
-            : [LisPropiVen((ancho - 7.8125) / 3, 0)],
-        altoCrital: [LisPropiVen(alto - 5, 0)],
-      );
+      int idVen = await DBProvider.insertVentana(Ventana(
+          idProduccion: _creProducProv[nuPro].id,
+          ancho: ancho,
+          alto: alto,
+          cantidaVia: cantidaVia));
+      Ventana medida = degloTradi(ancho, alto, cantidaVia,idVen);
 
       try {
         await DBProvider.insertDeglo(
@@ -333,14 +394,14 @@ class CreProducProv extends ChangeNotifier {
             LisPropiVen(medida.altoCrital![0].valor,
                 medida.altoCrital![0].estado, idVen));
       } catch (e) {
-        print('Error al Guadar desglose Tradicional en DB');
+        print('Error al Guadar desglose Tradicional');
       }
 
       _creProducProv[nuPro].items.add(medida);
     } catch (err) {
-      print('Error al insertar deglose en list');
+      print('amarillo');
     }
-
+    // prin();
     init(1);
   }
 
@@ -349,7 +410,8 @@ class CreProducProv extends ChangeNotifier {
   }
 
   coutVentanaByPro(int nuPro) {
-    print(nuPro);
+    print(
+        ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,${_creProducProv[nuPro].items.length}");
     return _creProducProv[nuPro].items.length;
   }
 

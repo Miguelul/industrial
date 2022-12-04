@@ -22,6 +22,7 @@ class DBProvider {
       CREATE TABLE ventana(
       IdVentana INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
 	    idProduccion INTEGER,
+      cantidaVia INTEGER,
       ancho REAL,
       alto REAL,
 	  
@@ -96,14 +97,14 @@ class DBProvider {
   static Future<sql.Database> _initDB() async {
     // Path de donde almacenaremos la base de datos
     Directory directory = await getApplicationDocumentsDirectory();
-    final path = join(directory.path, 'producciones17.db');
+    final path = join(directory.path, 'producci1.db');
     print(path);
     return sql.openDatabase(
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
       },
       path,
-      version: 22,
+      version: 1,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
       },
@@ -117,11 +118,18 @@ class DBProvider {
     return idprodu;
   }
 
-  static Future<int> insertVentana(Ventana ventana) async {
+  static Future<int> insertVentana(Ventana ventana1) async {
     sql.Database? db = await instance.database;
-    final idventana = await db!.insert("ventana", ventana.toMap());
-    print('Ventana insertada en DB');
-    return idventana;
+    try {
+      final idventana = await db!.insert("ventana", ventana1.toMap2());
+      print('Ventana insertada en DB');
+
+      return idventana;
+    } catch (err) {
+      print(err);
+    }
+
+    return 8;
   }
 
   static Future<int> insertDeglo(
@@ -138,7 +146,8 @@ class DBProvider {
     await db.insert("llavinEnganche", degLlaEn.toMap());
     await db.insert("anchoCrital", degAnCri.toMap());
     await db.insert("altoCrital", degAlCr.toMap());
-
+    print(await db.query('ventana'));
+    print(await db.query('cabezalArferza'));
     print('Desglo Insertado en DB');
     return idventana;
   }
@@ -163,38 +172,54 @@ class DBProvider {
   }
 
   static Future<int> updateProducc(ProduccionCre produccionCre) async {
+    print(produccionCre.toMap());
     sql.Database? db = await instance.database;
     return db!.update("produccion", produccionCre.toMap(),
         where: "id = ?", whereArgs: [produccionCre.id]);
   }
 
+  static Future<int> updateVenta(Ventana produccionCre) async {
+    print(
+        "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+    sql.Database? db = await instance.database;
+    print(produccionCre.toMap());
+    final i = db!.update("ventana", produccionCre.toMap(),
+        where: "IdVentana = ?", whereArgs: [produccionCre.idVentana]);
+
+    final List<Map<String, dynamic>> ventana =
+        await db.rawQuery('select * from ventana where idProduccion=2');
+    print(ventana);
+    print("Ventanata Editdad ${produccionCre.ancho} x ${produccionCre.alto}");
+    return i;
+  }
+
   static Future<int> updateLateral(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("laterales", proVenta.toMap2(),
+    return db!.update("laterales", proVenta.toMap(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
   static Future<int> updateRiel(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("cabezarRiel", proVenta.toMap2(),
+    return db!.update("cabezarRiel", proVenta.toMap(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
   static Future<int> updateLlavi(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("llavinEnganche", proVenta.toMap2(),
+    return db!.update("llavinEnganche", proVenta.toMap(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
-  static Future<int> updateAlfer(LisPropiVen proVenta) async {
+  static Future<int> updateAlfer(LisPropiVen3 proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("cabezalArferza", proVenta.toMap2(),
+    return db!.update("cabezalArferza", proVenta.toMap(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
   static Future<int> updateCrista(LisPropiVen proVenta) async {
     sql.Database? db = await instance.database;
-    return db!.update("anchoCrital", proVenta.toMap2(),
+    return db!.update("anchoCrital", proVenta.toMap(),
         where: "IdVentana = ?", whereArgs: [proVenta.idVentana]);
   }
 
@@ -232,6 +257,7 @@ class DBProvider {
     sql.Database? db = await instance.database;
     final List<Map<String, dynamic>> ventana =
         await db!.rawQuery('select * from ventana where idProduccion=$idPro');
+
     List<Ventana> ventan = [];
     for (int index = 0; index < ventana.length; index++) {
       int n = ventana[index]['IdVentana'];
