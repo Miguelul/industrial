@@ -44,7 +44,7 @@ class PdfPreviewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color.fromARGB(181, 21, 22, 22),
+        backgroundColor: Color.fromARGB(171, 110, 107, 107),
         title: const Text('PDF Preview'),
       ),
       body: PdfPreview(

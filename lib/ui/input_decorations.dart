@@ -23,7 +23,7 @@ class InputDecorations {
           )
         ),
         filled: true,
-        fillColor: Color.fromARGB(255, 230, 230, 230),
+        fillColor: const Color.fromARGB(255, 238, 238, 238),
         hintText: hintText,
         labelText: labelText,
         labelStyle: const TextStyle(
@@ -31,7 +31,7 @@ class InputDecorations {
         ),
 
         prefixIcon: prefixIcon != null 
-          ? Icon( prefixIcon, color: Color.fromARGB(255, 39, 149, 176) )
+          ? Icon( prefixIcon, color: const Color.fromARGB(255, 39, 149, 176) )
           : null
       );
   }  

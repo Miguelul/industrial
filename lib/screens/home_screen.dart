@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../providers/cre_produ_prov.dart';
 import '../providers/cre_ventana.dart';
 import '../services/auth_service.dart';
+import '../widgets/cupertino_co_men.dart';
 import 'agregar_ventana/agregar_vent.dart';
 
 // import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -239,7 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Padding(
                         padding: EdgeInsets.all(10.0),
                         child: Text(
-                          'Todas la producción',
+                          'Todas las Producciones',
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -335,16 +336,16 @@ class CardProducc extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: 10,
+                  right: 1,
                   top: 1,
                   bottom: 1,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(1.0),
                     child: SizedBox(
                       // color: Colors.red,
-                      width: 40,
-                      height: 50,
-                      child: CupertinoContextMenu(
+                      width: 65,
+                      height: 52,
+                      child: CupertinoContextMenu2M(
                         actions: [
                           CupertinoContextMenuAction(
                             onPressed: () {
@@ -401,8 +402,13 @@ class CardProducc extends StatelessWidget {
                             child: const Text("Delete"),
                           )
                         ],
-                        child: Icon(Icons.more_vert,
-                            color: theme.primaryColor, size: 28),
+                        child: Container(
+                          height: 20,
+                          width: 55,
+                          color: const Color.fromARGB(0, 0, 0, 0),
+                          child: Icon(CupertinoIcons.ellipsis_vertical,
+                              color: theme.primaryColor, size: 28),
+                        ),
                       ),
                     ),
                   ),

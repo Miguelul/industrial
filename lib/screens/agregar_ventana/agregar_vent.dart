@@ -9,6 +9,7 @@ import '../../providers/cre_produ_prov.dart';
 import '../../providers/validator_form.dart';
 import '../../services/notifications_service.dart';
 import '../../ui/input_decorations.dart';
+import '../../widgets/cupertino_co_men.dart';
 
 // ignore: must_be_immutable
 class AfregarVentanas extends StatefulWidget {
@@ -64,7 +65,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
         child: Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: const Color.fromARGB(255, 238, 238, 238),
+            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             leading: CupertinoButton(
               padding: const EdgeInsets.only(left: 20, right: 0),
               onPressed: () async {
@@ -93,7 +94,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                   children: [
                     Container(
                       decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 238, 238, 238),
+                          color: Color.fromARGB(255, 255, 255, 255),
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(35),
                               bottomRight: Radius.circular(35))),
@@ -106,7 +107,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                             width: double.infinity,
                             height: 100,
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 238, 238, 238),
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -171,7 +172,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                 hintText: '',
                                                 labelText: 'Ancho',
                                                 prefixIcon:
-                                                    Icons.account_box_outlined),
+                                                    CupertinoIcons.doc_plaintext),
                                         validator: (value) {
                                           return (value!.isNotEmpty &&
                                                       value.length == 6 ||
@@ -216,7 +217,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                             .authInputDecoration(
                                                 hintText: '',
                                                 labelText: 'Alto',
-                                                prefixIcon: Icons.lock_outline),
+                                                prefixIcon: CupertinoIcons.doc_plaintext),
                                         validator: (value) {
                                           return (value!.isNotEmpty &&
                                                       value.length == 6 ||
@@ -490,7 +491,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                       ),
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 30,
                     ),
                     const Text("Todas las Medidad",
                         style: TextStyle(
@@ -525,7 +526,6 @@ class CardProduccPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final theme = Theme.of(context);
-    print("++++++++++$nuPro+++++${crearPruduccionPro.coutVentanaByPro(nuPro)}");
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: crearPruduccionPro.coutVentanaByPro(nuPro),
@@ -585,16 +585,16 @@ class CardProduccPrimary extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: 10,
+                  right: 1,
                   top: 1,
                   bottom: 1,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(2.0),
                     child: SizedBox(
                       // color: Colors.red,
-                      width: 35,
+                      width: 60,
                       height: 70,
-                      child: CupertinoContextMenu(
+                      child: CupertinoContextMenu2M(
                         actions: [
                           CupertinoContextMenuAction(
                             onPressed: () {
@@ -632,9 +632,13 @@ class CardProduccPrimary extends StatelessWidget {
                             child: const Text("Eliminar"),
                           )
                         ],
-                        child: Icon(Icons.more_vert,
-                            color: theme.primaryColor, size: 27),
-                      ),
+                        child: Container(
+                          height: 20,
+                          width: 50,
+                          color: const Color.fromARGB(0, 0, 0, 0),
+                          child: Icon(CupertinoIcons.ellipsis_vertical,
+                              color: theme.primaryColor, size: 28),
+                      )),
                     ),
                   ),
                 ),

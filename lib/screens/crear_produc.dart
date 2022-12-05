@@ -68,7 +68,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
               'Nueva Producción',
               style: TextStyle(
                   fontWeight: FontWeight.w100,
-                  color: Color.fromARGB(255, 0, 0, 0)),
+                  color: Color.fromARGB(255, 58, 54, 54)),
             ),
           ),
         ),
@@ -87,7 +87,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                         : tipoVentana.indexTipo == 2
                             ? tipoVentana.ventanasD[2].nombre
                             : '',style: const TextStyle(
-                              color: Color.fromARGB(255, 83, 83, 80),
+                              color: Color.fromARGB(255, 138, 138, 133),
                               fontSize: 20,
                               fontWeight: FontWeight.bold
                             )),
@@ -106,7 +106,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                           decoration: InputDecorations.authInputDecoration(
                               hintText: '',
                               labelText: 'Nombre del Cliente',
-                              prefixIcon: Icons.lock_outline),
+                              prefixIcon: CupertinoIcons.person_alt_circle_fill),
                           validator: (value) {
                             return (value!.isNotEmpty)
                                 ? null
@@ -124,7 +124,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                           decoration: InputDecorations.authInputDecoration(
                               hintText: '',
                               labelText: 'Dirección',
-                              prefixIcon: Icons.lock_outline),
+                              prefixIcon: CupertinoIcons.arrow_turn_down_right),
                           validator: (value) {
                             return (value!.isNotEmpty)
                                 ? null
@@ -143,7 +143,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                           decoration: InputDecorations.authInputDecoration(
                               hintText: '',
                               labelText: 'Telefono',
-                              prefixIcon: Icons.lock_outline),
+                              prefixIcon: CupertinoIcons.phone),
                           validator: (value) {
                             return (value!.isNotEmpty && value.length == 12)
                                 ? null
