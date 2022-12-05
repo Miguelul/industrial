@@ -1,4 +1,3 @@
-import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:industrial/models/pruduccion.dart';
@@ -7,11 +6,11 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/cre_produ_prov.dart';
-import '../../providers/cre_ventana.dart';
 import '../../providers/validator_form.dart';
 import '../../services/notifications_service.dart';
 import '../../ui/input_decorations.dart';
 
+// ignore: must_be_immutable
 class AfregarVentanas extends StatefulWidget {
   int? nuPro;
   AfregarVentanas({
@@ -47,41 +46,35 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
     super.dispose();
   }
 
-  bool _isLoading = true, _refresh1 = true;
-
   @override
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-    final tipoVentana = Provider.of<TipoVentana>(context);
     final validatorForm = Provider.of<ValidatorForm>(context);
     final theme = Theme.of(context);
     // crearPruduccionPro.init(1);
-
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return WillPopScope(
         onWillPop: (() async {
-             await Navigator.pushReplacementNamed(context, 'home');
+          await Navigator.pushReplacementNamed(context, 'home');
           crearPruduccionPro.estadoEditVe(0);
           myController1.text = "";
           myController2.text = "";
           return false;
         }),
         child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: const Color.fromARGB(255, 238, 238, 238),
             leading: CupertinoButton(
               padding: const EdgeInsets.only(left: 20, right: 0),
-              onPressed: () async{
-              await Navigator.pushReplacementNamed(context, 'home');
+              onPressed: () async {
+                await Navigator.pushReplacementNamed(context, 'home');
                 myController1.text = "";
                 myController2.text = "";
-              
+
                 crearPruduccionPro.estadoEditVe(0);
               },
-              child: Text("Back"),
+              child: const Text("Back"),
             ),
             // automaticallyImplyLeading: false,
             title: const Center(
@@ -89,35 +82,31 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                 'Agregar Medidas',
                 style: TextStyle(
                     fontWeight: FontWeight.w100,
-                    color: Color.fromARGB(255, 0, 0, 0)),
+                    color: Color.fromARGB(255, 255, 255, 255)),
               ),
             ),
           ),
-          body:  SingleChildScrollView(
+          body: SingleChildScrollView(
             child: Container(
-                color: Colors.white,
+                color: const Color.fromARGB(255, 255, 255, 255),
                 child: Column(
                   children: [
                     Container(
                       decoration: const BoxDecoration(
-                        color: Color.fromARGB(
-                          255,
-                          255,
-                          255,
-                          255,
-                        ),
-                      ),
+                          color: Color.fromARGB(255, 238, 238, 238),
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(35),
+                              bottomRight: Radius.circular(35))),
                       child: Column(
                         children: [
                           const SizedBox(
                             height: 15,
                           ),
-
                           Container(
                             width: double.infinity,
-                            height: 77,
+                            height: 100,
                             decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 255, 255),
+                              color: Color.fromARGB(255, 238, 238, 238),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -127,16 +116,22 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                 children: [
                                   Text(
                                     "${crearPruduccionPro.creProducProv[widget.nuPro!].cliente}          ${crearPruduccionPro.creProducProv[widget.nuPro!].tipoVentana}",
-                                    style: TextStyle(fontSize: 12),
+                                    style: const TextStyle(
+                                        fontSize: 17,
+                                        color:
+                                            Color.fromARGB(255, 167, 160, 160)),
                                   ),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 25,
                                   ),
                                   Row(
                                     children: [
                                       const Text(
-                                        "Tres Vias",
-                                        style: TextStyle(fontSize: 12),
+                                        "Tres Vías",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Color.fromARGB(
+                                                255, 126, 117, 117)),
                                       ),
                                       CupertinoSwitch(
                                           value: valueI,
@@ -151,7 +146,6 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                               ),
                             ),
                           ),
-
                           Form(
                             key: validatorForm.formKey,
                             autovalidateMode:
@@ -162,7 +156,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                               child: Column(
                                 children: [
                                   Stack(children: [
-                                    Container(
+                                    SizedBox(
                                       width: double.infinity,
                                       child: TextFormField(
                                         controller: myController1,
@@ -208,7 +202,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                     height: 10,
                                   ),
                                   Stack(children: [
-                                    Container(
+                                    SizedBox(
                                       width: double.infinity,
                                       child: TextFormField(
                                         controller: myController2,
@@ -251,16 +245,8 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   ]),
                                 ],
                               ),
-                              //      CupertinoSwitch(
-                              // value: value2,
-                              // onChanged: ((value) => setState(() {
-                              //       value2 = value;
-                              //     }))),
                             ),
                           ),
-                          //   ],
-                          // ),
-
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Row(
@@ -271,17 +257,15 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(15)),
                                   padding: EdgeInsets.symmetric(
-                                      vertical: 13, horizontal: width * 0.062),
+                                      vertical: 13, horizontal: width * 0.075),
                                   onPressed: crearPruduccionPro
                                               .estadoEditVe(3) ==
                                           0
                                       ? () {
-                                          print(
-                                              "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
                                           if (validatorForm.isValidForm() ==
                                               true) {
                                             NotificationsService.showSnackbar(
-                                                "Ventana Add ${crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()) + 1}  ${myController1.text} x ${myController2.text}");
+                                                "Ventana Add ${crearPruduccionPro.coutVentanaByPro(widget.nuPro!) + 1}  ${myController1.text} x ${myController2.text}");
                                             if (crearPruduccionPro
                                                     .creProducProv[
                                                         widget.nuPro!]
@@ -337,8 +321,6 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                           }
                                         }
                                       : () {
-                                          print(
-                                              'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
                                           if (validatorForm.isValidForm() ==
                                               true) {
                                             if (crearPruduccionPro
@@ -348,59 +330,85 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                 "Ventanas Tradicional") {
                                               crearPruduccionPro.updateVentana(
                                                   Ventana(
-                                                      idProduccion:
-                                                          crearPruduccionPro
-                                                              .ventaTemp
-                                                              .idProduccion,
-                                                      idVentana:
-                                                          crearPruduccionPro
-                                                              .ventaTemp
-                                                              .idVentana,
-                                                      cantidaVia:
-                                                         (valueI == false) ? 0 : 1,
-                                                      ancho: double.parse(
-                                                          myController1.text),
-                                                      alto: double.parse(
-                                                          myController2.text)),
+                                                      idProduccion: crearPruduccionPro
+                                                          .ventaTemp
+                                                          .idProduccion,
+                                                      idVentana: crearPruduccionPro
+                                                          .ventaTemp.idVentana,
+                                                      cantidaVia: (valueI == false)
+                                                          ? 0
+                                                          : 1,
+                                                      ancho: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController1
+                                                                  .text,
+                                                              value2),
+                                                      alto: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController2
+                                                                  .text,
+                                                              value3)),
                                                   crearPruduccionPro
-                                                      .creProducProv[
-                                                          widget.nuPro!]
-                                                      .tipoVentana!);
+                                                      .creProducProv[widget.nuPro!]
+                                                      .tipoVentana!,widget.nuPro!,crearPruduccionPro.nuVenTem);
                                               NotificationsService.showSnackbar(
-                                                  "Ventana Editada ${crearPruduccionPro.coutVentanaByPro(crearPruduccionPro.coutProduc()) + 1}  ${myController1.text} x ${myController2.text}");
+                                                  "Ventana Editada ${crearPruduccionPro.coutVentanaByPro(widget.nuPro!) + 1}  ${myController1.text} x ${myController2.text}");
                                             } else if (crearPruduccionPro
                                                     .creProducProv[
                                                         widget.nuPro!]
                                                     .tipoVentana ==
                                                 "Ventanas P-65") {
-                                              crearPruduccionPro.addP65(
+                                              crearPruduccionPro.updateVentana(
+                                                  Ventana(
+                                                      idProduccion: crearPruduccionPro
+                                                          .ventaTemp
+                                                          .idProduccion,
+                                                      idVentana: crearPruduccionPro
+                                                          .ventaTemp.idVentana,
+                                                      cantidaVia: (valueI == false)
+                                                          ? 0
+                                                          : 1,
+                                                      ancho: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController1
+                                                                  .text,
+                                                              value2),
+                                                      alto: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController2
+                                                                  .text,
+                                                              value3)),
                                                   crearPruduccionPro
-                                                      .converFracDesim(
-                                                    myController1.text,
-                                                    value2,
-                                                  ),
-                                                  crearPruduccionPro
-                                                      .converFracDesim(
-                                                          myController2.text,
-                                                          value3),
-                                                  (valueI == false) ? 0 : 1,
-                                                  widget.nuPro!);
+                                                      .creProducProv[widget.nuPro!]
+                                                      .tipoVentana!,widget.nuPro!,crearPruduccionPro.nuVenTem);
                                             } else if (crearPruduccionPro
                                                     .creProducProv[
                                                         widget.nuPro!]
                                                     .tipoVentana ==
                                                 "Ventanas P-92") {
-                                              crearPruduccionPro.addP92(
+                                              crearPruduccionPro.updateVentana(
+                                                  Ventana(
+                                                      idProduccion: crearPruduccionPro
+                                                          .ventaTemp
+                                                          .idProduccion,
+                                                      idVentana: crearPruduccionPro
+                                                          .ventaTemp.idVentana,
+                                                      cantidaVia: (valueI == false)
+                                                          ? 0
+                                                          : 1,
+                                                      ancho: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController1
+                                                                  .text,
+                                                              value2),
+                                                      alto: crearPruduccionPro
+                                                          .converFracDesim(
+                                                              myController2
+                                                                  .text,
+                                                              value3)),
                                                   crearPruduccionPro
-                                                      .converFracDesim(
-                                                          myController1.text,
-                                                          value2),
-                                                  crearPruduccionPro
-                                                      .converFracDesim(
-                                                          myController2.text,
-                                                          value3),
-                                                  (valueI == false) ? 0 : 1,
-                                                  widget.nuPro!);
+                                                      .creProducProv[widget.nuPro!]
+                                                      .tipoVentana!,widget.nuPro!,crearPruduccionPro.nuVenTem);
                                             }
 
                                             setState(() {
@@ -426,53 +434,32 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                       Radius.circular(15)),
                                   padding: EdgeInsets.symmetric(
                                       vertical: 13, horizontal: width * 0.06),
-                                  onPressed: (() {
-                                    if (crearPruduccionPro.coutVentanaByPro(
-                                            crearPruduccionPro.coutProduc()) !=
+                                  onPressed: (() async {
+                                     
+                                    if (crearPruduccionPro
+                                            .coutVentanaByPro(widget.nuPro!) !=
                                         0) {
-                                      showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return CupertinoAlertDialog(
-                                              title: const Text("Aviso"),
-                                              content: const Text(
-                                                  "Revisaste las medidas?"),
-                                              actions: [
-                                                CupertinoDialogAction(
-                                                    child: const Text("YES"),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        PageRouteBuilder(
-                                                          pageBuilder: (context,
-                                                              animation1,
-                                                              animation2) {
-                                                            return FadeTransition(
-                                                                opacity:
-                                                                    animation1,
-                                                                child:
-                                                                    ProduTerminada(
-                                                                  nuPro: crearPruduccionPro
-                                                                      .coutProduc(),
-                                                                  contVen: crearPruduccionPro
-                                                                      .coutVentanaByPro(
-                                                                          crearPruduccionPro
-                                                                              .coutProduc())
-                                                                      .toDouble(),
-                                                                ));
-                                                          },
-                                                        ),
-                                                      );
-                                                    }),
-                                                CupertinoDialogAction(
-                                                    child: const Text("NO"),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    })
-                                              ],
-                                            );
-                                          });
+                                      Navigator.of(context).push(
+                                        PageRouteBuilder(
+                                          pageBuilder: (context, animation1,
+                                              animation2) {
+                                          
+                                            return FadeTransition(
+                                                opacity: animation1,
+                                                child: ProduTerminada(
+                                                  nuPro: crearPruduccionPro
+                                                      .coutProduc(),
+                                                  contVen: crearPruduccionPro
+                                                      .coutVentanaByPro(
+                                                          crearPruduccionPro
+                                                              .coutProduc())
+                                                      .toDouble(),
+                                                ));
+                                                
+                                          },
+                                        ),
+                                      );
+                                      
                                     } else {
                                       showCupertinoDialog(
                                         context: context,
@@ -492,6 +479,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                         },
                                       );
                                     }
+                                  
                                   }),
                                   child: const Text('Ver Deglose'),
                                 ),
@@ -504,11 +492,12 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text("Todas las Medidad"),
+                    const Text("Todas las Medidad",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 126, 117, 117))),
                     const SizedBox(
                       height: 7,
                     ),
-                  
                     CardProduccPrimary(
                       nuPro: widget.nuPro!,
                       myController1: myController1,
@@ -521,6 +510,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
   }
 }
 
+// ignore: must_be_immutable
 class CardProduccPrimary extends StatelessWidget {
   TextEditingController? myController1, myController2;
   int nuPro;
@@ -535,6 +525,7 @@ class CardProduccPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final theme = Theme.of(context);
+    print("++++++++++$nuPro+++++${crearPruduccionPro.coutVentanaByPro(nuPro)}");
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: crearPruduccionPro.coutVentanaByPro(nuPro),
@@ -571,12 +562,8 @@ class CardProduccPrimary extends StatelessWidget {
                           endIndent: 1,
                         ),
                         Text(
-                          (crearPruduccionPro
-                                      .creProducProv[
-                                          crearPruduccionPro.coutProduc()]
-                                      .items[index]
-                                      .cabezalArferza![0]
-                                      .valor2 ==
+                          (crearPruduccionPro.creProducProv[nuPro].items[index]
+                                      .cabezalArferza![0].valor2 ==
                                   0
                               ? '2 Vi  '
                               : '3 Vi  '),
@@ -585,9 +572,8 @@ class CardProduccPrimary extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               color: Color.fromARGB(255, 87, 87, 87)),
                         ),
-
                         Text(
-                          "${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].alto!)}",
+                          "${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[nuPro].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[nuPro].items[index].alto!)}",
                           style: const TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
@@ -604,7 +590,7 @@ class CardProduccPrimary extends StatelessWidget {
                   bottom: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       // color: Colors.red,
                       width: 35,
                       height: 70,
@@ -615,23 +601,15 @@ class CardProduccPrimary extends StatelessWidget {
                               Navigator.of(context).pop();
                               myController1!.text = (crearPruduccionPro
                                   .toFracc(crearPruduccionPro
-                                      .creProducProv[
-                                          crearPruduccionPro.coutProduc()]
-                                      .items[index]
-                                      .ancho!)
+                                      .creProducProv[nuPro].items[index].ancho!)
                                   .toString());
                               myController2!.text = (crearPruduccionPro
                                   .toFracc(crearPruduccionPro
-                                      .creProducProv[
-                                          crearPruduccionPro.coutProduc()]
-                                      .items[index]
-                                      .alto!)
+                                      .creProducProv[nuPro].items[index].alto!)
                                   .toString());
                               crearPruduccionPro.pushventanainta(
                                   crearPruduccionPro
-                                      .creProducProv[
-                                          crearPruduccionPro.coutProduc()]
-                                      .items[index]);
+                                      .creProducProv[nuPro].items[index],index);
                               crearPruduccionPro.estadoEditVe(1);
                             },
                             trailingIcon: CupertinoIcons.pencil,
@@ -642,15 +620,12 @@ class CardProduccPrimary extends StatelessWidget {
                               Navigator.of(context).pop();
 
                               NotificationsService.showSnackbar(
-                                  "Ventana Eliminda ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[crearPruduccionPro.coutProduc()].items[index].alto!)}");
+                                  "Ventana Eliminda ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[nuPro].items[index].ancho!)} x ${crearPruduccionPro.toFracc(crearPruduccionPro.creProducProv[nuPro].items[index].alto!)}");
 
                               crearPruduccionPro.deleteVentana(
-                                  crearPruduccionPro.coutProduc(),
-                                  crearPruduccionPro
-                                      .creProducProv[
-                                          crearPruduccionPro.coutProduc()]
-                                      .items[index]
-                                      .idVentana);
+                                  nuPro,
+                                  crearPruduccionPro.creProducProv[nuPro]
+                                      .items[index].idVentana);
                             },
                             isDestructiveAction: true,
                             trailingIcon: CupertinoIcons.delete,

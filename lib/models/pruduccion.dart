@@ -97,10 +97,8 @@ class DetalleMater {
       cabeHoja,
       alfeHoja,
       jambaLavin,
-      jambaEngan,
-      cierre,
-      rueda,
-      goma;
+      jambaEngan;
+    
 
   DetalleMater(
     this.lateraMarco,
@@ -110,6 +108,16 @@ class DetalleMater {
     this.alfeHoja,
     this.jambaLavin,
     this.jambaEngan,
+   
+  );
+}
+class DetalleMater2 {
+  final double ?
+      cierre,
+      rueda,
+      goma;
+
+  DetalleMater2(
     this.cierre,
     this.rueda,
     this.goma,

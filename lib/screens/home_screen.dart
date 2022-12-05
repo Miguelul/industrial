@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:industrial/providers/db_provider.dart';
 import 'package:industrial/providers/validator_form.dart';
 import 'package:industrial/screens/crear_produc.dart';
 import 'package:industrial/screens/produ_terninada.dart';
-import 'package:industrial/services/products_service.dart';
 import 'package:industrial/widgets/search.dart';
 import 'package:provider/provider.dart';
 
@@ -42,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final tipoVentana = Provider.of<TipoVentana>(context);
     final crPruProv = Provider.of<CreProducProv>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
-    final productsService = Provider.of<ProductsService>(context);
-    // productsService.loadProducts();
+  
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
@@ -220,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           bottom: 20,
                                           child: Padding(
                                             padding: const EdgeInsets.all(15.0),
-                                            child: Container(
+                                            child: SizedBox(
                                               width: 95,
                                               child: Text(
                                                 tipoVentana
@@ -269,7 +266,6 @@ class CardProducc extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
-    print(crearPruduccionPro.coutProduc2());
     final theme = Theme.of(context);
     return ListView.builder(
         reverse: true,
@@ -322,7 +318,7 @@ class CardProducc extends StatelessWidget {
                               fontWeight: FontWeight.w100,
                               color: Color.fromARGB(255, 126, 117, 117)),
                         ),
-                        Container(
+                        SizedBox(
                           width: width * 0.65,
                           child: Text(
                             '${crearPruduccionPro.creProducProv[index].fecha}  ${crearPruduccionPro.creProducProv[index].tipoVentana}',
@@ -344,7 +340,7 @@ class CardProducc extends StatelessWidget {
                   bottom: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       // color: Colors.red,
                       width: 40,
                       height: 50,
@@ -386,9 +382,9 @@ class CardProducc extends StatelessWidget {
                                         CupertinoDialogAction(
                                             child: const Text("YES"),
                                             onPressed: () {
-                                              crearPruduccionPro.deleteProducc(
+                                              crearPruduccionPro.deleteProducc(index,
                                                   crearPruduccionPro
-                                                      .creProducProv[index].id);
+                                                      .creProducProv[index].id!);
                                               Navigator.of(context).pop();
                                             }),
                                         CupertinoDialogAction(

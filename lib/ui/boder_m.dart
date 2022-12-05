@@ -13,7 +13,7 @@ class BorderM {
       );
     } else {
       return Border.all(
-        color: Color.fromARGB(0, 255, 255, 255),
+        color: const Color.fromARGB(0, 255, 255, 255),
         width: 0,
       );
     }

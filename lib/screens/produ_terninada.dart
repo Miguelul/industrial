@@ -1,15 +1,14 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:draggable_fab/draggable_fab.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:industrial/models/pruduccion.dart';
-import 'package:industrial/screens/home_screen.dart';
 import 'package:industrial/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cre_produ_prov.dart';
+import '../providers/validator_form.dart';
 import '../ui/boder_m.dart';
 import '../widgets/addbar_termina.dart';
 
@@ -29,23 +28,37 @@ class _ProduTerminadaState extends State<ProduTerminada>
   @override
   Widget build(BuildContext context) {
     TabController tabController = TabController(length: 6, vsync: this);
-    // final crPruProv = Provider.of<CreProducProv>(context);
-    // double height =
-    //     0; //crPruProv.coutVentanaByPro(widget.nuPro).toDouble()! * 100;
 
-    print(widget.contVen);
-    // return FutureBuilder(
-    //     future: crPruProv.init(),
-    //     builder: (context, snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return const Center(child: CircularProgressIndicator());
-    //       } else {
     return WillPopScope(
       onWillPop: (() async {
         await Navigator.pushReplacementNamed(context, 'home');
         return false;
       }),
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          elevation: 3,
+          
+          backgroundColor: const Color.fromARGB(181, 21, 22, 22),
+          onPressed: () {
+            Navigator.of(context).push(
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) {
+                  return FadeTransition(
+                      opacity: animation1,
+                      child: ChangeNotifierProvider(
+                        create: (context) => ValidatorForm(),
+                        child: AfregarVentanas(
+                          nuPro: widget.nuPro,
+                        ),
+                      ));
+                },
+              ),
+            );
+          },
+          disabledElevation: 0,
+          child: const Icon(CupertinoIcons.pencil),
+        ),
         backgroundColor: Colors.white,
         body: CustomScrollView(
           physics: const BouncingScrollPhysics(
@@ -149,6 +162,7 @@ class _ProduTerminadaState extends State<ProduTerminada>
   }
 }
 
+// ignore: must_be_immutable
 class CardProduTerm extends StatefulWidget {
   final int nuPro;
   bool estado;
@@ -173,8 +187,6 @@ class _CardProduTermState extends State<CardProduTerm> {
     final crPruProv = Provider.of<CreProducProv>(context);
     final theme = Theme.of(context);
     int estadoVen = 0;
-    print(
-        "  ...........${crPruProv.coutProduc()}...${crPruProv.coutVentanaByPro(crPruProv.coutProduc())}");
     return ListView.builder(
         itemCount: crPruProv.coutVentanaByPro(widget.nuPro),
         physics: const NeverScrollableScrollPhysics(),
@@ -193,7 +205,7 @@ class _CardProduTermState extends State<CardProduTerm> {
               width: double.infinity,
               decoration: BoxDecoration(
                   color: ColorM.color(
-                      color: Color.fromARGB(178, 216, 250, 232),
+                      color: const Color.fromARGB(178, 216, 250, 232),
                       page: widget.select2!,
                       estado: estadoVen),
                   borderRadius: BorderRadius.circular(15),
@@ -450,11 +462,9 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       children: [
         Positioned.fill(
           top: 0 - shrinkOffset,
-          child: Container(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: child,
-            ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: child,
           ),
         )
       ],

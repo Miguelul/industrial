@@ -8,6 +8,8 @@ import 'login_screen.dart';
 
 
 class CheckAuthScreen extends StatelessWidget {
+  const CheckAuthScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +22,16 @@ class CheckAuthScreen extends StatelessWidget {
           future: authService.readToken(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
             
-            if ( !snapshot.hasData )            
-              return Text('');
+            if ( !snapshot.hasData ) {
+              return const Text('');
+            }
 
             if ( snapshot.data == '' ) {
               Future.microtask(() {
 
                 Navigator.pushReplacement(context, PageRouteBuilder(
-                  pageBuilder: ( _, __ , ___ ) => LoginScreen(),
-                  transitionDuration: Duration( seconds: 0)
+                  pageBuilder: ( _, __ , ___ ) => const LoginScreen(),
+                  transitionDuration: const Duration( seconds: 0)
                   )
                 );
 
@@ -39,8 +42,8 @@ class CheckAuthScreen extends StatelessWidget {
               Future.microtask(() {
 
                 Navigator.pushReplacement(context, PageRouteBuilder(
-                  pageBuilder: ( _, __ , ___ ) => HomeScreen(),
-                  transitionDuration: Duration( seconds: 0)
+                  pageBuilder: ( _, __ , ___ ) => const HomeScreen(),
+                  transitionDuration: const Duration( seconds: 0)
                   )
                 );
 

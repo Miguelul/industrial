@@ -1,5 +1,6 @@
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart' as sql;
@@ -98,7 +99,6 @@ class DBProvider {
     // Path de donde almacenaremos la base de datos
     Directory directory = await getApplicationDocumentsDirectory();
     final path = join(directory.path, 'producci1.db');
-    print(path);
     return sql.openDatabase(
       onConfigure: (database) async {
         await database.execute('PRAGMA foreign_keys = ON');
@@ -114,22 +114,17 @@ class DBProvider {
   static Future<int> insertProducc(ProduccionCre produccionCre) async {
     sql.Database? db = await instance.database;
     final idprodu = await db!.insert("produccion", produccionCre.toMap());
-    print('producion insertada en DB');
+  
     return idprodu;
   }
 
   static Future<int> insertVentana(Ventana ventana1) async {
     sql.Database? db = await instance.database;
-    try {
+  
       final idventana = await db!.insert("ventana", ventana1.toMap2());
-      print('Ventana insertada en DB');
 
       return idventana;
-    } catch (err) {
-      print(err);
-    }
-
-    return 8;
+  
   }
 
   static Future<int> insertDeglo(
@@ -146,9 +141,6 @@ class DBProvider {
     await db.insert("llavinEnganche", degLlaEn.toMap());
     await db.insert("anchoCrital", degAnCri.toMap());
     await db.insert("altoCrital", degAlCr.toMap());
-    print(await db.query('ventana'));
-    print(await db.query('cabezalArferza'));
-    print('Desglo Insertado en DB');
     return idventana;
   }
 
@@ -157,9 +149,6 @@ class DBProvider {
 
     final int idPro = await db!
         .delete("produccion", where: "idProduccion = ?", whereArgs: [id]);
-
-    print('Producion Borrada $id');
-
     return idPro;
   }
 
@@ -172,24 +161,15 @@ class DBProvider {
   }
 
   static Future<int> updateProducc(ProduccionCre produccionCre) async {
-    print(produccionCre.toMap());
     sql.Database? db = await instance.database;
     return db!.update("produccion", produccionCre.toMap(),
         where: "id = ?", whereArgs: [produccionCre.id]);
   }
 
   static Future<int> updateVenta(Ventana produccionCre) async {
-    print(
-        "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
     sql.Database? db = await instance.database;
-    print(produccionCre.toMap());
     final i = db!.update("ventana", produccionCre.toMap(),
         where: "IdVentana = ?", whereArgs: [produccionCre.idVentana]);
-
-    final List<Map<String, dynamic>> ventana =
-        await db.rawQuery('select * from ventana where idProduccion=2');
-    print(ventana);
-    print("Ventanata Editdad ${produccionCre.ancho} x ${produccionCre.alto}");
     return i;
   }
 

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -8,7 +7,7 @@ import 'package:http/http.dart' as http;
 class ProductsService extends ChangeNotifier {
   final String _baseUrl = 'industrial-e474b-default-rtdb.firebaseio.com';
 
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   bool isLoading = true;
 
@@ -23,7 +22,6 @@ class ProductsService extends ChangeNotifier {
     final Map<String, dynamic> productsMap = json.decode(resp.body);
 
     isLoading = false;
-    print(productsMap);
     return productsMap;
   }
 }

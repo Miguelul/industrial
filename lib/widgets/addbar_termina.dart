@@ -17,11 +17,10 @@ class AppBarD extends StatelessWidget {
   Widget build(BuildContext context) {
     final crPruProv = Provider.of<CreProducProv>(context);
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return SliverAppBar(
       backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       leading: CupertinoButton(
-        disabledColor: Color.fromARGB(255, 226, 225, 225),
+        disabledColor: const Color.fromARGB(255, 226, 225, 225),
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         padding: const EdgeInsets.all(7),
         onPressed: (() {
@@ -46,7 +45,7 @@ class AppBarD extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CupertinoButton(
-                color: Color.fromARGB(181, 21, 22, 22),
+                color: const Color.fromARGB(181, 21, 22, 22),
                 disabledColor: Colors.grey,
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
                 padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
@@ -75,7 +74,7 @@ class AppBarD extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: CupertinoButton(
-                color: Color.fromARGB(181, 21, 22, 22),
+                color: const Color.fromARGB(181, 21, 22, 22),
                 disabledColor: Colors.grey,
                 borderRadius: const BorderRadius.all(Radius.circular(25)),
                 padding: const EdgeInsets.symmetric(horizontal: 1, vertical: 2),
@@ -123,45 +122,42 @@ class AppBarD extends StatelessWidget {
             Positioned(
               left: 20,
               bottom: 30,
-              child: Container(
-                // color: Colors.grey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${crPruProv.creProducProv[nuPro].tipoVentana}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 63, 61, 61),
-                            fontSize: 20),
-                      ),
-                      const SizedBox(height: 15),
-                      Text(
-                        '${crPruProv.creProducProv[nuPro].fecha} ',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 68, 64, 64),
-                            fontSize: 15),
-                      ),
-                      Text(
-                        'Cliente: ${crPruProv.creProducProv[nuPro].cliente} ',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 68, 64, 64),
-                            fontSize: 15),
-                      ),
-                      Text(
-                        'Dirección:  ${crPruProv.creProducProv[nuPro].direccion!}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 68, 64, 64),
-                            fontSize: 15),
-                      ),
-                      Text(
-                        'Tel: ${crPruProv.creProducProv[nuPro].telefono}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 68, 64, 64),
-                            fontSize: 15),
-                      ),
-                    ]),
-              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${crPruProv.creProducProv[nuPro].tipoVentana}',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 63, 61, 61),
+                          fontSize: 20),
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      '${crPruProv.creProducProv[nuPro].fecha} ',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 68, 64, 64),
+                          fontSize: 15),
+                    ),
+                    Text(
+                      'Cliente: ${crPruProv.creProducProv[nuPro].cliente} ',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 68, 64, 64),
+                          fontSize: 15),
+                    ),
+                    Text(
+                      'Dirección:  ${crPruProv.creProducProv[nuPro].direccion!}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 68, 64, 64),
+                          fontSize: 15),
+                    ),
+                    Text(
+                      'Tel: ${crPruProv.creProducProv[nuPro].telefono}',
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 68, 64, 64),
+                          fontSize: 15),
+                    ),
+                  ]),
             ),
             // const DecoratedBox(
             //   decoration: BoxDecoration(

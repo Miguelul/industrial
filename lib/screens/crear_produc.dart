@@ -43,6 +43,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
      final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: (() async {
+        await Navigator.pushReplacementNamed(context, 'home');
         return false;
       }),
       child: Scaffold(
@@ -60,7 +61,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
               ));
             },
             icon: const Icon(Icons.arrow_back_ios_new),
-            color: Color.fromARGB(31, 10, 10, 10),
+            color: const Color.fromARGB(31, 10, 10, 10),
           ),
           title: const Center(
             child: Text(
@@ -85,7 +86,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                         ? tipoVentana.ventanasD[1].nombre
                         : tipoVentana.indexTipo == 2
                             ? tipoVentana.ventanasD[2].nombre
-                            : '',style: TextStyle(
+                            : '',style: const TextStyle(
                               color: Color.fromARGB(255, 83, 83, 80),
                               fontSize: 20,
                               fontWeight: FontWeight.bold
@@ -164,7 +165,6 @@ class _CrearProduccionState extends State<CrearProduccion> {
                     var now1 = DateTime.now();
                     String now =
                         DateFormat("dd/MM/yyyy  hh:mm").format(now1).toString();
-                    print(validatorForm.isValidForm());
                     if (validatorForm.isValidForm() == true) {
                       if (tipoVentana.indexTipo == 0) {
                         crearPruduccionPro.addProducc(ProduccionCre(
