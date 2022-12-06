@@ -114,17 +114,16 @@ class DBProvider {
   static Future<int> insertProducc(ProduccionCre produccionCre) async {
     sql.Database? db = await instance.database;
     final idprodu = await db!.insert("produccion", produccionCre.toMap());
-  
+
     return idprodu;
   }
 
   static Future<int> insertVentana(Ventana ventana1) async {
     sql.Database? db = await instance.database;
-  
-      final idventana = await db!.insert("ventana", ventana1.toMap2());
 
-      return idventana;
-  
+    final idventana = await db!.insert("ventana", ventana1.toMap2());
+    print(await db.query("ventana"));
+    return idventana;
   }
 
   static Future<int> insertDeglo(

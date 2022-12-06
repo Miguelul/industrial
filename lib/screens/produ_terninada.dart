@@ -287,7 +287,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                           ),
                           (crPruProv.creProducProv[widget.nuPro].items[index].cantidaVia !=
                                       0 &&
-                                  widget.select == 5)
+                                  widget.select == 5 && crPruProv.creProducProv[widget.nuPro].tipoVentana !="Ventanas P-65")
                               ? Text(
                                   '${crPruProv.toFracc(crPruProv.verDeglose(widget.select2!, widget.nuPro, index))}',
                                   style: const TextStyle(

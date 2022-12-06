@@ -37,8 +37,17 @@ class CreProducProv extends ChangeNotifier {
   }
 
   addProducc(ProduccionCre produccion) async {
-    _creProducProv.add(produccion);
     idProdu = await DBProvider.insertProducc(produccion);
+    _creProducProv.add(ProduccionCre(
+      id: idProdu,
+      fecha: produccion.fecha,
+      tipoVentana: produccion.tipoVentana,
+      cliente: produccion.cliente,
+      direccion: produccion.direccion,
+      telefono: produccion.telefono,
+      items: produccion.items
+       ));
+  
   }
 
   sumMateriales(int nuPro, int totalDe) {
@@ -62,7 +71,7 @@ class CreProducProv extends ChangeNotifier {
       15: 0
     };
     for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
-      if (creProducProv[nuPro].items[index].cabezalArferza![0].valor2 == 0) {
+      if (creProducProv[nuPro].items[index].cantidaVia == 0) {
         n++;
         total[1] = total[1]! +
             creProducProv[nuPro].items[index].laterales![0].valor * 2;
@@ -287,12 +296,30 @@ class CreProducProv extends ChangeNotifier {
   }
 
   addTradi(double ancho, double alto, int cantidaVia, int nuPro) async {
+      
+
+
+
     int idVen = await DBProvider.insertVentana(Ventana(
         idProduccion: _creProducProv[nuPro].id,
         ancho: ancho,
         alto: alto,
         cantidaVia: cantidaVia));
+      
     Ventana medida = degloTradi(ancho, alto, cantidaVia, idVen);
+  Ventana ventaTem = Ventana(
+      idVentana: idVen,
+      cantidaVia: cantidaVia,
+      idProduccion: _creProducProv[nuPro].id,
+      ancho: ancho,
+      alto: alto,
+      laterales: medida.laterales,
+      cabezarRiel: medida.cabezarRiel,
+      cabezalArferza: medida.cabezalArferza,
+      llavinEnganche: medida.llavinEnganche,
+      anchoCrital: medida.anchoCrital,
+      altoCrital: medida.altoCrital
+    );
 
     await DBProvider.insertDeglo(
         LisPropiVen(
@@ -311,12 +338,13 @@ class CreProducProv extends ChangeNotifier {
         LisPropiVen(
             medida.altoCrital![0].valor, medida.altoCrital![0].estado, idVen));
 
-    _creProducProv[nuPro].items.add(medida);
+    _creProducProv[nuPro].items.add(ventaTem);
     notifyListeners();
     init(2);
   }
 
   degloP65(double ancho, double alto, int cantidaVia, int idVent) {
+  
     Ventana medida = Ventana(
       ancho: ancho,
       alto: alto,
@@ -352,8 +380,21 @@ class CreProducProv extends ChangeNotifier {
         ancho: ancho,
         alto: alto,
         cantidaVia: cantidaVia));
+          print(".........................$cantidaVia");
     Ventana medida = degloP65(ancho, alto, cantidaVia, idVen);
-
+ Ventana ventaTem = Ventana(
+      idVentana: idVen,
+      cantidaVia: cantidaVia,
+      idProduccion: _creProducProv[nuPro].id,
+      ancho: ancho,
+      alto: alto,
+      laterales: medida.laterales,
+      cabezarRiel: medida.cabezarRiel,
+      cabezalArferza: medida.cabezalArferza,
+      llavinEnganche: medida.llavinEnganche,
+      anchoCrital: medida.anchoCrital,
+      altoCrital: medida.altoCrital
+    );
     await DBProvider.insertDeglo(
         LisPropiVen(
             medida.laterales![0].valor, medida.laterales![0].estado, idVen),
@@ -371,7 +412,7 @@ class CreProducProv extends ChangeNotifier {
         LisPropiVen(
             medida.altoCrital![0].valor, medida.altoCrital![0].estado, idVen));
 
-    _creProducProv[nuPro].items.add(medida);
+    _creProducProv[nuPro].items.add(ventaTem);
     notifyListeners();
     init(2);
   }
