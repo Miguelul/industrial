@@ -13,7 +13,9 @@ import 'models/pruduccion.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final List<ProduccionCre> creProducProv = [];
+
   creProducProv.addAll(await DBProvider.getProducc());
+
   runApp(
     MultiProvider(
       providers: [
@@ -30,7 +32,6 @@ void main() async {
       child: const MyApp(),
     ),
   );
-
 }
 
 class MyApp extends StatelessWidget {
