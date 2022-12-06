@@ -66,27 +66,35 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            leading: CupertinoButton(
-              padding: const EdgeInsets.only(left: 20, right: 0),
-              onPressed: () async {
-                await Navigator.pushReplacementNamed(context, 'home');
+            leading:  CupertinoButton(
+        disabledColor: const Color.fromARGB(255, 226, 225, 225),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        padding: const EdgeInsets.all(7),
+        onPressed: (() async{
+            await Navigator.pushReplacementNamed(context, 'home');
                 myController1.text = "";
                 myController2.text = "";
 
                 crearPruduccionPro.estadoEditVe(0);
-              },
-              child: const Text("Back"),
-            ),
+        }),
+        child: const Icon(
+          CupertinoIcons.back,
+          color: Color.fromARGB(255, 201, 196, 196),
+          size: 25,
+        ),
+      ),
+            
+            
+       
             // automaticallyImplyLeading: false,
-            title: const Center(
-              child: Text(
-                'Agregar Medidas',
+            title: const Text(
+                'Control de Medidas',
                 style: TextStyle(
                     fontWeight: FontWeight.w100,
-                    color: Color.fromARGB(255, 255, 255, 255)),
+                    color: Color.fromARGB(255, 105, 104, 104)),
               ),
             ),
-          ),
+      
           body: SingleChildScrollView(
             child: Container(
                 color: const Color.fromARGB(255, 255, 255, 255),
@@ -119,6 +127,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                     "${crearPruduccionPro.creProducProv[widget.nuPro!].cliente}          ${crearPruduccionPro.creProducProv[widget.nuPro!].tipoVentana}",
                                     style: const TextStyle(
                                         fontSize: 17,
+                                        fontWeight: FontWeight.w100,
                                         color:
                                             Color.fromARGB(255, 167, 160, 160)),
                                   ),
@@ -131,6 +140,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                         "Tres Vías",
                                         style: TextStyle(
                                             fontSize: 12,
+                                              fontWeight: FontWeight.w100,
                                             color: Color.fromARGB(
                                                 255, 126, 117, 117)),
                                       ),
@@ -387,6 +397,8 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                       .tipoVentana!,
                                                   widget.nuPro!,
                                                   crearPruduccionPro.nuVenTemk);
+                                              NotificationsService.showSnackbar(
+                                                  "Ventana Editada ${crearPruduccionPro.coutVentanaByPro(widget.nuPro!) + 1}  ${myController1.text} x ${myController2.text}");
                                             } else if (crearPruduccionPro
                                                     .creProducProv[
                                                         widget.nuPro!]
@@ -417,6 +429,8 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                       .tipoVentana!,
                                                   widget.nuPro!,
                                                   crearPruduccionPro.nuVenTemk);
+                                              NotificationsService.showSnackbar(
+                                                  "Ventana Editada ${crearPruduccionPro.coutVentanaByPro(widget.nuPro!) + 1}  ${myController1.text} x ${myController2.text}");
                                             }
 
                                             setState(() {
@@ -493,9 +507,11 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Text("Todas las Medidad",
+                    const Text("Todas las Medidas",
                         style: TextStyle(
+                            fontWeight: FontWeight.w100,
                             color: Color.fromARGB(255, 126, 117, 117))),
+                            
                     const SizedBox(
                       height: 7,
                     ),
@@ -613,9 +629,8 @@ class CardProduccPrimary extends StatelessWidget {
                                     .toString());
                                 crearPruduccionPro.pushventanainta(
                                     crearPruduccionPro
-                                    .creProducProv[nuPro].items[index],
-                                    index
-                                    );
+                                        .creProducProv[nuPro].items[index],
+                                    index);
                                 crearPruduccionPro.estadoEditVe(1);
                               },
                               trailingIcon: CupertinoIcons.pencil,

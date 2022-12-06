@@ -26,7 +26,9 @@ class PdfInvoiceApi {
 }
 
 Widget buildInvoice(ProduccionCre invoice) {
+  int n = 0;
   final headers = [
+    'No.',
     'Alto',
     'Ancho',
     'Lateral',
@@ -37,14 +39,16 @@ Widget buildInvoice(ProduccionCre invoice) {
     'Alto'
   ];
   final data = invoice.items.map((item) {
+    n++;
     return [
+      n ,
       toFracc(item.ancho!),
       toFracc(item.alto!),
-      toFracc(item.laterales![0].valor),
-      toFracc(item.cabezarRiel![0].valor),
-      toFracc(item.cabezalArferza![0].valor!),
-      toFracc(item.llavinEnganche![0].valor),
-      toFracc(item.anchoCrital![0].valor),
+      "2       ${toFracc(item.laterales![0].valor)}",
+      "1       ${toFracc(item.cabezarRiel![0].valor)}",
+      "2       ${toFracc(item.cabezalArferza![0].valor!)}${item.cantidaVia != 0 ? "\n 1       ${toFracc(item.cabezalArferza![0].valor2!)}" : ''}",
+      "${item.cantidaVia == 0 ? '2' : '3'}       ${toFracc(item.llavinEnganche![0].valor)}",
+      "${item.cantidaVia == 0 ? '2' : '3'}       ${toFracc(item.anchoCrital![0].valor)}",
       toFracc(item.altoCrital![0].valor),
     ];
   }).toList();
@@ -52,12 +56,12 @@ Widget buildInvoice(ProduccionCre invoice) {
   return Table.fromTextArray(
     headers: headers,
     data: data,
-    border: null,
+    // border: null,
     headerStyle: TextStyle(fontWeight: FontWeight.bold),
     headerDecoration: const BoxDecoration(color: PdfColors.grey300),
     cellHeight: 30,
     cellAlignments: {
-      0: Alignment.centerLeft,
+      0: Alignment.center,
       1: Alignment.centerRight,
       2: Alignment.centerRight,
       3: Alignment.centerRight,
@@ -65,201 +69,220 @@ Widget buildInvoice(ProduccionCre invoice) {
       5: Alignment.centerRight,
       6: Alignment.centerRight,
       7: Alignment.centerRight,
+      8: Alignment.centerRight,
     },
+
+    border: TableBorder.all(color: PdfColors.grey300),
   );
 }
 
 Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
     DetalleMater detaVe2, DetalleMater2 deta2) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start, 
-    children: [
-       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //  crossAxisAlignment: CrossAxisAlignment.center,
-       children: [
-        Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  return Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+    Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //  crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'ORDEN DE PRODUCCION',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'ORDEN DE PRODUCCION',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 0.2 * PdfPageFormat.cm),
+              Text(
+                '${invoice.tipoVentana}',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 0.8 * PdfPageFormat.cm),
+              Text("Orden No. :  ${invoice.id!}"),
+              Text("CLIENTE :  ${invoice.cliente!}"),
+              Text("LOCALIDAD :  ${invoice.direccion!}"),
+              Text("FECHA :  ${invoice.fecha!}"),
+              Text("TELEFONO :  ${invoice.telefono!}"),
+              SizedBox(height: 0.8 * PdfPageFormat.cm),
+            ],
           ),
-          SizedBox(height: 0.2 * PdfPageFormat.cm),
-          Text(
-            '${invoice.tipoVentana}',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 0.8 * PdfPageFormat.cm),
-          Text("Orden No. :  ${invoice.id!}"),
-          Text("CLIENTE :  ${invoice.cliente!}"),
-          Text("LOCALIDAD :  ${invoice.direccion!}"),
-          Text("FECHA :  ${invoice.fecha!}"),
-          Text("TELEFONO :  ${invoice.telefono!}"),
-          SizedBox(height: 0.8 * PdfPageFormat.cm),
-        ],
-      ),
+          Column(children: [
+            SizedBox(
+              height: 64,
+            ),
+            SizedBox(
+                height: 200,
+                width: 150,
+                child: Table(
+                  defaultColumnWidth: const IntrinsicColumnWidth(
+                    flex: 1,
+                  ),
+                  tableWidth: TableWidth.min,
+                  border: TableBorder.all(color: PdfColors.grey300),
+                  children: [
+                    TableRow(
+                      children: [
+                        Padding(
+                          child: Text(
+                            'Goma',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                          ),
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        Text(
+                          "${deta2.goma}",
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          child: Text(
+                            'Rueda',
+                            textAlign: TextAlign.center,
+                             style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                          ),
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        Text(
+                          "${deta2.rueda}",
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    TableRow(
+                      children: [
+                        Padding(
+                          child: Text(
+                            'Cierre',
+                            textAlign: TextAlign.center,
+                             style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                          ),
+                          padding: const EdgeInsets.all(5),
+                        ),
+                        Text(
+                          "${deta2.cierre}",
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
+          ]),
+          SizedBox(
+              height: 150,
+              width: 270,
+              child: Table(
+                
+                defaultColumnWidth: const IntrinsicColumnWidth(
+                  flex: 1,
+                ),
+                tableWidth: TableWidth.min,
           
-     Column(
-      children: [
-        SizedBox(
-          height: 64,
-          ),
-      SizedBox(
-          height: 200,
-          width: 150,
-          child: Table(
-            defaultColumnWidth: const IntrinsicColumnWidth(
-              flex: 1,
-            ),
-            tableWidth: TableWidth.min,
-            border: TableBorder.all(color: PdfColors.black),
-            children: [
-              TableRow(
+                border: TableBorder.all(color: PdfColors.grey300),
                 children: [
-                  Padding(
-                    child: Text(
-                      'Goma',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
+                  TableRow(
+                    children: [
+                      Padding(
+                        child: Text(
+                          'Materirales',
+                          textAlign: TextAlign.center,
+                           style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                        ),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      Padding(
+                        child: Text(
+                          '2 Vías',
+                          textAlign: TextAlign.center,
+                           style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                        ),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      Padding(
+                        child: Text(
+                          '3 Vías',
+                          textAlign: TextAlign.center,
+                           style: TextStyle(
+                              fontWeight: FontWeight.bold
+                            )
+                        ),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "${deta2.goma}",
-                    textAlign: TextAlign.center,
+                  TableRow(
+                    children: [
+                      Text("Laterales Marco"),
+                      Text("${detaVe1.lateraMarco}"),
+                      Text("${detaVe2.lateraMarco}"),
+                    ],
                   ),
+                  TableRow(
+                    children: [
+                      Text('Cabezal Marco'),
+                      Text('${detaVe1.cabezaMarco}'),
+                      Text('${detaVe2.cabezaMarco}'),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      Text(
+                        'Riel Marco',
+                      ),
+                      Text('${detaVe1.rielMarco}'),
+                      Text('${detaVe2.rielMarco}'),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      Text(
+                        'Cabezal Hojas',
+                      ),
+                      Text('${detaVe1.cabeHoja}'),
+                      Text('${detaVe2.cabeHoja}'),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      Text(
+                        'Alfeizal Hojas ',
+                      ),
+                      Text('${detaVe1.alfeHoja}'),
+                      Text('${detaVe2.alfeHoja}'),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      Text(
+                        'Jambas Llavín',
+                      ),
+                      Text('${detaVe1.jambaLavin}'),
+                      Text('${detaVe2.jambaLavin}'),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      Text(
+                        'Jambas Enganche',
+                      ),
+                      Text('${detaVe1.jambaEngan}'),
+                      Text('${detaVe2.jambaEngan}'),
+                    ],
+                  )
                 ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    child: Text(
-                      'Rueda',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                  ),
-                  Text(
-                    "${deta2.rueda}",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    child: Text(
-                      'Cierre',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                  ),
-                  Text(
-                    "${deta2.cierre}",
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ],
-          )),
-     ]),
-      SizedBox(
-          height: 150,
-          width: 270,
-          child: Table(
-            defaultColumnWidth: const IntrinsicColumnWidth(
-              flex: 1,
-            ),
-            tableWidth: TableWidth.min,
-            border: TableBorder.all(color: PdfColors.black),
-            children: [
-              TableRow(
-                children: [
-                  Padding(
-                    child: Text(
-                      'Materirales',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                  ),
-                  Padding(
-                    child: Text(
-                      '2 Vias',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                  ),
-                  Padding(
-                    child: Text(
-                      '3 Vias',
-                      textAlign: TextAlign.center,
-                    ),
-                    padding: const EdgeInsets.all(5),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text("Laterales Marco"),
-                  Text("${detaVe1.lateraMarco}"),
-                   Text("${detaVe2.lateraMarco}"),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text('Cabezal Marco'),
-                  Text('${detaVe1.cabezaMarco}'),
-                  Text('${detaVe2.cabezaMarco}'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Riel Marco',
-                  ),
-                  Text('${detaVe1.rielMarco}'),
-                  Text('${detaVe2.rielMarco}'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Cabezal Hojas',
-                  ),
-                  Text('${detaVe1.cabeHoja}'),
-                  Text('${detaVe2.cabeHoja}'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Alfeizal Hojas ',
-                  ),
-                  Text('${detaVe1.alfeHoja}'),
-                  Text('${detaVe2.alfeHoja}'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Jambas Llavín',
-                  ),
-                  Text('${detaVe1.jambaLavin}'),
-                  Text('${detaVe2.jambaLavin}'),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Text(
-                    'Jambas Enganche',
-                  ),
-                  Text('${detaVe1.jambaEngan}'),
-                  Text('${detaVe2.jambaEngan}'),
-                ],
-              )
-            ],
-          ))
-   
-    ])
+              ))
+        ])
   ]);
 }
 

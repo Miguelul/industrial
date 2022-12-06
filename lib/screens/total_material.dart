@@ -22,15 +22,15 @@ class TotalMaterial extends StatelessWidget {
             Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_ios_new),
-          color: const Color.fromARGB(31, 10, 10, 10),
+          color: const Color.fromARGB(255, 201, 196, 196),
         ),
-        title: const Center(
-          child: Text(
+        title: 
+           const Text(
             'Detalles de Materiales',
             style: TextStyle(
                 fontWeight: FontWeight.w100,
                 color: Color.fromARGB(255, 0, 0, 0)),
-          ),
+        
         ),
       ),
       body: SingleChildScrollView(

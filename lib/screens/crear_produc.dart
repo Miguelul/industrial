@@ -12,7 +12,6 @@ import '../providers/cre_ventana.dart';
 import '../ui/input_decorations.dart';
 
 class CrearProduccion extends StatefulWidget {
-
   const CrearProduccion({Key? key}) : super(key: key);
 
   @override
@@ -41,7 +40,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
     final crearPruduccionPro = Provider.of<CreProducProv>(context);
     final tipoVentana = Provider.of<TipoVentana>(context);
     final validatorForm = Provider.of<ValidatorForm>(context);
-     final theme = Theme.of(context);
+    final theme = Theme.of(context);
     return WillPopScope(
       onWillPop: (() async {
         await Navigator.pushReplacementNamed(context, 'home');
@@ -54,7 +53,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              Navigator.pushReplacement(context ,PageRouteBuilder(
+              Navigator.pushReplacement(context, PageRouteBuilder(
                 pageBuilder: (context, animation1, animation2) {
                   return FadeTransition(
                       opacity: animation1, child: const HomeScreen());
@@ -62,15 +61,13 @@ class _CrearProduccionState extends State<CrearProduccion> {
               ));
             },
             icon: const Icon(Icons.arrow_back_ios_new),
-            color: const Color.fromARGB(31, 10, 10, 10),
+            color: const Color.fromARGB(255, 201, 196, 196),
           ),
-          title: const Center(
-            child: Text(
-              'Nueva Producción',
-              style: TextStyle(
-                  fontWeight: FontWeight.w100,
-                  color: Color.fromARGB(255, 58, 54, 54)),
-            ),
+          title: const Text(
+            'Nueva Producción',
+            style: TextStyle(
+                fontWeight: FontWeight.w100,
+                color: Color.fromARGB(255, 58, 54, 54)),
           ),
         ),
         body: Container(
@@ -81,17 +78,22 @@ class _CrearProduccionState extends State<CrearProduccion> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
               child: Column(children: [
-                Text(tipoVentana.indexTipo == 0
-                    ? tipoVentana.ventanasD[0].nombre
-                    : tipoVentana.indexTipo == 1
-                        ? tipoVentana.ventanasD[1].nombre
-                        : tipoVentana.indexTipo == 2
-                            ? tipoVentana.ventanasD[2].nombre
-                            : '',style: const TextStyle(
-                              color: Color.fromARGB(255, 138, 138, 133),
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                            )),
+                Text(
+                    tipoVentana.indexTipo == 0
+                        ? tipoVentana.ventanasD[0].nombre
+                        : tipoVentana.indexTipo == 1
+                            ? tipoVentana.ventanasD[1].nombre
+                            : tipoVentana.indexTipo == 2
+                                ? tipoVentana.ventanasD[2].nombre
+                                : '',
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 138, 138, 133),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w100,
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
                 Form(
                   key: validatorForm.formKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -107,7 +109,8 @@ class _CrearProduccionState extends State<CrearProduccion> {
                           decoration: InputDecorations.authInputDecoration(
                               hintText: '',
                               labelText: 'Nombre del Cliente',
-                              prefixIcon: CupertinoIcons.person_alt_circle_fill),
+                              prefixIcon:
+                                  CupertinoIcons.person_alt_circle_fill),
                           validator: (value) {
                             return (value!.isNotEmpty)
                                 ? null
@@ -155,7 +158,9 @@ class _CrearProduccionState extends State<CrearProduccion> {
                     ],
                   ),
                 ),
-
+                const SizedBox(
+                  height: 12,
+                ),
                 CupertinoButton(
                   color: theme.primaryColor,
                   disabledColor: Colors.grey,
@@ -210,27 +215,6 @@ class _CrearProduccionState extends State<CrearProduccion> {
                   }),
                   child: const Text('Siguiente'),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // CupertinoButton(
-                //   child: Text('Ver Data'),
-                //   color: CupertinoColors.activeBlue,
-                //   disabledColor: Colors.grey,
-                //   borderRadius: BorderRadius.all(Radius.circular(15)),
-                //   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                //   onPressed: (() {}),
-                // ),
-                // SizedBox(
-                //   height: 15,
-                // ),
-                // ElevatedButton.icon(
-                //     onPressed: (() {
-                //       // creProducProv.input = myController.text;
-                //       Navigator.pushReplacementNamed(context, 'home');
-                //     }),
-                //     icon: Icon(Icons.backpack),
-                //     label: Text('Atrás')),
               ]),
             ),
           ),

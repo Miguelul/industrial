@@ -169,7 +169,6 @@ class CreProducProv extends ChangeNotifier {
       ventana = degloTradi(
           ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
     } else if (tipoVeta == "Ventanas P-65") {
-      print(ventana.idVentana);
       ventana = degloP65(
           ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
     } else if (tipoVeta == "Ventanas P-92") {
@@ -188,7 +187,6 @@ class CreProducProv extends ChangeNotifier {
         llavinEnganche: ventana.llavinEnganche,
         anchoCrital: ventana.anchoCrital,
         altoCrital: ventana.altoCrital);
-    print(_creProducProv[nuPro].items[nuVen].cantidaVia);
       _creProducProv[nuPro].items[nuVen] = ventanaFinal;
     notifyListeners();
 
@@ -284,7 +282,7 @@ class CreProducProv extends ChangeNotifier {
       alto: alto,
       laterales: [LisPropiVen(alto - 0.5, 0, idVent)],
       cabezarRiel: (cantidaVia == 0)
-          ? [LisPropiVen(ancho - 0.5, 0, idVent)]
+          ? [LisPropiVen(ancho - 0.25, 0, idVent)]
           : [LisPropiVen(ancho - 0.25, 0, idVent)],
       cabezalArferza: (cantidaVia == 0)
           ? [
@@ -303,8 +301,8 @@ class CreProducProv extends ChangeNotifier {
             ],
       llavinEnganche: [LisPropiVen(alto - 0.875, 0, idVent)],
       anchoCrital: (cantidaVia == 0)
-          ? [LisPropiVen(ancho / 2 - 2.0625, 0, idVent)]
-          : [LisPropiVen((ancho / 3) - (1.5), 0, idVent)],
+          ? [LisPropiVen((ancho -4.125) /2, 0, idVent)]
+          : [LisPropiVen((ancho -4.625 ) /(3), 0, idVent)],
       altoCrital: [LisPropiVen(alto - 4, 0, idVent)],
     );
     return medida;
@@ -361,7 +359,7 @@ class CreProducProv extends ChangeNotifier {
       cabezalArferza: (cantidaVia == 0)
           ? [
               LisPropiVen3(
-                  valor: (ancho - 1.125) / 2,
+                  valor: (ancho - 1.25) / 2,
                   valor2: 0,
                   estado: 0,
                   idVentana: idVent)
@@ -375,7 +373,7 @@ class CreProducProv extends ChangeNotifier {
             ],
       llavinEnganche: [LisPropiVen(alto - 2.125, 0, idVent)],
       anchoCrital: (cantidaVia == 0)
-          ? [LisPropiVen(ancho / 2 - 6.875, 0, idVent)]
+          ? [LisPropiVen((ancho -6.5)/ 2, 0, idVent)]
           : [LisPropiVen((ancho - 7.8125) / 3, 0, idVent)],
       altoCrital: [LisPropiVen(alto - 5, 0, idVent)],
     );

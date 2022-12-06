@@ -38,7 +38,6 @@ class _ProduTerminadaState extends State<ProduTerminada>
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
           elevation: 3,
-          
           backgroundColor: const Color.fromARGB(181, 21, 22, 22),
           onPressed: () {
             Navigator.of(context).push(
@@ -244,10 +243,11 @@ class _CardProduTermState extends State<CardProduTerm> {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        (crPruProv.creProducProv[widget.nuPro].items[index].cantidaVia ==
+                        (crPruProv.creProducProv[widget.nuPro].items[index]
+                                    .cantidaVia ==
                                 0
                             ? ''
-                            : '3 Vi  '),
+                            : '3V   '),
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -261,7 +261,11 @@ class _CardProduTermState extends State<CardProduTerm> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                '${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}',
+                                '${widget.select==3? '2 ': widget.select==4?'1 ': widget.select==5?'2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==0 ? '2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==1?'3 ': widget.select==7 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==0 ? '2 ':widget.select==7 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==1?'3 ':''}  ${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}',
                                 style: const TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
@@ -285,11 +289,15 @@ class _CardProduTermState extends State<CardProduTerm> {
                               ),
                             ],
                           ),
-                          (crPruProv.creProducProv[widget.nuPro].items[index].cantidaVia !=
+                          (crPruProv.creProducProv[widget.nuPro].items[index]
+                                          .cantidaVia !=
                                       0 &&
-                                  widget.select == 5 && crPruProv.creProducProv[widget.nuPro].tipoVentana !="Ventanas P-65")
+                                  widget.select == 5 &&
+                                  crPruProv.creProducProv[widget.nuPro]
+                                          .tipoVentana ==
+                                      "Ventanas Tradicional")
                               ? Text(
-                                  '${crPruProv.toFracc(crPruProv.verDeglose(widget.select2!, widget.nuPro, index))}',
+                                  '1   ${crPruProv.toFracc(crPruProv.verDeglose(widget.select2!, widget.nuPro, index))}',
                                   style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
