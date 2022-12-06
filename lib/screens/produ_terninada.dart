@@ -244,8 +244,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        (crPruProv.creProducProv[widget.nuPro].items[index]
-                                    .cabezalArferza![0].valor2 ==
+                        (crPruProv.creProducProv[widget.nuPro].items[index].cantidaVia ==
                                 0
                             ? ''
                             : '3 Vi  '),
@@ -286,8 +285,7 @@ class _CardProduTermState extends State<CardProduTerm> {
                               ),
                             ],
                           ),
-                          (crPruProv.creProducProv[widget.nuPro].items[index]
-                                          .cabezalArferza![0].valor2 !=
+                          (crPruProv.creProducProv[widget.nuPro].items[index].cantidaVia !=
                                       0 &&
                                   widget.select == 5)
                               ? Text(
