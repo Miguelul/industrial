@@ -12,6 +12,7 @@ import '../providers/cre_ventana.dart';
 import '../ui/input_decorations.dart';
 
 class CrearProduccion extends StatefulWidget {
+
   const CrearProduccion({Key? key}) : super(key: key);
 
   @override

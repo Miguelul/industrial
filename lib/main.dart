@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:industrial/providers/cre_produ_prov.dart';
 import 'package:industrial/providers/cre_ventana.dart';
+import 'package:industrial/providers/db_provider.dart';
 import 'package:industrial/screens/screens.dart';
 import 'package:industrial/services/auth_service.dart';
 import 'package:industrial/services/notifications_service.dart';
 import 'package:industrial/services/products_service.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'models/pruduccion.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final List<ProduccionCre> creProducProv = [];
+  creProducProv.addAll(await DBProvider.getProducc());
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
             create: (_) => TipoVentana(), child: const HomeScreen()),
         ChangeNotifierProvider(
-            create: (_) => CreProducProv(), child: const CrearProduccion()),
-        ChangeNotifierProvider(
-            create: (context) => CreProducProv(), child: AfregarVentanas()),
+            create: (_) => CreProducProv(creProTem: creProducProv),
+            child: const HomeScreen()),
+        // ChangeNotifierProvider(
+        //     create: (context) => CreProducProv(), child: AfregarVentanas()),
         ChangeNotifierProvider(create: (_) => AuthService()),
-         ChangeNotifierProvider(create: ( _ ) => ProductsService() ),
+        ChangeNotifierProvider(create: (_) => ProductsService()),
       ],
       child: const MyApp(),
     ),
   );
+
 }
 
 class MyApp extends StatelessWidget {
@@ -35,19 +43,19 @@ class MyApp extends StatelessWidget {
       title: 'Productos App',
       initialRoute: 'checking',
       routes: {
-        'checking': ( _ ) => const CheckAuthScreen(),
+        'checking': (_) => const CheckAuthScreen(),
         'home': (_) => const HomeScreen(),
         'crearProduc': (_) => const CrearProduccion(),
         'login': (_) => const LoginScreen(),
       },
       scaffoldMessengerKey: NotificationsService.messengerKey,
-      theme: ThemeData( 
+      theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
-        //  primarySwatch: Colors.blue,
-        
-         primaryColor: const Color.fromARGB(255, 39, 149, 176)
-        //  CupertinoColors.activeBlue
-      ),
+          //  primarySwatch: Colors.blue,
+
+          primaryColor: const Color.fromARGB(255, 39, 149, 176)
+          //  CupertinoColors.activeBlue
+          ),
     );
   }
 }

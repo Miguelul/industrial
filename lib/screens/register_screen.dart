@@ -134,7 +134,7 @@ class _LoginForm extends StatelessWidget {
                               pageBuilder: (context, animation1, animation2) {
                                 return FadeTransition(
                                   opacity: animation1,
-                                  child: const HomeScreen(),
+                                  child:  const HomeScreen(),
                                 );
                               },
                             ),

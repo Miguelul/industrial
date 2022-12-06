@@ -1,12 +1,25 @@
 import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
+
 import 'package:industrial/models/pruduccion.dart';
 import 'package:industrial/providers/db_provider.dart';
 
 class CreProducProv extends ChangeNotifier {
+  List<ProduccionCre> creProTem = [];
+  CreProducProv({
+    required this.creProTem,
+  }) {
+    _creProducProv.clear();
+
+    _creProducProv.addAll(creProTem);
+
+    notifyListeners();
+  }
   final List<ProduccionCre> _creProducProv = [];
   UnmodifiableListView<ProduccionCre> get creProducProv =>
       UnmodifiableListView(_creProducProv);
+
   int idProdu = 0, estadoEditVen = 0;
 
   estadoEditVe(int estadoEdi) {
@@ -18,10 +31,12 @@ class CreProducProv extends ChangeNotifier {
   }
 
   Ventana ventaTemp = Ventana();
-  int nuVenTem = 0;
+  int nuVenTemk = 0;
+
   pushventanainta(Ventana ventanIsta, int nuVenTem) {
+    
     ventaTemp = ventanIsta;
-    nuVenTem = nuVenTem;
+    nuVenTemk = nuVenTem;
     notifyListeners();
   }
 
@@ -31,6 +46,7 @@ class CreProducProv extends ChangeNotifier {
       _creProducProv.addAll(await DBProvider.getProducc());
       notifyListeners();
     } else {
+      _creProducProv.clear();
       _creProducProv.addAll(await DBProvider.getProducc());
     }
     return 1;
@@ -39,15 +55,18 @@ class CreProducProv extends ChangeNotifier {
   addProducc(ProduccionCre produccion) async {
     idProdu = await DBProvider.insertProducc(produccion);
     _creProducProv.add(ProduccionCre(
-      id: idProdu,
-      fecha: produccion.fecha,
-      tipoVentana: produccion.tipoVentana,
-      cliente: produccion.cliente,
-      direccion: produccion.direccion,
-      telefono: produccion.telefono,
-      items: produccion.items
-       ));
-  
+        id: idProdu,
+        fecha: produccion.fecha,
+        tipoVentana: produccion.tipoVentana,
+        cliente: produccion.cliente,
+        direccion: produccion.direccion,
+        telefono: produccion.telefono,
+        items: produccion.items));
+  }
+
+  coutProduc2() {
+    int n = _creProducProv.length;
+    return n;
   }
 
   sumMateriales(int nuPro, int totalDe) {
@@ -150,6 +169,7 @@ class CreProducProv extends ChangeNotifier {
       ventana = degloTradi(
           ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
     } else if (tipoVeta == "Ventanas P-65") {
+      print(ventana.idVentana);
       ventana = degloP65(
           ventana.ancho!, ventana.alto!, ventana.cantidaVia, ventana.idVentana);
     } else if (tipoVeta == "Ventanas P-92") {
@@ -168,8 +188,8 @@ class CreProducProv extends ChangeNotifier {
         llavinEnganche: ventana.llavinEnganche,
         anchoCrital: ventana.anchoCrital,
         altoCrital: ventana.altoCrital);
-
-    _creProducProv[nuPro].items[nuVen] = ventanaFinal;
+    print(_creProducProv[nuPro].items[nuVen].cantidaVia);
+      _creProducProv[nuPro].items[nuVen] = ventanaFinal;
     notifyListeners();
 
     await DBProvider.updateVenta(ventaTem);
@@ -258,11 +278,6 @@ class CreProducProv extends ChangeNotifier {
     return n - 1;
   }
 
-  coutProduc2() {
-    int n = _creProducProv.length;
-    return n;
-  }
-
   degloTradi(double ancho, double alto, int cantidaVia, int idVent) {
     Ventana medida = Ventana(
       ancho: ancho,
@@ -296,30 +311,25 @@ class CreProducProv extends ChangeNotifier {
   }
 
   addTradi(double ancho, double alto, int cantidaVia, int nuPro) async {
-      
-
-
-
     int idVen = await DBProvider.insertVentana(Ventana(
         idProduccion: _creProducProv[nuPro].id,
         ancho: ancho,
         alto: alto,
         cantidaVia: cantidaVia));
-      
+
     Ventana medida = degloTradi(ancho, alto, cantidaVia, idVen);
-  Ventana ventaTem = Ventana(
-      idVentana: idVen,
-      cantidaVia: cantidaVia,
-      idProduccion: _creProducProv[nuPro].id,
-      ancho: ancho,
-      alto: alto,
-      laterales: medida.laterales,
-      cabezarRiel: medida.cabezarRiel,
-      cabezalArferza: medida.cabezalArferza,
-      llavinEnganche: medida.llavinEnganche,
-      anchoCrital: medida.anchoCrital,
-      altoCrital: medida.altoCrital
-    );
+    Ventana ventaTem = Ventana(
+        idVentana: idVen,
+        cantidaVia: cantidaVia,
+        idProduccion: _creProducProv[nuPro].id,
+        ancho: ancho,
+        alto: alto,
+        laterales: medida.laterales,
+        cabezarRiel: medida.cabezarRiel,
+        cabezalArferza: medida.cabezalArferza,
+        llavinEnganche: medida.llavinEnganche,
+        anchoCrital: medida.anchoCrital,
+        altoCrital: medida.altoCrital);
 
     await DBProvider.insertDeglo(
         LisPropiVen(
@@ -340,11 +350,9 @@ class CreProducProv extends ChangeNotifier {
 
     _creProducProv[nuPro].items.add(ventaTem);
     notifyListeners();
-    init(2);
   }
 
   degloP65(double ancho, double alto, int cantidaVia, int idVent) {
-  
     Ventana medida = Ventana(
       ancho: ancho,
       alto: alto,
@@ -380,21 +388,19 @@ class CreProducProv extends ChangeNotifier {
         ancho: ancho,
         alto: alto,
         cantidaVia: cantidaVia));
-          print(".........................$cantidaVia");
     Ventana medida = degloP65(ancho, alto, cantidaVia, idVen);
- Ventana ventaTem = Ventana(
-      idVentana: idVen,
-      cantidaVia: cantidaVia,
-      idProduccion: _creProducProv[nuPro].id,
-      ancho: ancho,
-      alto: alto,
-      laterales: medida.laterales,
-      cabezarRiel: medida.cabezarRiel,
-      cabezalArferza: medida.cabezalArferza,
-      llavinEnganche: medida.llavinEnganche,
-      anchoCrital: medida.anchoCrital,
-      altoCrital: medida.altoCrital
-    );
+    Ventana ventaTem = Ventana(
+        idVentana: idVen,
+        cantidaVia: cantidaVia,
+        idProduccion: _creProducProv[nuPro].id,
+        ancho: ancho,
+        alto: alto,
+        laterales: medida.laterales,
+        cabezarRiel: medida.cabezarRiel,
+        cabezalArferza: medida.cabezalArferza,
+        llavinEnganche: medida.llavinEnganche,
+        anchoCrital: medida.anchoCrital,
+        altoCrital: medida.altoCrital);
     await DBProvider.insertDeglo(
         LisPropiVen(
             medida.laterales![0].valor, medida.laterales![0].estado, idVen),
@@ -414,7 +420,6 @@ class CreProducProv extends ChangeNotifier {
 
     _creProducProv[nuPro].items.add(ventaTem);
     notifyListeners();
-    init(2);
   }
 
   degloP92(double ancho, double alto, int cantidaVia, int idVent) {
@@ -475,7 +480,6 @@ class CreProducProv extends ChangeNotifier {
     _creProducProv[nuPro].items.add(medida);
 
     notifyListeners();
-    init(2);
   }
 
   cout() {

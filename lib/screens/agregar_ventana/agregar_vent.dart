@@ -354,7 +354,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                       .creProducProv[widget.nuPro!]
                                                       .tipoVentana!,
                                                   widget.nuPro!,
-                                                  crearPruduccionPro.nuVenTem);
+                                                  crearPruduccionPro.nuVenTemk);
                                               NotificationsService.showSnackbar(
                                                   "Ventana Editada ${crearPruduccionPro.coutVentanaByPro(widget.nuPro!) + 1}  ${myController1.text} x ${myController2.text}");
                                             } else if (crearPruduccionPro
@@ -386,7 +386,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                       .creProducProv[widget.nuPro!]
                                                       .tipoVentana!,
                                                   widget.nuPro!,
-                                                  crearPruduccionPro.nuVenTem);
+                                                  crearPruduccionPro.nuVenTemk);
                                             } else if (crearPruduccionPro
                                                     .creProducProv[
                                                         widget.nuPro!]
@@ -416,7 +416,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                                       .creProducProv[widget.nuPro!]
                                                       .tipoVentana!,
                                                   widget.nuPro!,
-                                                  crearPruduccionPro.nuVenTem);
+                                                  crearPruduccionPro.nuVenTemk);
                                             }
 
                                             setState(() {
@@ -613,8 +613,9 @@ class CardProduccPrimary extends StatelessWidget {
                                     .toString());
                                 crearPruduccionPro.pushventanainta(
                                     crearPruduccionPro
-                                        .creProducProv[nuPro].items[index],
-                                    index);
+                                    .creProducProv[nuPro].items[index],
+                                    index
+                                    );
                                 crearPruduccionPro.estadoEditVe(1);
                               },
                               trailingIcon: CupertinoIcons.pencil,

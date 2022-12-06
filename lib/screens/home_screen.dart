@@ -39,14 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final tipoVentana = Provider.of<TipoVentana>(context);
-    final crPruProv = Provider.of<CreProducProv>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
-  
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     if (_refresh1 == false) {
-      crPruProv.init(1);
       _refresh1 = true;
       _isLoading = false;
     }
@@ -383,9 +381,11 @@ class CardProducc extends StatelessWidget {
                                         CupertinoDialogAction(
                                             child: const Text("YES"),
                                             onPressed: () {
-                                              crearPruduccionPro.deleteProducc(index,
+                                              crearPruduccionPro.deleteProducc(
+                                                  index,
                                                   crearPruduccionPro
-                                                      .creProducProv[index].id!);
+                                                      .creProducProv[index]
+                                                      .id!);
                                               Navigator.of(context).pop();
                                             }),
                                         CupertinoDialogAction(

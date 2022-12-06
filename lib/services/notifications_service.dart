@@ -11,7 +11,7 @@ class NotificationsService {
 
     final snackBar = SnackBar(
       content: Text( message, style: const TextStyle( color: Color.fromARGB(255, 87, 87, 87), fontSize: 15)),
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 2),
       backgroundColor: const Color.fromARGB(255, 238, 238, 238),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(

@@ -122,7 +122,6 @@ class DBProvider {
     sql.Database? db = await instance.database;
 
     final idventana = await db!.insert("ventana", ventana1.toMap2());
-    print(await db.query("ventana"));
     return idventana;
   }
 
