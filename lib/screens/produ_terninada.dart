@@ -261,10 +261,10 @@ class _CardProduTermState extends State<CardProduTerm> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                '${widget.select==3? '2 ': widget.select==4?'1 ': widget.select==5?'2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
-                                  .cantidaVia ==0 ? '2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                '${widget.select==3?'2 ':widget.select==4?'1 ':widget.select==5?'2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==0 ?'2 ':widget.select==6 && crPruProv.creProducProv[widget.nuPro].items[index]
                                   .cantidaVia ==1?'3 ': widget.select==7 && crPruProv.creProducProv[widget.nuPro].items[index]
-                                  .cantidaVia ==0 ? '2 ':widget.select==7 && crPruProv.creProducProv[widget.nuPro].items[index]
+                                  .cantidaVia ==0 ?'2 ':widget.select==7 && crPruProv.creProducProv[widget.nuPro].items[index]
                                   .cantidaVia ==1?'3 ':''}  ${crPruProv.toFracc(crPruProv.verDeglose(widget.select!, widget.nuPro, index))}',
                                 style: const TextStyle(
                                     fontSize: 17,

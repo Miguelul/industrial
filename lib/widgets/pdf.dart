@@ -35,8 +35,8 @@ Widget buildInvoice(ProduccionCre invoice) {
     'Cab\\Riel',
     'Cab\\Alf',
     'Jambas',
-    'Ancho',
-    'Alto'
+    'Ancho Cris',
+    'Alto Cris'
   ];
   final data = invoice.items.map((item) {
     n++;
@@ -46,7 +46,7 @@ Widget buildInvoice(ProduccionCre invoice) {
       toFracc(item.alto!),
       " 2       ${toFracc(item.laterales![0].valor)}",
       " 1       ${toFracc(item.cabezarRiel![0].valor)}",
-      " 2       ${toFracc(item.cabezalArferza![0].valor!)}${item.cantidaVia != 0 ? "\n 1       ${toFracc(item.cabezalArferza![0].valor2!)}" : ''}",
+      " 2       ${toFracc(item.cabezalArferza![0].valor!)}${item.cantidaVia != 0 && invoice.tipoVentana == "Ventanas Tradicional"? "\n 1       ${toFracc(item.cabezalArferza![0].valor2!)}" : ''}",
       " ${item.cantidaVia == 0 ? '2' : '3'}       ${toFracc(item.llavinEnganche![0].valor)}",
       " ${item.cantidaVia == 0 ? '2' : '3'}       ${toFracc(item.anchoCrital![0].valor)}",
       toFracc(item.altoCrital![0].valor),
