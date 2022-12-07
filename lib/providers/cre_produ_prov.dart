@@ -34,7 +34,6 @@ class CreProducProv extends ChangeNotifier {
   int nuVenTemk = 0;
 
   pushventanainta(Ventana ventanIsta, int nuVenTem) {
-    
     ventaTemp = ventanIsta;
     nuVenTemk = nuVenTem;
     notifyListeners();
@@ -62,6 +61,7 @@ class CreProducProv extends ChangeNotifier {
         direccion: produccion.direccion,
         telefono: produccion.telefono,
         items: produccion.items));
+    notifyListeners();
   }
 
   coutProduc2() {
@@ -187,7 +187,7 @@ class CreProducProv extends ChangeNotifier {
         llavinEnganche: ventana.llavinEnganche,
         anchoCrital: ventana.anchoCrital,
         altoCrital: ventana.altoCrital);
-      _creProducProv[nuPro].items[nuVen] = ventanaFinal;
+    _creProducProv[nuPro].items[nuVen] = ventanaFinal;
     notifyListeners();
 
     await DBProvider.updateVenta(ventaTem);
@@ -273,7 +273,7 @@ class CreProducProv extends ChangeNotifier {
 
   coutProduc() {
     int n = _creProducProv.length;
-    return n - 1;
+    return n != 0 ? n - 1 : 0;
   }
 
   degloTradi(double ancho, double alto, int cantidaVia, int idVent) {
@@ -301,8 +301,8 @@ class CreProducProv extends ChangeNotifier {
             ],
       llavinEnganche: [LisPropiVen(alto - 0.875, 0, idVent)],
       anchoCrital: (cantidaVia == 0)
-          ? [LisPropiVen((ancho -4.125) /2, 0, idVent)]
-          : [LisPropiVen((ancho -4.625 ) /(3), 0, idVent)],
+          ? [LisPropiVen((ancho - 4.125) / 2, 0, idVent)]
+          : [LisPropiVen((ancho - 4.625) / (3), 0, idVent)],
       altoCrital: [LisPropiVen(alto - 4, 0, idVent)],
     );
     return medida;
@@ -373,7 +373,7 @@ class CreProducProv extends ChangeNotifier {
             ],
       llavinEnganche: [LisPropiVen(alto - 2.125, 0, idVent)],
       anchoCrital: (cantidaVia == 0)
-          ? [LisPropiVen((ancho -6.5)/ 2, 0, idVent)]
+          ? [LisPropiVen((ancho - 6.5) / 2, 0, idVent)]
           : [LisPropiVen((ancho - 7.8125) / 3, 0, idVent)],
       altoCrital: [LisPropiVen(alto - 5, 0, idVent)],
     );

@@ -26,7 +26,7 @@ class AfregarVentanas extends StatefulWidget {
 class _AfregarVentanasState extends State<AfregarVentanas> {
   final myController1 = TextEditingController();
   final myController2 = TextEditingController();
-
+   
   bool valueI = false;
   bool value2 = false;
   bool value3 = false;
@@ -53,6 +53,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
     final validatorForm = Provider.of<ValidatorForm>(context);
     final theme = Theme.of(context);
     // crearPruduccionPro.init(1);
+    print("...........................${widget.nuPro}");
     double width = MediaQuery.of(context).size.width;
     return WillPopScope(
         onWillPop: (() async {
@@ -515,11 +516,11 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                     const SizedBox(
                       height: 7,
                     ),
-                    CardProduccPrimary(
-                      nuPro: widget.nuPro!,
-                      myController1: myController1,
-                      myController2: myController2,
-                    ),
+                    // CardProduccPrimary(
+                    //   nuPro: widget.nuPro!,
+                    //   myController1: myController1,
+                    //   myController2: myController2,
+                    // ),
                   ],
                 )),
           ),
