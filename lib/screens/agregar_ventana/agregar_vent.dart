@@ -26,7 +26,7 @@ class AfregarVentanas extends StatefulWidget {
 class _AfregarVentanasState extends State<AfregarVentanas> {
   final myController1 = TextEditingController();
   final myController2 = TextEditingController();
-   
+
   bool valueI = false;
   bool value2 = false;
   bool value3 = false;
@@ -67,35 +67,32 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
           appBar: AppBar(
             elevation: 0,
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-            leading:  CupertinoButton(
-        disabledColor: const Color.fromARGB(255, 226, 225, 225),
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        padding: const EdgeInsets.all(7),
-        onPressed: (() async{
-            await Navigator.pushReplacementNamed(context, 'home');
+            leading: CupertinoButton(
+              disabledColor: const Color.fromARGB(255, 226, 225, 225),
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              padding: const EdgeInsets.all(7),
+              onPressed: (() async {
+                await Navigator.pushReplacementNamed(context, 'home');
                 myController1.text = "";
                 myController2.text = "";
 
                 crearPruduccionPro.estadoEditVe(0);
-        }),
-        child: const Icon(
-          CupertinoIcons.back,
-          color: Color.fromARGB(255, 201, 196, 196),
-          size: 25,
-        ),
-      ),
-            
-            
-       
-            // automaticallyImplyLeading: false,
-            title: const Text(
-                'Control de Medidas',
-                style: TextStyle(
-                    fontWeight: FontWeight.w100,
-                    color: Color.fromARGB(255, 105, 104, 104)),
+              }),
+              child: const Icon(
+                CupertinoIcons.back,
+                color: Color.fromARGB(255, 201, 196, 196),
+                size: 25,
               ),
             ),
-      
+
+            // automaticallyImplyLeading: false,
+            title: const Text(
+              'Control de Medidas',
+              style: TextStyle(
+                  fontWeight: FontWeight.w100,
+                  color: Color.fromARGB(255, 105, 104, 104)),
+            ),
+          ),
           body: SingleChildScrollView(
             child: Container(
                 color: const Color.fromARGB(255, 255, 255, 255),
@@ -141,7 +138,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                         "Tres Vías",
                                         style: TextStyle(
                                             fontSize: 12,
-                                              fontWeight: FontWeight.w100,
+                                            fontWeight: FontWeight.w100,
                                             color: Color.fromARGB(
                                                 255, 126, 117, 117)),
                                       ),
@@ -484,7 +481,7 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                                           return CupertinoAlertDialog(
                                             title: const Text("Aviso"),
                                             content: const Text(
-                                                "Tines que añadir minimo una medida"),
+                                                "Tienes que añadir minimo una medida"),
                                             actions: [
                                               CupertinoDialogAction(
                                                   child: const Text("OK"),
@@ -512,7 +509,6 @@ class _AfregarVentanasState extends State<AfregarVentanas> {
                         style: TextStyle(
                             fontWeight: FontWeight.w100,
                             color: Color.fromARGB(255, 126, 117, 117))),
-                            
                     const SizedBox(
                       height: 7,
                     ),

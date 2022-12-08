@@ -61,7 +61,14 @@ class CreProducProv extends ChangeNotifier {
         direccion: produccion.direccion,
         telefono: produccion.telefono,
         items: produccion.items));
+    print(".................${_creProducProv.length}");
     notifyListeners();
+  }
+
+  coutProduc() {
+    int n = _creProducProv.length;
+    print(_creProducProv.length);
+    return n != 0 ? n - 1 : 0;
   }
 
   coutProduc2() {
@@ -70,8 +77,6 @@ class CreProducProv extends ChangeNotifier {
   }
 
   sumMateriales(int nuPro, int totalDe) {
-
-
     double totalf = 0;
     double contador1 = 0, contador2 = 0;
     Map<int, double> total = {
@@ -91,64 +96,63 @@ class CreProducProv extends ChangeNotifier {
       14: 0,
       15: 0
     };
-  
-      for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
-        if (creProducProv[nuPro].items[index].cantidaVia == 0) {
-          contador1++;
 
-          total[1] = total[1]! +
-              creProducProv[nuPro].items[index].laterales![0].valor * 2;
-          total[2] = total[2]! +
-              creProducProv[nuPro].items[index].cabezarRiel![0].valor;
-          total[3] = total[3]! +
-              creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 2;
-          total[4] = total[4]! +
-              creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
-          total[5] = contador1 + contador2*2;
-          total[6] = contador1 * 4 +contador2*6;
-          print(total[5]);
-          total[7] = total[7]! +
-              (creProducProv[nuPro]
-                          .items[contador1.toInt() - 1]
-                          .anchoCrital![0]
-                          .valor +
-                      creProducProv[nuPro]
-                          .items[contador1.toInt() - 1]
-                          .altoCrital![0]
-                          .valor) *
-                  4;
-          totalf = total[totalDe]!;
-        } else {
-          contador2++;
-          print(contador2);
-          total[8] = total[8]! +
-              creProducProv[nuPro].items[index].laterales![0].valor * 2;
-          total[9] = total[9]! +
-              creProducProv[nuPro].items[index].cabezarRiel![0].valor;
-          total[10] = total[10]! +
-              creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
-          total[11] = total[11]! +
-              creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
-          total[12] = total[12]! +
-              creProducProv[nuPro].items[index].llavinEnganche![0].valor * 4;
-          total[5] = contador1 + contador2*2;
-          total[6] = contador1 * 4 +contador2*6;
-       
-          total[7] = total[7]! +
-              (creProducProv[nuPro]
-                          .items[contador2.toInt() - 1]
-                          .anchoCrital![0]
-                          .valor +
-                      creProducProv[nuPro]
-                          .items[contador2.toInt() - 1]
-                          .altoCrital![0]
-                          .valor) *
-                  6;
-          totalf = total[totalDe]!;
-        }
+    for (int index = 0; index < creProducProv[nuPro].items.length; index++) {
+      if (creProducProv[nuPro].items[index].cantidaVia == 0) {
+        contador1++;
+
+        total[1] = total[1]! +
+            creProducProv[nuPro].items[index].laterales![0].valor * 2;
+        total[2] =
+            total[2]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[3] = total[3]! +
+            creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 2;
+        total[4] = total[4]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
+        total[5] = contador1 + contador2 * 2;
+        total[6] = contador1 * 4 + contador2 * 6;
+        print(total[5]);
+        total[7] = total[7]! +
+            (creProducProv[nuPro]
+                        .items[contador1.toInt() - 1]
+                        .anchoCrital![0]
+                        .valor +
+                    creProducProv[nuPro]
+                        .items[contador1.toInt() - 1]
+                        .altoCrital![0]
+                        .valor) *
+                4;
+        totalf = total[totalDe]!;
+      } else {
+        contador2++;
+        print(contador2);
+        total[8] = total[8]! +
+            creProducProv[nuPro].items[index].laterales![0].valor * 2;
+        total[9] =
+            total[9]! + creProducProv[nuPro].items[index].cabezarRiel![0].valor;
+        total[10] = total[10]! +
+            creProducProv[nuPro].items[index].cabezalArferza![0].valor! * 3;
+        total[11] = total[11]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 2;
+        total[12] = total[12]! +
+            creProducProv[nuPro].items[index].llavinEnganche![0].valor * 4;
+        total[5] = contador1 + contador2 * 2;
+        total[6] = contador1 * 4 + contador2 * 6;
+
+        total[7] = total[7]! +
+            (creProducProv[nuPro]
+                        .items[contador2.toInt() - 1]
+                        .anchoCrital![0]
+                        .valor +
+                    creProducProv[nuPro]
+                        .items[contador2.toInt() - 1]
+                        .altoCrital![0]
+                        .valor) *
+                6;
+        totalf = total[totalDe]!;
       }
-    
-   
+    }
+
     return double.parse(totalf.toStringAsFixed(2));
   }
 
@@ -281,11 +285,6 @@ class CreProducProv extends ChangeNotifier {
   coutPosiProduc() {
     int n = _creProducProv.length;
     return (n != 0) ? n - 1 : 0;
-  }
-
-  coutProduc() {
-    int n = _creProducProv.length;
-    return n != 0 ? n - 1 : 0;
   }
 
   degloTradi(double ancho, double alto, int cantidaVia, int idVent) {

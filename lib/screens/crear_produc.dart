@@ -167,13 +167,13 @@ class _CrearProduccionState extends State<CrearProduccion> {
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                  onPressed: (() {
+                  onPressed: (() async{
                     var now1 = DateTime.now();
                     String now =
                         DateFormat("dd/MM/yyyy  hh:mm").format(now1).toString();
                     if (validatorForm.isValidForm() == true) {
                       if (tipoVentana.indexTipo == 0) {
-                        crearPruduccionPro.addProducc(ProduccionCre(
+                       await crearPruduccionPro.addProducc(ProduccionCre(
                             fecha: now,
                             tipoVentana: tipoVentana.ventanasD[0].nombre,
                             cliente: myController.text,
@@ -181,7 +181,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                             telefono: myController3.text,
                             items: []));
                       } else if (tipoVentana.indexTipo == 1) {
-                        crearPruduccionPro.addProducc(ProduccionCre(
+                       await crearPruduccionPro.addProducc(ProduccionCre(
                             fecha: now,
                             tipoVentana: tipoVentana.ventanasD[1].nombre,
                             cliente: myController.text,
@@ -189,7 +189,7 @@ class _CrearProduccionState extends State<CrearProduccion> {
                             telefono: myController3.text,
                             items: []));
                       } else if (tipoVentana.indexTipo == 2) {
-                        crearPruduccionPro.addProducc(ProduccionCre(
+                       await crearPruduccionPro.addProducc(ProduccionCre(
                             fecha: now,
                             tipoVentana: tipoVentana.ventanasD[2].nombre,
                             cliente: myController.text,
