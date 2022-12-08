@@ -124,63 +124,63 @@ class TotalMaterial extends StatelessWidget {
                             cells: <DataCell>[
                               const DataCell(Text('Laterales Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 1)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 1)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 1)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Cabezal Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 2)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 2)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 2)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Riel Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 2)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 2)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 2)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Cabezal Hojas')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 3)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 3)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 3)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Alfeizal Hojas')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 3)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 3)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 3)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Jambas Llavín')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 4)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 4)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 4)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Jambas Enganche')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 4)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 4)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 4)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                         ],
@@ -253,65 +253,33 @@ class TotalMaterial extends StatelessWidget {
                             cells: <DataCell>[
                               const DataCell(Text('Laterales Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 8)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 8)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Cabezal Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 9)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 9)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 9)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
                           DataRow(
                             cells: <DataCell>[
                               const DataCell(Text('Riel Marco')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 9)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 9)/12).toStringAsFixed(2)}')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
+                                  '${((crPruProv.sumMateriales(nuPro!, 9)/12)/21).toStringAsFixed(2)}')),
                             ],
                           ),
-                          DataRow(
-                            cells: <DataCell>[
-                              const DataCell(Text('Cabezal Hojas')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 10)}')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              const DataCell(Text('Alfeizal Hojas')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 10)}')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              const DataCell(Text('Jambas Llavín')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 11)}')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
-                            ],
-                          ),
-                          DataRow(
-                            cells: <DataCell>[
-                              const DataCell(Text('Jambas Enganche')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 12)}')),
-                              DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 8)}')),
-                            ],
-                          ),
+                         
+                        
+                    
+                       
                         ],
                       ),
                     ),
@@ -319,7 +287,7 @@ class TotalMaterial extends StatelessWidget {
                 ),
                 //  ),
                 Positioned(
-                  bottom: 343,
+                  bottom: 150,
                   child: ClipPath(
                     clipper: MyCustomClipper(),
                     child: Container(
@@ -388,7 +356,7 @@ class TotalMaterial extends StatelessWidget {
                             cells: <DataCell>[
                               const DataCell(Text('Goma')),
                               DataCell(Text(
-                                  '${crPruProv.sumMateriales(nuPro!, 7)}')),
+                                  '${(crPruProv.sumMateriales(nuPro!, 7)/12).toStringAsFixed(2)}')),
                             ],
                           ),
                         ],

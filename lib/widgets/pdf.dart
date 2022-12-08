@@ -131,7 +131,7 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                           padding: const EdgeInsets.all(5),
                         ),
                         Text(
-                          "${deta2.goma}",
+                          "${deta2.goma!/12}",
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -224,15 +224,15 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                   TableRow(
                     children: [
                       Text("Laterales Marco"),
-                      Text("${detaVe1.lateraMarco}"),
-                      Text("${detaVe2.lateraMarco}"),
+                      Text(" ${(detaVe1.lateraMarco/12).toStringAsFixed(2)}"),
+                      Text(" ${(detaVe2.lateraMarco/12).toStringAsFixed(2)}"),
                     ],
                   ),
                   TableRow(
                     children: [
                       Text('Cabezal Marco'),
-                      Text('${detaVe1.cabezaMarco}'),
-                      Text('${detaVe2.cabezaMarco}'),
+                      Text(' ${(detaVe1.cabezaMarco/12).toStringAsFixed(2)}'),
+                      Text(' ${(detaVe2.cabezaMarco/12).toStringAsFixed(2)}'),
                     ],
                   ),
                   TableRow(
@@ -240,8 +240,8 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                       Text(
                         'Riel Marco',
                       ),
-                      Text('${detaVe1.rielMarco}'),
-                      Text('${detaVe2.rielMarco}'),
+                      Text(' ${(detaVe1.rielMarco/12).toStringAsFixed(2)}'),
+                      Text(' ${(detaVe2.rielMarco/12).toStringAsFixed(2)}'),
                     ],
                   ),
                   TableRow(
@@ -249,8 +249,8 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                       Text(
                         'Cabezal Hojas',
                       ),
-                      Text('${detaVe1.cabeHoja}'),
-                      Text('${detaVe2.cabeHoja}'),
+                      Text(' ${(detaVe1.cabeHoja/12).toStringAsFixed(2)}'),
+                
                     ],
                   ),
                   TableRow(
@@ -258,8 +258,8 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                       Text(
                         'Alfeizal Hojas ',
                       ),
-                      Text('${detaVe1.alfeHoja}'),
-                      Text('${detaVe2.alfeHoja}'),
+                      Text(' ${(detaVe1.alfeHoja/12).toStringAsFixed(2)}'),
+            
                     ],
                   ),
                   TableRow(
@@ -267,8 +267,8 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                       Text(
                         'Jambas Llavín',
                       ),
-                      Text('${detaVe1.jambaLavin}'),
-                      Text('${detaVe2.jambaLavin}'),
+                      Text(' ${(detaVe1.jambaLavin/12).toStringAsFixed(2)}'),
+                
                     ],
                   ),
                   TableRow(
@@ -276,8 +276,8 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                       Text(
                         'Jambas Enganche',
                       ),
-                      Text('${detaVe1.jambaEngan}'),
-                      Text('${detaVe2.jambaEngan}'),
+                      Text(' ${(detaVe1.jambaEngan/12).toStringAsFixed(2)}'),
+                     
                     ],
                   )
                 ],
