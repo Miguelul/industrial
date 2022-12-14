@@ -236,13 +236,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             }),
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(11.0),
                         child: Text(
                           'Todas las Producciones',
                           style: TextStyle(
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(221, 66, 66, 66)),
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(218, 66, 66, 66)),
                         ),
                       ),
                       const CardProducc(),
@@ -304,7 +304,7 @@ class CardProducc extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '${crearPruduccionPro.creProducProv[index].id} ${crearPruduccionPro.creProducProv[index].cliente} ',
+                          '${crearPruduccionPro.creProducProv[index].id}  ${crearPruduccionPro.creProducProv[index].cliente} ',
                           style: const TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,

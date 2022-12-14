@@ -131,7 +131,7 @@ Widget buildDetalle(ProduccionCre invoice, DetalleMater detaVe1,
                           padding: const EdgeInsets.all(5),
                         ),
                         Text(
-                          "${deta2.goma!/12}",
+                          (deta2.goma!/12).toStringAsFixed(2),
                           textAlign: TextAlign.center,
                         ),
                       ],
