@@ -27,12 +27,14 @@ dependencies:
   flutter_speed_dial: ^6.2.0
   printing:
   
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.0
-
+  flutter_native_splash: ^2.2.16
+  change_app_package_name: ^1.1.0
 flutter_icons:
   android: true
   ios: true
@@ -49,6 +51,14 @@ flutter_icons:
   macos:
     generate: true
     image_path: "assets/images/logo3.png"
+
+
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/logo7.png
+
+
 
 flutter:
 
